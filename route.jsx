@@ -7,6 +7,7 @@ import AllTables from './src/components/dashboard/AllTables';
 import RootLayout from './src/layout/RootLayout';
 import Login from './src/pages/login';
 import Hierarchy from './src/components/dashboard/chat/hierarchy';
+import Test from './src/components/dashboard/Test';
 
 
 const Route = () => {
@@ -83,6 +84,10 @@ const Route = () => {
                                     path: '/dashboard/chat-bot',
                                     element: <Hierarchy/>
                                 },
+                                {
+                                    path:'/dashboard/test',
+                                    element:<Test/>
+                                }
                                 // {
                                 //     path: '/dashboard/manage-categories',
                                 //     element: <AllTables  type="categories"/>
