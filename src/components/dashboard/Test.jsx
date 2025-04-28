@@ -5,35 +5,44 @@ import cross from '../../assets/Icons/cross.png'
 import filterArrow from "../../assets/Icons/filterArrow.png"
 import download from "../../assets/Icons/download.png"
 import gameIcon from "../../assets/Icons/gameIcon.png"
+import search from "../../assets/Icons/Search.png"
 import Buttons from '../utils/buttons'
 
 function Test() {
 
+    let certificateSelect=[
+        {
+            value:"Certificates",
+            selected:true,
+            name:"Certificates"
+        }
+    ]
+
     let studioOption=[
         {
             value:"Studios",
-            selected: "true",
+            selected: true,
             name:"Studios"
         }
     ]
     let regionOption=[
         {
             value:"Region",
-            selected: "true",
+            selected: true,
             name:"Region"
         }
     ]
     let gameTitleOption=[
         {
             value:"GameTitle",
-            selected: "true",
+            selected: true,
             name:"Game Title"
         }
     ]
     let certificatesOption=[
         {
             value:"Certificates",
-            selected: "true",
+            selected: true,
             name:"Certificates"
         }
     ]
@@ -73,7 +82,20 @@ function Test() {
 
   return (
     <>
+
+
+
     <div className='px-24'>
+
+    <div className='flex gap-10 mb-11'>
+<InputField type='select' options={certificateSelect}/>
+<div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
+<img className='h-3.5 w-3.5' src={search} alt="" />
+<input type="text" className=' outline-none' placeholder='Keyword' />
+</div>
+<Buttons>Search</Buttons>
+    </div>
+
         {/*  section */}
         <div className='flex justify-between pb-14'>
     <h1 className='text-5xl font-medium'>Certificates</h1>
@@ -135,7 +157,7 @@ Clear All
 <div>
     {gamesList?.map((game)=>{
         return(
-            <div className='flex justify-between items-center bg-white-v1 pl-8 pr-14 mb-9  rounded-lg'>
+            <div className='flex justify-between items-center bg-white-v1 px-8 pb-8  mb-9  rounded-lg'>
                 <div className='flex gap-14 items-center'>
 <InputField type='checkbox'/>
 <img className='w-44 h-28' src={game.icon} alt="" />
@@ -144,7 +166,7 @@ Clear All
 <p>United Kingdom Certificate</p>
     </div>
     <p className='text-3xl font-medium pb-1'>{game.title}</p>
-    <p className='pb-10'>By: {game.by}</p>
+    <p className=''>By: {game.by}</p>
 </div>
 </div>
 <Buttons>
