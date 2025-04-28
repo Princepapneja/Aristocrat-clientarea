@@ -7,8 +7,8 @@ import AllTables from './src/components/dashboard/AllTables';
 import RootLayout from './src/layout/RootLayout';
 import Login from './src/pages/login';
 import Hierarchy from './src/components/dashboard/chat/hierarchy';
-import Test from './src/components/dashboard/certificates';
 import Certificates from './src/components/dashboard/certificates';
+import MasterGame from './src/components/dashboard/MasterGame';
 
 
 const Route = () => {
@@ -88,6 +88,10 @@ const Route = () => {
                                 {
                                     path:'/dashboard/certificates',
                                     element:<Certificates/>
+                                },
+                                {
+                                    path:'/dashboard/mastergame',
+                                    element:<MasterGame/>
                                 }
                                 // {
                                 //     path: '/dashboard/manage-categories',
