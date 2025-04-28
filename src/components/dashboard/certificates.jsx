@@ -67,7 +67,7 @@ const [filters,setFilters]= useState(null)
     ]
     const handleChange=()=>{
         
-    }
+    }   
     const clearFilter = (value) => {
         const oldFilters = { ...filters };
       
