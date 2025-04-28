@@ -9,6 +9,7 @@ import search from "../../assets/Icons/Search.png"
 import Buttons from '../utils/buttons'
 
 function Certificates() {
+<<<<<<< HEAD
 
 const[certificateSelect, setCertificateSelect]  =useState([
     {
@@ -17,6 +18,16 @@ const[certificateSelect, setCertificateSelect]  =useState([
         name: "Certificates"
     }
 ])  
+=======
+const [filters,setFilters]= useState(null)
+    let certificateSelect = [
+        {
+            value: "Certificates",
+            selected: true,
+            name: "Certificates"
+        }
+    ]
+>>>>>>> 9ae8ad97ea21d576dfaa535ba28d00d2584d7c0c
 
 const[studioOption, setStudioOption]= useState(
     [
@@ -57,6 +68,7 @@ const[certificatesOption, setCertificatesOption]= useState(
         }
     ]
 
+<<<<<<< HEAD
 )
 
 
@@ -76,6 +88,8 @@ const[chosenFilters, setChosenFilter]= useState(
         },
     ]
 )
+=======
+>>>>>>> 9ae8ad97ea21d576dfaa535ba28d00d2584d7c0c
 
 const[gamesList, setGameLists]=useState(
     [
@@ -95,7 +109,25 @@ const[gamesList, setGameLists]=useState(
             by: "Studio Name"
         }
     ]
+<<<<<<< HEAD
 )
+=======
+    const handleChange=()=>{
+        
+    }   
+    const clearFilter = (value) => {
+        const oldFilters = { ...filters };
+      
+        const keyToRemove = Object.keys(oldFilters).find(key => oldFilters[key] === value);
+      
+        if (keyToRemove) {
+          delete oldFilters[keyToRemove];
+        }
+      
+        setFilters(oldFilters); 
+      };
+      
+>>>>>>> 9ae8ad97ea21d576dfaa535ba28d00d2584d7c0c
 
 
     return (
@@ -126,9 +158,15 @@ const[gamesList, setGameLists]=useState(
 
 
                 {/* section */}
+<<<<<<< HEAD
                 <div className='flex gap-10 mb-11'>
                     <InputField type='select' id="studios" options={studioOption} />
                     <InputField type='select' id="studios" options={regionOption} />
+=======
+                <div className='flex gap-10 pb-11'>
+                    <InputField type='select' placeholder='Studios'  id="studios" options={studioOption} />
+                    <InputField type='select'  id="studios" options={regionOption} />
+>>>>>>> 9ae8ad97ea21d576dfaa535ba28d00d2584d7c0c
                     <InputField type='select' id="studios" options={certificatesOption} />
                     <InputField type='select' id="studios" options={gameTitleOption} />
                 </div>
@@ -137,11 +175,15 @@ const[gamesList, setGameLists]=useState(
                 {/*  section */}
                 <div className='flex justify-between items-center mb-14'>
                     <div className='flex gap-5'>
-                        {chosenFilters?.map((filter) => {
+                        {Object.values(filters)?.map((filter) => {
                             return (
                                 <div className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
-                                    <p className='text-sm text-black-v3'>{filter.name}</p>
+                                    <p className='text-sm text-black-v3'>{filter}</p>
+                                    <button onClick={()=>{clearFilter(filter)}}>
+
                                     <img className='w-2 h-2' src={cross} alt="" />
+                                    </button>
+
                                 </div>
                             )
                         })}
@@ -151,9 +193,9 @@ const[gamesList, setGameLists]=useState(
                             <p>View All Chosen Filters</p>
                             <img className='h-4 w-4' src={filterArrow} alt="" />
                         </div>
-                        <div className='font-semibold text-black-v4'>
+                        <button onClick={()=>{setFilters(null)}} className='font-semibold text-black-v4'>
                             Clear All
-                        </div>
+                        </button>
                     </div>
                 </div>
                 {/*  section */}

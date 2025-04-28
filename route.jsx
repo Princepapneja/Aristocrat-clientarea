@@ -1,4 +1,3 @@
-// import  {  Suspense } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import Dashboard from './src/pages/dashboard';
 import DashboardLayout from './src/layout/DashboardLayout';
