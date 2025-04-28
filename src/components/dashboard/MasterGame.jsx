@@ -1,24 +1,30 @@
-import React from 'react'
+import React, { useState } from 'react'
 import InputField from '../utils/InputFields'
 import Buttons from '../utils/buttons'
 import search from "../../assets/Icons/search.png"
 import download from "../../assets/Icons/download.png"
 
 function MasterGame() {
-    let gameAssets =[
+
+const[gameAssets, setGameAssets]=useState(
+    [
         {
             value:"Game Assets",
             selected: true,
             name:"Game Assets"
         }
     ]
-
-    let gameLists=[
+)    
+  
+const[gameLists, setGameLists]=useState(
+    [
         {
             title:"Wizard Games Master Game List",
         }
     ]
-  return (
+)
+  
+return (
    <>
    <div className='px-24'>
 

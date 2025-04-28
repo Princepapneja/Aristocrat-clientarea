@@ -7,7 +7,7 @@ import AllTables from './src/components/dashboard/AllTables';
 import RootLayout from './src/layout/RootLayout';
 import Login from './src/pages/login';
 import Hierarchy from './src/components/dashboard/chat/hierarchy';
-import Test from './src/components/dashboard/Test';
+import Certificates from './src/components/dashboard/certificates';
 import MasterGame from './src/components/dashboard/MasterGame';
 import ContactUs from './src/components/dashboard/ContactUs';
 
@@ -87,8 +87,8 @@ const Route = () => {
                                     element: <Hierarchy/>
                                 },
                                 {
-                                    path:'/dashboard/test',
-                                    element:<Test/>
+                                    path:'/dashboard/certificates',
+                                    element:<Certificates/>
                                 },
                                 {
                                     path:'/dashboard/mastergame',
