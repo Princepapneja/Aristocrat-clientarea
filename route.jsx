@@ -9,6 +9,7 @@ import Login from './src/pages/login';
 import Hierarchy from './src/components/dashboard/chat/hierarchy';
 import Test from './src/components/dashboard/Test';
 import MasterGame from './src/components/dashboard/MasterGame';
+import ContactUs from './src/components/dashboard/ContactUs';
 
 
 const Route = () => {
@@ -92,6 +93,9 @@ const Route = () => {
                                 {
                                     path:'/dashboard/mastergame',
                                     element:<MasterGame/>
+                                },{
+                                    path:'/dashboard/contactus',
+                                    element:<ContactUs/>
                                 }
                                 // {
                                 //     path: '/dashboard/manage-categories',
