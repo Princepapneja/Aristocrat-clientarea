@@ -9,6 +9,7 @@ import Hierarchy from './src/components/dashboard/chat/hierarchy';
 import Certificates from './src/components/dashboard/certificates';
 import MasterGame from './src/components/dashboard/MasterGame';
 import ContactUs from './src/components/dashboard/ContactUs';
+import Roadmaps from './src/components/dashboard/Roadmaps';
 
 
 const Route = () => {
@@ -92,9 +93,14 @@ const Route = () => {
                                 {
                                     path:'/dashboard/mastergame',
                                     element:<MasterGame/>
-                                },{
+                                },
+                                {
                                     path:'/dashboard/contactus',
                                     element:<ContactUs/>
+                                },
+                                {
+                                    path:'/dashboard/roadmaps',
+                                    element:<Roadmaps/>
                                 }
                                 // {
                                 //     path: '/dashboard/manage-categories',

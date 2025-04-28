@@ -93,9 +93,9 @@ function ContactUs() {
     )
 })}
 </div>
-<div>
+
 <Buttons>Send</Buttons>
-</div>
+
 </div>
 </div>
 </div>
