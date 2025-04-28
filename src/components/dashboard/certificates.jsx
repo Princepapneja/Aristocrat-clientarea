@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import rightArrow from "../../assets/Icons/rightArrow.png"
 import InputField from '../utils/InputFields'
 import cross from '../../assets/Icons/cross.png'
@@ -9,7 +9,7 @@ import search from "../../assets/Icons/Search.png"
 import Buttons from '../utils/buttons'
 
 function Certificates() {
-
+const [filters,setFilters]= useState(null)
     let certificateSelect = [
         {
             value: "Certificates",
@@ -47,20 +47,6 @@ function Certificates() {
         }
     ]
 
-    let chosenFilters = [
-        {
-            name: "Aristocrat Interactive",
-        },
-        {
-            name: "Germany",
-        },
-        {
-            name: "Medium",
-        },
-        {
-            name: "Video Slot",
-        },
-    ]
 
     let gamesList = [
         {
@@ -79,6 +65,22 @@ function Certificates() {
             by: "Studio Name"
         }
     ]
+    const handleChange=()=>{
+        
+    }
+    const clearFilter = (value) => {
+        const oldFilters = { ...filters };
+      
+        const keyToRemove = Object.keys(oldFilters).find(key => oldFilters[key] === value);
+      
+        if (keyToRemove) {
+          delete oldFilters[keyToRemove];
+        }
+      
+        setFilters(oldFilters); 
+      };
+      
+
 
     return (
         <>
@@ -97,7 +99,7 @@ function Certificates() {
                 </div>
 
                 {/*  section */}
-                <div className='flex justify-between pb-14'>
+                <div className='flex justify-between mb-14'>
                     <h1 className='text-5xl font-medium'>Certificates</h1>
                     <div className='flex gap-2.5 py-2.5 px-4  border-2 border-black-v4 rounded-xl'>
                         <p className='text-center font-medium'>Go to Game Assets</p>
@@ -109,21 +111,25 @@ function Certificates() {
 
                 {/* section */}
                 <div className='flex gap-10 pb-11'>
-                    <InputField type='select' id="studios" options={studioOption} />
-                    <InputField type='select' id="studios" options={regionOption} />
+                    <InputField type='select' placeholder='Studios'  id="studios" options={studioOption} />
+                    <InputField type='select'  id="studios" options={regionOption} />
                     <InputField type='select' id="studios" options={certificatesOption} />
                     <InputField type='select' id="studios" options={gameTitleOption} />
                 </div>
                 {/* section */}
 
                 {/*  section */}
-                <div className='flex justify-between items-center pb-14'>
+                <div className='flex justify-between items-center mb-14'>
                     <div className='flex gap-5'>
-                        {chosenFilters?.map((filter) => {
+                        {Object.values(filters)?.map((filter) => {
                             return (
                                 <div className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
-                                    <p className='text-sm text-black-v3'>{filter.name}</p>
+                                    <p className='text-sm text-black-v3'>{filter}</p>
+                                    <button onClick={()=>{clearFilter(filter)}}>
+
                                     <img className='w-2 h-2' src={cross} alt="" />
+                                    </button>
+
                                 </div>
                             )
                         })}
@@ -133,9 +139,9 @@ function Certificates() {
                             <p>View All Chosen Filters</p>
                             <img className='h-4 w-4' src={filterArrow} alt="" />
                         </div>
-                        <div className='font-semibold text-black-v4'>
+                        <button onClick={()=>{setFilters(null)}} className='font-semibold text-black-v4'>
                             Clear All
-                        </div>
+                        </button>
                     </div>
                 </div>
                 {/*  section */}
