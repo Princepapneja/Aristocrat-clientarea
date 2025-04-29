@@ -22,6 +22,8 @@ const Route = () => {
                     path: '/',
                     element:<Login type={"login"}/>
                 },
+
+                
                 {
                     path: '/forgot-password',
                     element: <Login type={"forgot pass"}/>
