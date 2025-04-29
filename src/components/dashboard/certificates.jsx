@@ -9,6 +9,7 @@ import gameIcon from "../../assets/Icons/gameIcon.png"
 import Buttons from '../utils/buttons'
 
 function Certificates() {
+    const [filters,setFilters]= useState(null)
 
 const[certificateSelect, setCertificateSelect]  =useState([
     {
@@ -137,7 +138,7 @@ const[gamesList, setGameLists]=useState(
                 {/*  section */}
                 <div className='flex justify-between items-center mb-14'>
                     <div className='flex gap-5'>
-                        {Object.values(filters)?.map((filter) => {
+                        {filters && Object.values(filters)?.map((filter) => {
                             return (
                                 <div className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
                                     <p className='text-sm text-black-v3'>{filter}</p>

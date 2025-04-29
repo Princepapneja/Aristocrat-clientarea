@@ -20,7 +20,7 @@ const Route = () => {
             element: <RootLayout/>,
             children:[
                 {
-                    path: '/login',
+                    path: '/',
                     element:<Login type={"login"}/>
                 },
                 {
@@ -35,68 +35,17 @@ const Route = () => {
                                     path: '/dashboard',
                                     element:  <Dashboard />,
                                 },
-                                {
-                                    path: '/dashboard/add-clinician',
-                                    element:  <AddForm  text={"add new clinician"} type="clinician"/>
-                                },
-                                {
-                                    path: '/dashboard/manage-clinician',
-                                    element: <AllTables type={"clinician"} />
-                                },
-                                {
-                                    path: '/dashboard/add-patient',
-                                    element: <AddForm text={"add new patient"} type="patient" />
-                                },
-                                {
-                                    path: '/dashboard/manage-patient',
-                                    element: <AllTables type={"patients"} />
-                                },
-                                // {
-                                //     path: '/dashboard/new-appointment',
-                                //     element: <NewAppointment />
-                                // },
-                                {
-                                    path: '/dashboard/all-appointment',
-                                    element: <AllTables type={"appointments"} />
-                                },
-                                // {
-                                //     path: '/dashboard/mass-health',
-                                //     element: <AllTables type={"mass health"} />
-                                // },
-                                {
-                                    path: '/dashboard/metric-survey',
-                                    element: <AllTables type={"metric survey"} />
-                                },
-                                {
-                                    path: '/dashboard/mood-survey',
-                                    element: <AllTables type={"mood survey"} />
-                                },
-                                {
-                                    path: '/dashboard/new-article',
-                                    element: <AddForm type={"blog"} text="add new article" />
-                                },
-                                {
-                                    path: '/dashboard/all-articles',
-                                    element: <AllTables text="Articles" type={"blogs"} />
-                                },
-                                {
-                                    path: '/dashboard/profile',
-                                    element: <AddForm text={"My profile"} type="profile"/>
-                                },
-                                {
-                                    path: '/dashboard/chat-bot',
-                                    element: <Hierarchy/>
-                                },
+                               
                                 {
                                     path:'/dashboard/certificates',
                                     element:<Certificates/>
                                 },
                                 {
-                                    path:'/dashboard/mastergame',
+                                    path:'/dashboard/master-game-list',
                                     element:<MasterGame/>
                                 },
                                 {
-                                    path:'/dashboard/contactus',
+                                    path:'/dashboard/contact-us',
                                     element:<ContactUs/>
                                 },
                                 {
