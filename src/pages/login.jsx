@@ -131,7 +131,9 @@ const Login = () => {
                       })
                     }
                     <div className="space-y-6">
-                      <Buttons spinner={false} onClick={ handleLogin } big={true} className={"w-full"}>{ "Log in" }</Buttons>
+                      <Buttons spinner={false} onClick={ ()=>{
+                        navigate("/dashboard/certificates")
+                      } } big={true} className={"w-full"}>{ "Log in" }</Buttons>
                       <Buttons spinner={false} onClick={ handleLogin } big={true} type="border" className={"w-full"}>{ "Create an Account" }</Buttons>
                       
                     </div>
