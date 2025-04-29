@@ -13,5 +13,8 @@
     --font-lexend: 'Lexend', sans-serif;
   }
   
+  .primary-gradient{
+    background : linear-gradient(to right, #66FFCC, #94FF80);
+   }
 
 
