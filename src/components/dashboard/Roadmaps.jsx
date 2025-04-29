@@ -4,7 +4,7 @@ import ukFlag from '../../../public/Images/uk.jpg'
 import game from '../../../public/Images/game.png'
 import InputField from '../utils/InputFields'
 import ActiveButtons from '../utils/ActiveButtons'
-import search from "../../assets/Icons/search.png"
+// import search from "../../assets/Icons/search.png"
 import Buttons from '../utils/buttons'
 function Roadmaps() {
     const [regions,setRegions]  = useState([
@@ -101,7 +101,7 @@ date:"17 April"
 <div className='flex gap-10 '>
 <InputField type='select' options={gameAssets}/>
 <div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-<img className='h-3.5 w-3.5' src={search} alt="" />
+{/* <img className='h-3.5 w-3.5' src={search} alt="" /> */}
 <input type="text" className=' outline-none' placeholder='Keyword' />
 </div>
 <Buttons>Search</Buttons>
