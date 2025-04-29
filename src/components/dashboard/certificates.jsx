@@ -5,7 +5,7 @@ import cross from '../../assets/Icons/cross.png'
 import filterArrow from "../../assets/Icons/filterArrow.png"
 import download from "../../assets/Icons/download.png"
 import gameIcon from "../../assets/Icons/gameIcon.png"
-import search from "../../assets/Icons/Search.png"
+// import search from "../../assets/Icons/Search.png"
 import Buttons from '../utils/buttons'
 
 function Certificates() {
@@ -108,7 +108,7 @@ const[gamesList, setGameLists]=useState(
                 <div className='flex gap-10 mb-11'>
                     <InputField type='select' options={certificateSelect} />
                     <div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-                        <img className='h-3.5 w-3.5' src={search} alt="" />
+                        {/* <img className='h-3.5 w-3.5' src={search} alt="" /> */}
                         <input type="text" className=' outline-none' placeholder='Keyword' />
                     </div>
                     <Buttons>Search</Buttons>
