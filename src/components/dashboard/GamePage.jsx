@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import Buttons from '../utils/buttons'
- import search from "../../../public/logos/search.png"
 import InputField from '../utils/InputFields'
 import { validateEmail } from '../../functions/emailValidator'
 import filterArrow from '../../../public/logos/filterArrow.png'

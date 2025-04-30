@@ -1,7 +1,5 @@
 import React, { useRef, useState } from 'react'
-
 import Buttons from '../utils/buttons'
-import InputField from '../utils/InputFields'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import game from '../../../public/Images/game.png'
 import 'swiper/css';
