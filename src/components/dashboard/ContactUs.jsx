@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import InputField from '../utils/InputFields'
 import Buttons from '../utils/buttons'
-import email from "../../../public/logos/email.png"
 import DashboardHeader from '../header-footer/dashBoardHeader'
 
 function ContactUs() {
@@ -76,7 +75,7 @@ function ContactUs() {
     <p className='text-2xl text-black-v3 mb-10'>Please feel free to contact us by any means below.We will answer you as soon as possible!</p>
 <div className='flex border-2 border-primary-dark rounded-xl gap-2.5 items-center p-4 max-w-80'>
     <p className='text-primary-dark font-semibold'>support@aristocratinteractive.com</p>
-    <img src={email} alt="" />
+    <img src={'/logos/email.png'} alt="" />
 </div>
 </div>
 <div>

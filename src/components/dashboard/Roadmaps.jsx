@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
 import GameCard from '../utils/GameCard'
-import ukFlag from '../../../public/Images/uk.jpg'
-import game from '../../../public/Images/game.png'
 import InputField from '../utils/InputFields'
 import ActiveButtons from '../utils/ActiveButtons'
 import DashboardHeader from '../header-footer/dashBoardHeader'
@@ -67,26 +65,26 @@ function Roadmaps() {
  
     const [games,setGames] = useState([
         {
-image: game,
+image: "/Images/game.png",
 title:"Wolf Riches Hold N Spin",
 by:"Studio Name",
 date:"05 January"
         },
         {
-            image: game,
+            image:"/Images/game.png",
             title:"Chicken Burst",
             by:"Studio Name",
             date:"13 February"
                     },
         {
-image: game,
+image: "/Images/game.png",
 title:"Fortune Tree Of Wealth",
 by:"Studio Name",
 date:"04 March"
         },
     
         {
-image: game,
+image: "/Images/game.png",
 title:"Cards Fortune",
 by:"Studio Name",
 date:"17 April"
@@ -113,7 +111,7 @@ date:"17 April"
 
    <div className='flex justify-between items-center mb-5'>
 <div className='flex gap-3.5 items-center'>
-<img src={ukFlag} className='h-12 w-12 rounded-full' alt="" />
+<img src={"/Images/uk.jpg"} className='h-12 w-12 rounded-full' alt="" />
 <p className='text-3xl font-medium'>United Kingdom</p>
 </div>
 <div>

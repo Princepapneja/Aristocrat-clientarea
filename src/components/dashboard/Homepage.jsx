@@ -1,12 +1,10 @@
 import React, { useRef, useState } from 'react'
 import Buttons from '../utils/buttons'
 import { Swiper, SwiperSlide } from 'swiper/react';
-import game from '../../../public/Images/game.png'
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import mainSliderImage from '../../../public/Images/sliderBanner.png'
 import  {  Pagination, Autoplay } from 'swiper/modules';
 import GameCard from '../utils/GameCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
@@ -29,62 +27,62 @@ function Homepage() {
 
             const [heroSlider,setHeroSlider] = useState([
                 {
-                    img: mainSliderImage
+                    img: '/Images/sliderBanner.png'
                 },
                 {
-                    img: mainSliderImage
+                    img: '/Images/sliderBanner.png'
                 },
                 {
-                    img: mainSliderImage
+                    img: '/Images/sliderBanner.png'
                 },
             ])
 
                 const [games,setGames] = useState([
                     {
-            image: game,
+            image:'/Images/game.png',
             title:"Wolf Riches Hold N Spin",
             by:"Studio Name",
             date:"05 January"
                     },
                     {
-                        image: game,
+                        image:'/Images/game.png',
                         title:"Chicken Burst",
                         by:"Studio Name",
                         date:"13 February"
                                 },
                     {
-            image: game,
+            image:'/Images/game.png',
             title:"Fortune Tree Of Wealth",
             by:"Studio Name",
             date:"04 March"
                     },
                 
                     {
-            image: game,
+            image:'/Images/game.png',
             title:"Cards Fortune",
             by:"Studio Name",
             date:"17 April"
                     },
                     {
-                        image: game,
+                        image:'/Images/game.png',
                         title:"Fortune Tree Of Wealth",
                         by:"Studio Name",
                         date:"04 March"
                                 },
                                 {
-                                    image: game,
+                                    image:'/Images/game.png',
                                     title:"Fortune Tree Of Wealth",
                                     by:"Studio Name",
                                     date:"04 March"
                                             },
                                             {
-                                                image: game,
+                                                image:'/Images/game.png',
                                                 title:"Fortune Tree Of Wealth",
                                                 by:"Studio Name",
                                                 date:"04 March"
                                                         },
                                                         {
-                                                            image: game,
+                                                            image:'/Images/game.png',
                                                             title:"Fortune Tree Of Wealth",
                                                             by:"Studio Name",
                                                             date:"04 March"

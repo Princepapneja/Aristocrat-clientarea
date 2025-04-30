@@ -1,6 +1,4 @@
 import React, { useState } from 'react'
-import trophy from '../../../public/Images/trophy.png'
-import screen from '../../../public/Images/screen.png'
 import DashboardHeader from '../header-footer/dashBoardHeader'
 function EngagementTools() {
     const[gameAssets, setGameAssets]=useState(
@@ -38,7 +36,7 @@ function EngagementTools() {
     </div>
     <div className='bg-white-v2 rounded-3xl flex gap-28 p-20  '>
 <div className='space-y-11'>
-<img src={trophy} className='h-28 w-60' alt="" />
+<img src={'/Images/trophy.png'} className='h-28 w-60' alt="" />
 <div className='space-y-5'>
     <p className='max-w-[408px] text-lg text-black-v3'>
     Summon your players for enticing competitions!
@@ -50,7 +48,7 @@ function EngagementTools() {
 </div>
 </div>
 <div>
-<img src={screen} className='h-[445px] w-[683px]' alt="" />
+<img src={'/Images/screen.png'} className='h-[445px] w-[683px]' alt="" />
 </div>
     </div>
 
