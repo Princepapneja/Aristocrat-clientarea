@@ -12,6 +12,7 @@ import ContactUs from './src/components/dashboard/ContactUs';
 import Roadmaps from './src/components/dashboard/Roadmaps';
 import GamePage from './src/components/dashboard/GamePage';
 import EngagementTools from './src/components/dashboard/EngagementTools';
+import Homepage from './src/components/dashboard/Homepage';
 
 
 const Route = () => {
@@ -60,6 +61,10 @@ const Route = () => {
                                 {
                                     path:'/dashboard/engagement-tools',
                                     element:<EngagementTools/>
+                                },
+                                {
+                                    path:'/dashboard/home',
+                                    element:<Homepage/>
                                 }
                                 // {
                                 //     path: '/dashboard/manage-categories',

@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
 import InputField from '../utils/InputFields'
 import Buttons from '../utils/buttons'
-import search from "../../../public/logos/search.png"
-import email from "../../../public/logos/email.png"
-
+import DashboardHeader from '../header-footer/dashBoardHeader'
 
 function ContactUs() {
     const [inputDetails,setInputDetails] = useState({})
@@ -64,15 +62,10 @@ function ContactUs() {
   return (
     <>
 
-     <div className='px-24'>
+     <div className='container'>
 
-<div className='flex gap-10 mb-36 '>
-<InputField type='select' options={gameAssets}/>
-<div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-<img className='h-3.5 w-3.5' src={search} alt="" />
-<input type="text" className=' outline-none' placeholder='Keyword' />
-</div>
-<Buttons>Search</Buttons>
+<div className=' mb-36 '>
+<DashboardHeader options={gameAssets}/>
 </div>
 
 <div className='grid grid-cols-2 gap-20'>
@@ -82,7 +75,7 @@ function ContactUs() {
     <p className='text-2xl text-black-v3 mb-10'>Please feel free to contact us by any means below.We will answer you as soon as possible!</p>
 <div className='flex border-2 border-primary-dark rounded-xl gap-2.5 items-center p-4 max-w-80'>
     <p className='text-primary-dark font-semibold'>support@aristocratinteractive.com</p>
-    <img src={email} alt="" />
+    <img src={'/logos/email.png'} alt="" />
 </div>
 </div>
 <div>
