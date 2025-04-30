@@ -4,8 +4,8 @@ import ukFlag from '../../../public/Images/uk.jpg'
 import game from '../../../public/Images/game.png'
 import InputField from '../utils/InputFields'
 import ActiveButtons from '../utils/ActiveButtons'
-import search from "../../../public/logos/search.png"
 import Buttons from '../utils/buttons'
+import DashboardHeader from '../header-footer/dashBoardHeader'
 function Roadmaps() {
     const [regions,setRegions]  = useState([
         {
@@ -96,16 +96,10 @@ date:"17 April"
   return (
    
    <>
-   <div className='px-24'>
+   <div className='container'>
+   <div>
 <div className='space-y-11'>
-<div className='flex gap-10 '>
-<InputField type='select' options={gameAssets}/>
-<div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-<img className='h-3.5 w-3.5' src={search} alt="" />
-<input type="text" className=' outline-none' placeholder='Keyword' />
-</div>
-<Buttons>Search</Buttons>
-</div>
+<DashboardHeader options={gameAssets}/>
 
 <h1 className='text-5xl font-medium'>Roadmaps</h1>
 
@@ -137,6 +131,7 @@ date:"17 April"
         <GameCard gameImage={item.image} title={item.title} by={item.by} date={item.date} />
     )
 })}
+</div>
 </div>
 </div>
    </>

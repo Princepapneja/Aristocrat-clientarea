@@ -6,6 +6,7 @@ import { validateEmail } from '../../functions/emailValidator'
 import filterArrow from '../../../public/logos/filterArrow.png'
 import game from '../../../public/Images/game.png'
 import GameCard from '../utils/GameCard'
+import DashboardHeader from '../header-footer/dashBoardHeader'
 
 function GamePage() {
      const [filters,setFilters]= useState(null)
@@ -134,14 +135,8 @@ date:"17 April"
 
   return (
     <>
-    <div className='px-24 pt-16 pb-24 space-y-16'>
-    <div className='flex gap-10 '>
-<div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-<img className='h-3.5 w-3.5' src={search} alt="" />
-<input type="text" className=' outline-none' placeholder='Keyword' />
-</div>
-<Buttons>Search</Buttons>
-</div>
+    <div className='container pt-16 pb-24 space-y-16'>
+<DashboardHeader/>
 
 <div className='space-y-5'>
 <div className='grid grid-cols-4 gap-10'>

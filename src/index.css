@@ -17,4 +17,14 @@
     background : linear-gradient(to right, #66FFCC, #94FF80);
    }
 
+   .container{
+   max-width: 1240px;
+   margin-left: auto;
+   margin-right: auto;
+   padding-left: 20px;
+   padding-right: 20px;
+   }
+
+
+
 

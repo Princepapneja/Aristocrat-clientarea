@@ -1,10 +1,7 @@
 import React, { useState } from 'react'
-import InputField from '../utils/InputFields'
-import Buttons from '../utils/buttons'
-import search from "../../../public/logos/search.png"
 import trophy from '../../../public/Images/trophy.png'
 import screen from '../../../public/Images/screen.png'
-
+import DashboardHeader from '../header-footer/dashBoardHeader'
 function EngagementTools() {
     const[gameAssets, setGameAssets]=useState(
         [
@@ -17,14 +14,9 @@ function EngagementTools() {
     )   
   return (
     <>
-    <div className='px-24 pt-16 pb-6'>
-    <div className='flex gap-10 mb-11'>
-<InputField type='select' options={gameAssets}/>
-<div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-<img className='h-3.5 w-3.5' src={search} alt="" />
-<input type="text" className=' outline-none' placeholder='Keyword' />
-</div>
-<Buttons>Search</Buttons>
+    <div className='container pt-16 pb-6'>
+    <div className=' mb-11'>
+    <DashboardHeader options={gameAssets}/>
 </div>
 <div className='space-y-12'>
 <h1 className='text-5xl font-medium'>Engagement Tools</h1>

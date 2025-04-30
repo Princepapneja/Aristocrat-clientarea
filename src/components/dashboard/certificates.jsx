@@ -5,8 +5,8 @@ import cross from '../../../public/logos/cross.png'
 import filterArrow from "../../../public/logos/filterArrow.png"
 import download from "../../../public/logos/download.png"
 import gameIcon from "../../../public/logos/gameIcon.png"
-import search from "../../../public/logos/search.png"
 import Buttons from '../utils/buttons'
+import DashboardHeader from '../header-footer/dashBoardHeader'
 
 function Certificates() {
     const [filters,setFilters]= useState(null)
@@ -104,16 +104,13 @@ const[gamesList, setGameLists]=useState(
 
 
 
-            <div className='px-24'>
+            <div className='container'>
 
-                <div className='flex gap-10 mb-11'>
-                    <InputField type='select' options={certificateSelect} />
-                    <div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-                        <img className='h-3.5 w-3.5' src={search} alt="" />
-                        <input type="text" className=' outline-none' placeholder='Keyword' />
-                    </div>
-                    <Buttons>Search</Buttons>
+                <div className='mb-11'>
+<DashboardHeader options={certificateSelect}/>
                 </div>
+
+
 
                 {/*  section */}
                 <div className='flex justify-between mb-14'>
