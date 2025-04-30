@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import InputField from '../utils/InputFields'
 import Buttons from '../utils/buttons'
-// import search from "../../assets/Icons/search.png"
+import search from "../../../public/logos/search.png"
 import email from "../../../public/logos/email.png"
 
 
@@ -69,7 +69,7 @@ function ContactUs() {
 <div className='flex gap-10 mb-36 '>
 <InputField type='select' options={gameAssets}/>
 <div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-{/* <img className='h-3.5 w-3.5' src={search} alt="" /> */}
+<img className='h-3.5 w-3.5' src={search} alt="" />
 <input type="text" className=' outline-none' placeholder='Keyword' />
 </div>
 <Buttons>Search</Buttons>

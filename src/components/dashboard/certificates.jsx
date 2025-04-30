@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import rightArrow from "../../assets/Icons/rightArrow.png"
+import rightArrow from "../../../public/logos/rightArrow.png"
 import InputField from '../utils/InputFields'
-import cross from '../../assets/Icons/cross.png'
-import filterArrow from "../../assets/Icons/filterArrow.png"
-import download from "../../assets/Icons/download.png"
-import gameIcon from "../../assets/Icons/gameIcon.png"
-// import search from "../../assets/Icons/Search.png"
+import cross from '../../../public/logos/cross.png'
+import filterArrow from "../../../public/logos/filterArrow.png"
+import download from "../../../public/logos/download.png"
+import gameIcon from "../../../public/logos/gameIcon.png"
+import search from "../../../public/logos/search.png"
 import Buttons from '../utils/buttons'
 
 function Certificates() {
@@ -109,7 +109,7 @@ const[gamesList, setGameLists]=useState(
                 <div className='flex gap-10 mb-11'>
                     <InputField type='select' options={certificateSelect} />
                     <div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-                        {/* <img className='h-3.5 w-3.5' src={search} alt="" /> */}
+                        <img className='h-3.5 w-3.5' src={search} alt="" />
                         <input type="text" className=' outline-none' placeholder='Keyword' />
                     </div>
                     <Buttons>Search</Buttons>
