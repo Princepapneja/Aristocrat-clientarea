@@ -50,7 +50,6 @@ const DashboardLayout = () => {
           <ChangePass initialValue={user?.systemGeneratedPass} />
         }
         <div className={`w-screen md:w-[calc(100vw-230px)] `} >
-          <DashBoardHeader />
           <div className={`main p-4 space-y-8 overflow-y-auto ${sideBarOpen ? "blur":""} duration-500 `} style={{ height: `calc(100vh - ${height}px)` }}>
             <Outlet context={context} />
           </div>

@@ -13,6 +13,7 @@ import Roadmaps from './src/components/dashboard/Roadmaps';
 import GamePage from './src/components/dashboard/GamePage';
 import EngagementTools from './src/components/dashboard/EngagementTools';
 import DetailGame from './src/components/dashboard/DetailGame';
+import Homepage from './src/components/dashboard/Homepage';
 
 
 const Route = () => {
@@ -63,8 +64,8 @@ const Route = () => {
                                     element:<EngagementTools/>
                                 },
                                 {
-                                    path:'/dashboard/detail-game-page',
-                                    element:<DetailGame/>
+                                    path:'/dashboard/home',
+                                    element:<Homepage/>
                                 }
                                 // {
                                 //     path: '/dashboard/manage-categories',

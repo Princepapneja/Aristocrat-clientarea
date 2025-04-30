@@ -1,12 +1,7 @@
 import React, { useState } from 'react'
-import rightArrow from "../../../public/logos/rightArrow.png"
 import InputField from '../utils/InputFields'
-import cross from '../../../public/logos/cross.png'
-import filterArrow from "../../../public/logos/filterArrow.png"
-import download from "../../../public/logos/download.png"
-import gameIcon from "../../../public/logos/gameIcon.png"
-import search from "../../../public/logos/search.png"
 import Buttons from '../utils/buttons'
+import DashboardHeader from '../header-footer/dashBoardHeader'
 
 function Certificates() {
     const [filters,setFilters]= useState(null)
@@ -81,17 +76,17 @@ const[chosenFilters, setChosenFilter]= useState(
 const[gamesList, setGameLists]=useState(
     [
         {
-            icon: gameIcon,
+            icon:'/logos/gameIcon.png',
             title: "Amun Ra King Of The Gods...",
             by: "Studio Name"
         },
         {
-            icon: gameIcon,
+            icon:'/logos/gameIcon.png',
             title: "Amun Ra King Of The Gods...",
             by: "Studio Name"
         },
         {
-            icon: gameIcon,
+            icon:'/logos/gameIcon.png',
             title: "Amun Ra King Of The Gods...",
             by: "Studio Name"
         }
@@ -104,23 +99,20 @@ const[gamesList, setGameLists]=useState(
 
 
 
-            <div className='px-24'>
+            <div className='container'>
 
-                <div className='flex gap-10 mb-11'>
-                    <InputField type='select' options={certificateSelect} />
-                    <div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-                        <img className='h-3.5 w-3.5' src={search} alt="" />
-                        <input type="text" className=' outline-none' placeholder='Keyword' />
-                    </div>
-                    <Buttons>Search</Buttons>
+                <div className='mb-11'>
+<DashboardHeader options={certificateSelect}/>
                 </div>
+
+
 
                 {/*  section */}
                 <div className='flex justify-between mb-14'>
                     <h1 className='text-5xl font-medium'>Certificates</h1>
                     <div className='flex gap-2.5 py-2.5 px-4  border-2 border-black-v4 rounded-xl'>
                         <p className='text-center font-medium'>Go to Game Assets</p>
-                        <img className='h-5 w-5' src={rightArrow} alt="" />
+                        <img className='h-5 w-5' src={'/logos/rightArrow.png'} alt="" />
                     </div>
                 </div>
                 {/*  section */}
@@ -144,7 +136,7 @@ const[gamesList, setGameLists]=useState(
                                     <p className='text-sm text-black-v3'>{filter}</p>
                                     <button onClick={()=>{clearFilter(filter)}}>
 
-                                    <img className='w-2 h-2' src={cross} alt="" />
+                                    <img className='w-2 h-2' src={'/logos/cross.png'} alt="" />
                                     </button>
 
                                 </div>
@@ -154,7 +146,7 @@ const[gamesList, setGameLists]=useState(
                     <div className='flex gap-10'>
                         <div className='font-semibold text-primary-dark flex gap-3.5 items-center bg-white-v2 rounded-xl px-5 py-2.5'>
                             <p>View All Chosen Filters</p>
-                            <img className='h-4 w-4' src={filterArrow} alt="" />
+                            <img className='h-4 w-4' src={'/logos/filterArrow.png'} alt="" />
                         </div>
                         <button onClick={()=>{setFilters(null)}} className='font-semibold text-black-v4'>
                             Clear All
@@ -171,7 +163,7 @@ const[gamesList, setGameLists]=useState(
                         <Buttons>
                             <div className='flex gap-2.5'>
                                 <p className='font-semibold'>Download All</p>
-                                <img className='h-4 w-4' src={download} alt="" />
+                                <img className='h-4 w-4' src={'/logos/download.png'} alt="" />
                             </div>
                         </Buttons>
                     </div>
@@ -195,7 +187,7 @@ const[gamesList, setGameLists]=useState(
                                     <Buttons>
                                         <div className='flex gap-2.5'>
                                             <p className='font-semibold'>Download</p>
-                                            <img className='h-4 w-4' src={download} alt="" />
+                                            <img className='h-4 w-4' src={'/logos/download.png'} alt="" />
                                         </div>
                                     </Buttons>
 

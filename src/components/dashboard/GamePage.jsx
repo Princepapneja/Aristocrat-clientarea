@@ -1,11 +1,8 @@
 import React, { useState } from 'react'
-import Buttons from '../utils/buttons'
- import search from "../../../public/logos/search.png"
 import InputField from '../utils/InputFields'
 import { validateEmail } from '../../functions/emailValidator'
-import filterArrow from '../../../public/logos/filterArrow.png'
-import game from '../../../public/Images/game.png'
 import GameCard from '../utils/GameCard'
+import DashboardHeader from '../header-footer/dashBoardHeader'
 
 function GamePage() {
      const [filters,setFilters]= useState(null)
@@ -81,50 +78,50 @@ const[jackpotOption, setJackpotOption]= useState(
 )
     const [games,setGames] = useState([
         {
-image: game,
+image:'/Images/game.png',
 title:"Wolf Riches Hold N Spin",
 by:"Studio Name",
 date:"05 January"
         },
         {
-            image: game,
+            image:'/Images/game.png',
             title:"Chicken Burst",
             by:"Studio Name",
             date:"13 February"
                     },
         {
-image: game,
+image:'/Images/game.png',
 title:"Fortune Tree Of Wealth",
 by:"Studio Name",
 date:"04 March"
         },
     
         {
-image: game,
+image:'/Images/game.png',
 title:"Cards Fortune",
 by:"Studio Name",
 date:"17 April"
         },
         {
-            image: game,
+            image:'/Images/game.png',
             title:"Fortune Tree Of Wealth",
             by:"Studio Name",
             date:"04 March"
                     },
                     {
-                        image: game,
+                        image:'/Images/game.png',
                         title:"Fortune Tree Of Wealth",
                         by:"Studio Name",
                         date:"04 March"
                                 },
                                 {
-                                    image: game,
+                                    image:'/Images/game.png',
                                     title:"Fortune Tree Of Wealth",
                                     by:"Studio Name",
                                     date:"04 March"
                                             },
                                             {
-                                                image: game,
+                                                image:'/Images/game.png',
                                                 title:"Fortune Tree Of Wealth",
                                                 by:"Studio Name",
                                                 date:"04 March"
@@ -134,14 +131,8 @@ date:"17 April"
 
   return (
     <>
-    <div className='px-24 pt-16 pb-24 space-y-16'>
-    <div className='flex gap-10 '>
-<div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-<img className='h-3.5 w-3.5' src={search} alt="" />
-<input type="text" className=' outline-none' placeholder='Keyword' />
-</div>
-<Buttons>Search</Buttons>
-</div>
+    <div className='container pt-16 pb-24 space-y-16'>
+<DashboardHeader/>
 
 <div className='space-y-5'>
 <div className='grid grid-cols-4 gap-10'>
@@ -178,7 +169,7 @@ date:"17 April"
                     <div className='flex gap-10'>
                         <div className='font-semibold text-primary-dark flex gap-3.5 items-center bg-white-v2 rounded-xl px-5 py-2.5'>
                             <p>View All Chosen Filters</p>
-                            <img className='h-4 w-4' src={filterArrow} alt="" />
+                            <img className='h-4 w-4' src={"/logos/filterArrow.png"} alt="" />
                         </div>
                         <button onClick={()=>{setFilters(null)}} className='font-semibold text-black-v4'>
                             Clear All
