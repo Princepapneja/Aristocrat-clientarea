@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import rightArrow from "../../assets/Icons/rightArrow.png"
+import rightArrow from "../../../public/logos/rightArrow.png"
 import InputField from '../utils/InputFields'
-import cross from '../../assets/Icons/cross.png'
-import filterArrow from "../../assets/Icons/filterArrow.png"
-import download from "../../assets/Icons/download.png"
-import gameIcon from "../../assets/Icons/gameIcon.png"
-import search from "../../assets/Icons/Search.png"
+import cross from '../../../public/logos/cross.png'
+import filterArrow from "../../../public/logos/filterArrow.png"
+import download from "../../../public/logos/download.png"
+import gameIcon from "../../../public/logos/gameIcon.png"
+import search from "../../../public/logos/search.png"
 import Buttons from '../utils/buttons'
 
 function Certificates() {

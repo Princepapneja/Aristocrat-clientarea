@@ -4,7 +4,7 @@ import ukFlag from '../../../public/Images/uk.jpg'
 import game from '../../../public/Images/game.png'
 import InputField from '../utils/InputFields'
 import ActiveButtons from '../utils/ActiveButtons'
-// import search from "../../assets/Icons/search.png"
+import search from "../../../public/logos/search.png"
 import Buttons from '../utils/buttons'
 function Roadmaps() {
     const [regions,setRegions]  = useState([

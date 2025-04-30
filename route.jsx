@@ -10,6 +10,8 @@ import Certificates from './src/components/dashboard/certificates';
 import MasterGame from './src/components/dashboard/MasterGame';
 import ContactUs from './src/components/dashboard/ContactUs';
 import Roadmaps from './src/components/dashboard/Roadmaps';
+import GamePage from './src/components/dashboard/GamePage';
+import EngagementTools from './src/components/dashboard/EngagementTools';
 
 
 const Route = () => {
@@ -52,6 +54,14 @@ const Route = () => {
                                 {
                                     path:'/dashboard/roadmaps',
                                     element:<Roadmaps/>
+                                },
+                                {
+                                    path:'/dashboard/game-page',
+                                    element:<GamePage/>
+                                },
+                                {
+                                    path:'/dashboard/engagement-tools',
+                                    element:<EngagementTools/>
                                 }
                                 // {
                                 //     path: '/dashboard/manage-categories',

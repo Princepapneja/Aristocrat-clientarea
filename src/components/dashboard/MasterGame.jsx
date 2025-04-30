@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import InputField from '../utils/InputFields'
 import Buttons from '../utils/buttons'
-import search from "../../assets/Icons/search.png"
-import download from "../../assets/Icons/download.png"
+import search from "../../../public/logos/search.png"
+import download from "../../../public/logos/download.png"
 
 function MasterGame() {
 
