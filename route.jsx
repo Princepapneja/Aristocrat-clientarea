@@ -14,6 +14,7 @@ import GamePage from './src/components/dashboard/GamePage';
 import EngagementTools from './src/components/dashboard/EngagementTools';
 import DetailGame from './src/components/dashboard/DetailGame';
 import Homepage from './src/components/dashboard/Homepage';
+import Footer from './src/components/header-footer/Footer';
 
 
 const Route = () => {
@@ -66,7 +67,12 @@ const Route = () => {
                                 {
                                     path:'/dashboard/home',
                                     element:<Homepage/>
-                                }
+                                },
+                                {
+                                  path:"/dashboard/detail-game",
+                                  element:<DetailGame/>
+                                },
+                               
                                 // {
                                 //     path: '/dashboard/manage-categories',
                                 //     element: <AllTables  type="categories"/>

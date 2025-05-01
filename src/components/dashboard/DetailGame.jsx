@@ -1,8 +1,16 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Buttons from '../utils/buttons'
-import InputField from '../utils/InputFields'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import DashBoardHeader from '../header-footer/dashBoardHeader';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import  {  Pagination, Autoplay } from 'swiper/modules';
+import Footer from '../header-footer/Footer';
 
 function DetailGame() {
+     const [activeIndex, setActiveIndex] = useState(0)
+      const swiperRef = useRef(null)
     const[dateOption, setDateOption]= useState(
         [
             {
@@ -11,17 +19,23 @@ function DetailGame() {
                 name: "Date"
             }
         ]
-    )    
+    ) 
+    
+    const [sliderData,setSliderData] = useState([
+        {
+            img:"/Images/gameimg.png"
+        },
+        {
+            img:"/Images/gameimg.png"
+        },
+        {
+            img:"/Images/gameimg.png"
+        },
+    ]) 
   return (
     <>
-    <div className='px-24 pt-16'>
-    <div className='flex gap-10 '>
-<div className='flex gap-2 grow items-center rounded-xl border-2 border-black-v4 py-2 px-4'>
-<img className='h-3.5 w-3.5' src={'/logos/Search.png'} alt="" />
-<input type="text" className=' outline-none' placeholder='Keyword' />
-</div>
-<Buttons>Search</Buttons>
-</div>
+    <div className='container pt-16'>
+<DashBoardHeader/>
 
 <div className='mt-10'>
 <div className='flex gap-9'>
@@ -31,13 +45,13 @@ function DetailGame() {
 <p className='mt-2 mb-4'>By: Studio Name</p>
 
 <div className='space-y-6'>
-<p className='text-lg text-black-v3 max-w-[593px]'>Take a break and enjoy the wholesome vibe of the farm! With plenty of fun activities, opportunities to win great rewards, and warm hospitality, Turkey Burst has everything for a good time. Pack your bags, the Turkeys can’t wait to see you!
+<p className='text-lg text-black-v3 max-w-[650px]'>Take a break and enjoy the wholesome vibe of the farm! With plenty of fun activities, opportunities to win great rewards, and warm hospitality, Turkey Burst has everything for a good time. Pack your bags, the Turkeys can’t wait to see you!
 </p>
 
-<p className='text-lg text-black-v3 max-w-[593px]'>Turkey Burst is a 5x3 slot with 40 paylines and generous bonus features. Get ready to start gobbling up rewards when Turkey Coins land and are collected by the Turkeys above the reels, plus the Coins can randomly trigger the LOCK N SPIN Bonus feature that awards 3 Respins. Then, depending on the Coins collected, you could be blessed with a prize up to 500x or maybe even the Grand prize. Keep the Respins action flowing, because every time a new coin lands, it resets the Respins.
+<p className='text-lg text-black-v3 max-w-[650px]'>Turkey Burst is a 5x3 slot with 40 paylines and generous bonus features. Get ready to start gobbling up rewards when Turkey Coins land and are collected by the Turkeys above the reels, plus the Coins can randomly trigger the LOCK N SPIN Bonus feature that awards 3 Respins. Then, depending on the Coins collected, you could be blessed with a prize up to 500x or maybe even the Grand prize. Keep the Respins action flowing, because every time a new coin lands, it resets the Respins.
 </p>
 
-<p className='text-lg text-black-v3 max-w-[593px]'>
+<p className='text-lg text-black-v3 max-w-[650px]'>
 Want to jump right into the Bonus action? Use the Buy Bonus option to activate the feature whenever you want.
 </p>
 
@@ -45,15 +59,47 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 </div>   
 
 <div>
-<div>
-    <img src={"/Images/templateDetailpage.png"} alt="" className='relative w-[626px] h-[440px]'/>
-{/* <img src={"/Images/gameimg.png"} alt="" className='h-[384px] w-[565px] absolute top-[262px] right-[335px]'/>
-<img src={"/Images/frog.png"} alt="" className='absolute top-[532px] right-[252px] w-[170px] h-[164px] '/> */}
+<div className='relative'>
+    <img src={"/Images/templateDetailpage.png"} alt="" className=' w-[626px] h-[440px]'/>
+    <Swiper
+    onSwiper={(swiper) => (swiperRef.current = swiper)}
+    onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+    modules={[Pagination,Autoplay]}
+    loop={true}
+    autoplay
+    spaceBetween={10}
+    slidesPerView={1}
+    className='h-[384px] w-[540px] absolute top-[-413px] left-0'
+  >
+    {sliderData.map((slide)=>{
+        return(
+<SwiperSlide>
+      <img src={slide.img} className='h-full w-full object-cover' />
+    </SwiperSlide>
+        )
+    })}
+    
+  </Swiper>
+  <div className="flex justify-center space-x-2 mt-4 absolute top-[377px] left-[250px] z-10">
+        {sliderData.map((_, index) => {
+            return(
+        
+          <button
+            key={index}
+            onClick={() => swiperRef.current?.slideToLoop(index)}
+            className={`w-2.5 h-2.5 rounded-full ${
+              activeIndex === index ? 'w-20 h-2.5 rounded-xl bg-primary-dark' : 'bg-black-v4'
+            }`}
+          ></button>
+        )})}
+      </div>
+<img src={"/Images/frog.png"} alt="" className='absolute w-[170px] h-[164px] top-[297px] right-[-43px] z-50 '/>
+<div className=''>
+<Buttons>Play Game</Buttons>
+</div>
 </div>
 
-<div className='mt-14'>
-<Buttons>Play Game</Buttons>
-</div></div>
+</div>
 </div>
 </div>
 
@@ -61,7 +107,7 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 
 <div className='mt-14'>
 <div className='bg-black rounded-3xl'>
-<div className='flex pt-11 pb-9 ml-12 gap-32 max-w-[1354px]'>
+<div className='flex pt-11 pb-9 ml-12 gap-20 max-w-[1354px]'>
     <div>
 <p className='font-semibold text-3xl text-white mb-1.5'>Video Slot Game</p>
 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Game Type</p></div>
@@ -86,8 +132,6 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 </div>
 
 </div>
-
-
 
 
 </div>
@@ -126,7 +170,7 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
     <p className='text-xl font-semibold'>Var_99     96.66%</p>
     <p className='text-xl font-semibold'>Var_99     96.66%</p>
     <p className='text-xl font-semibold'>Var_99     96.66%</p>
-    <p className='text-xl text-black-v3 mt-20'>RTP  USA</p>
+    <p className='text-xl text-black-v3 mt-20 mb-6'>RTP  USA</p>
     <p className='text-xl font-semibold'>Var_99     96.66%</p>
     <p className='text-xl font-semibold'>Var_99     96.66%</p>
     <p className='text-xl font-semibold'>Var_99     96.66%</p>
@@ -151,8 +195,6 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 
     </div>    
 </div>
-
-
 
 
 <div className='bg-white-v2 rounded-3xl mt-24'>
@@ -186,6 +228,7 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 
 
 </div>
+<Footer/>
     </>
   )
 }

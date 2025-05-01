@@ -2,13 +2,13 @@ import React, { useRef, useState } from 'react'
 import Buttons from '../utils/buttons'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/scrollbar';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import  {  Pagination, Autoplay } from 'swiper/modules';
 import GameCard from '../utils/GameCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import DashBoardHeader from '../header-footer/dashBoardHeader';
+import Footer from '../header-footer/Footer';
 
 function Homepage() {
     const [activeIndex, setActiveIndex] = useState(0)
