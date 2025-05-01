@@ -6,7 +6,6 @@ import DashBoardHeader from '../header-footer/dashBoardHeader';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import  {  Pagination, Autoplay } from 'swiper/modules';
-import Footer from '../header-footer/Footer';
 
 function DetailGame() {
      const [activeIndex, setActiveIndex] = useState(0)
@@ -217,7 +216,7 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 
 
 </div>
-<Footer/>
+
     </>
   )
 }

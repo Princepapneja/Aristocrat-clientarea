@@ -8,7 +8,7 @@ import  {  Pagination, Autoplay } from 'swiper/modules';
 import GameCard from '../utils/GameCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import DashBoardHeader from '../header-footer/dashBoardHeader';
-import Footer from '../header-footer/Footer';
+import { Link } from 'react-router-dom';
 
 function Homepage() {
     const [activeIndex, setActiveIndex] = useState(0)
@@ -91,9 +91,9 @@ function Homepage() {
   return (
    <>
    <div className='container mt-16 mb-32'>
-   <div className='flex justify-center font-medium text-4xl mb-16'>
-    <h1>Welcome to Arictocrat Interactive Client Area</h1>
-</div>
+
+    <h1 className='text-center font-medium text-4xl mb-16'>Welcome to Arictocrat Interactive Client Area</h1>
+
 <div className='mb-20'>
 <DashBoardHeader options={gameAssets} />
 </div>
@@ -167,7 +167,7 @@ function Homepage() {
 {games.map((slide)=>{
     return(
         <SwiperSlide>
-            <GameCard gameImage={slide.image} title={slide.title} by={slide.by} date={slide.date} />
+            <GameCard  game={slide} />
         </SwiperSlide>  
     )
 })}
@@ -175,7 +175,7 @@ function Homepage() {
     
 </div>
 <div className='flex justify-center pb-16 border-b-2 mb-14 border-b-black-v4'>
-<Buttons>Discover More</Buttons>
+<Link to={'/dashboard/games?studio=aristocrat'}> <Buttons>Discover More</Buttons> </Link>
 </div>
 <div>
     <div className='flex justify-between mb-14'>
@@ -211,14 +211,14 @@ function Homepage() {
 {games.map((slide)=>{
     return(
         <SwiperSlide>
-            <GameCard gameImage={slide.image} title={slide.title} by={slide.by} date={slide.date} />
+            <GameCard game={slide} />
         </SwiperSlide>  
     )
 })}
     </Swiper>
 </div>
 <div className='flex justify-center'>
-<Buttons>Discover More</Buttons>
+<Link to={'/dashboard/games?studio=ignite'}> <Buttons>Discover More</Buttons> </Link>
 </div>
 </div>
 

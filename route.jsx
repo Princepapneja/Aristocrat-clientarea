@@ -57,7 +57,7 @@ const Route = () => {
                                     element:<Roadmaps/>
                                 },
                                 {
-                                    path:'/dashboard/game-page',
+                                    path:'/dashboard/games',
                                     element:<GamePage/>
                                 },
                                 {

@@ -131,7 +131,7 @@ date:"17 April"
 
   return (
     <>
-    <div className='container pt-16 pb-24 space-y-16'>
+    <div className='container pt-12 pb-20 space-y-16'>
 <DashboardHeader/>
 
 <div className='space-y-5'>
@@ -180,7 +180,7 @@ date:"17 April"
 <div className='grid grid-cols-4 gap-x-10 gap-y-16'>
 {games.map((item)=>{
     return(
-        <GameCard gameImage={item.image} title={item.title} by={item.by} date={item.date} />
+        <GameCard game={item} />
     )
 })}
 </div>

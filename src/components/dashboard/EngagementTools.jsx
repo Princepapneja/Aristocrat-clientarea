@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import DashboardHeader from '../header-footer/dashBoardHeader'
+import ActiveButtons from '../utils/ActiveButtons'
 function EngagementTools() {
     const[gameAssets, setGameAssets]=useState(
         [
@@ -9,7 +10,22 @@ function EngagementTools() {
                 name:"Game Assets"
             }
         ]
-    )   
+    ) 
+    
+    const [activeButtons,setActiveButtons] = useState([
+        {
+            name:'Tournaments'
+        },
+        {
+            name:'Free Spins'
+        },
+        {
+            name:'Spin That Wheel™'
+        },
+        {
+            name:'Raffle Rocket'
+        },
+    ])
   return (
     <>
     <div className='container pt-16 pb-6'>
@@ -28,12 +44,7 @@ function EngagementTools() {
     </p>
 </div>
 <div className='space-y-2.5'>
-<div className='flex bg-white-v2 gap-3 p-3 rounded-2xl '>
-        <div className='bg-black rounded-xl py-5 text-white text-center w-full font-semibold'>Tournaments </div>
-        <div className='py-5 rounded-xl bg-white w-full text-center font-semibold text-black-v3'>Free Spins</div>
-        <div className='py-5 rounded-xl bg-white w-full text-center font-semibold text-black-v3'>Spin That Wheel™</div>
-        <div className='py-5 rounded-xl bg-white w-full text-center font-semibold text-black-v3'>Raffle Rocket</div>
-    </div>
+<ActiveButtons buttons={activeButtons} type='activePage' />
     <div className='bg-white-v2 rounded-3xl flex gap-28 p-20  '>
 <div className='space-y-11'>
 <img src={'/Images/trophy.png'} className='h-28 w-60' alt="" />
