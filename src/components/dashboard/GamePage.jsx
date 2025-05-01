@@ -131,7 +131,7 @@ date:"17 April"
 
   return (
     <>
-    <div className='container pt-16 pb-24 space-y-16'>
+    <div className='container pt-12 pb-20 space-y-16'>
 <DashboardHeader/>
 
 <div className='space-y-5'>
