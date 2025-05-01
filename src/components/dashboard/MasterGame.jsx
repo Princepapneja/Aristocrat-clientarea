@@ -51,12 +51,7 @@ return (
     })}</div>
 
 <div>
-    <Buttons>
-    <div className='flex gap-2.5'>
-   <p className='font-semibold'>Download</p> 
-<img className='h-4 w-4' src={'/logos/download.png'} alt="" />
-    </div>
-</Buttons></div>
+<Buttons type='download' name='Download'></Buttons></div>
    </div>
    </div>
 </div>

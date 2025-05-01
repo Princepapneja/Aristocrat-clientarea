@@ -160,12 +160,7 @@ const[gamesList, setGameLists]=useState(
 
                     {/*  button */}
                     <div className='flex justify-end '>
-                        <Buttons>
-                            <div className='flex gap-2.5'>
-                                <p className='font-semibold'>Download All</p>
-                                <img className='h-4 w-4' src={'/logos/download.png'} alt="" />
-                            </div>
-                        </Buttons>
+                    <Buttons type='download' name='Download All'></Buttons>
                     </div>
                     {/*  button */}
 
@@ -184,12 +179,7 @@ const[gamesList, setGameLists]=useState(
                                             <p className=''>By: {game.by}</p>
                                         </div>
                                     </div>
-                                    <Buttons>
-                                        <div className='flex gap-2.5'>
-                                            <p className='font-semibold'>Download</p>
-                                            <img className='h-4 w-4' src={'/logos/download.png'} alt="" />
-                                        </div>
-                                    </Buttons>
+                                    <Buttons type='download' name='Download'></Buttons>
 
                                 </div>
                             )

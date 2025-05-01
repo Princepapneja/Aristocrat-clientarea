@@ -45,17 +45,17 @@ function DetailGame() {
 <p className='mt-2 mb-4'>By: Studio Name</p>
 
 <div className='space-y-6'>
-<p className='text-lg text-black-v3 max-w-[650px]'>Take a break and enjoy the wholesome vibe of the farm! With plenty of fun activities, opportunities to win great rewards, and warm hospitality, Turkey Burst has everything for a good time. Pack your bags, the Turkeys can’t wait to see you!
+<p className='text-lg text-black-v3 max-w-[650px] w-full'>Take a break and enjoy the wholesome vibe of the farm! With plenty of fun activities, opportunities to win great rewards, and warm hospitality, Turkey Burst has everything for a good time. Pack your bags, the Turkeys can’t wait to see you!
 </p>
 
-<p className='text-lg text-black-v3 max-w-[650px]'>Turkey Burst is a 5x3 slot with 40 paylines and generous bonus features. Get ready to start gobbling up rewards when Turkey Coins land and are collected by the Turkeys above the reels, plus the Coins can randomly trigger the LOCK N SPIN Bonus feature that awards 3 Respins. Then, depending on the Coins collected, you could be blessed with a prize up to 500x or maybe even the Grand prize. Keep the Respins action flowing, because every time a new coin lands, it resets the Respins.
+<p className='text-lg text-black-v3 max-w-[650px] w-full'>Turkey Burst is a 5x3 slot with 40 paylines and generous bonus features. Get ready to start gobbling up rewards when Turkey Coins land and are collected by the Turkeys above the reels, plus the Coins can randomly trigger the LOCK N SPIN Bonus feature that awards 3 Respins. Then, depending on the Coins collected, you could be blessed with a prize up to 500x or maybe even the Grand prize. Keep the Respins action flowing, because every time a new coin lands, it resets the Respins.
 </p>
 
-<p className='text-lg text-black-v3 max-w-[650px]'>
+<p className='text-lg text-black-v3 max-w-[650px] w-full'>
 Want to jump right into the Bonus action? Use the Buy Bonus option to activate the feature whenever you want.
 </p>
 
-<p className='text-lg text-black-v3 max-w-[593px]'>Play Turkey Burst now!</p></div>
+<p className='text-lg text-black-v3 max-w-[593px] w-full'>Play Turkey Burst now!</p></div>
 </div>   
 
 <div>
@@ -107,7 +107,7 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 
 <div className='mt-14'>
 <div className='bg-black rounded-3xl'>
-<div className='flex pt-11 pb-9 ml-12 gap-20 max-w-[1354px]'>
+<div className='flex pt-11 pb-9 ml-12 gap-20 max-w-[1354px] w-full'>
     <div>
 <p className='font-semibold text-3xl text-white mb-1.5'>Video Slot Game</p>
 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Game Type</p></div>
@@ -156,7 +156,7 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
     <p className='mt-20 text-xl text-black-v3 '>Game Theme</p>
     <p className='text-xl font-semibold mt-5'>Animals, Mythology, </p> 
     <p className='text-xl font-semibold mb-20'>Amazon Forest</p>
-     <div className='font-semibold text-black flex gap-3.5 items-center bg-primary rounded-xl px-5 py-2.5 max-w-[147px]'>
+     <div className='font-semibold text-black flex gap-3.5 items-center bg-primary rounded-xl px-5 py-2.5 max-w-[147px] w-full'>
     <p>Game Key</p>
     <img className='h-4 w-4 ' src={"/logos/filterarrowBlack.png"} alt="" />
     </div>
@@ -208,19 +208,8 @@ Want to jump right into the Bonus action? Use the Buy Bonus option to activate t
 
     <div className='px-6'>
     <div className='flex justify-end gap-7 bg-white pt-14 rounded-lg pr-9'>
-                        
-                        <Buttons>
-                            <div className='flex gap-2.5'>
-                                <p className='font-semibold'>Download Selected</p>
-                                <img className='h-4 w-4' src={"/logos/download.png"} alt="" />
-                            </div>
-                        </Buttons>
-                        <Buttons>
-                            <div className='flex gap-2.5'>
-                                <p className='font-semibold'>Download All</p>
-                                <img className='h-4 w-4' src={"/logos/download.png"} alt="" />
-                            </div>
-                        </Buttons>
+                 <Buttons type='download' name='Download Selected'></Buttons>
+                 <Buttons type='download' name='Download All'></Buttons>     
                     </div> 
 </div>
 </div>
