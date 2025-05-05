@@ -73,6 +73,8 @@ const Route = () => {
                                   element:<DetailGame/>
                                 },
                                
+
+                                
                                 // {
                                 //     path: '/dashboard/manage-categories',
                                 //     element: <AllTables  type="categories"/>
