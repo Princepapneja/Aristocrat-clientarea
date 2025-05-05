@@ -22,6 +22,8 @@ const Route = () => {
                     path: '/',
                     element:<Login />
                 },
+
+                
                 {
                     path: '/forgot-password',
                     element: <Login type={"forgot pass"}/>
@@ -52,7 +54,7 @@ const Route = () => {
                                     element:<Roadmaps/>
                                 },
                                 {
-                                    path:'/dashboard/game-page',
+                                    path:'/dashboard/games',
                                     element:<GamePage/>
                                 },
                                 {
