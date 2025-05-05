@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputField from '../utils/InputFields'
 import Buttons from '../utils/buttons'
 import DashboardHeader from '../header-footer/dashBoardHeader'
+import ActiveButtons from '../utils/ActiveButtons'
 function MasterGame() {
 
 const[gameAssets, setGameAssets]=useState(
@@ -21,6 +22,15 @@ const[gameLists, setGameLists]=useState(
         }
     ]
 )
+
+const [activeButtons,setActiveButtons] = useState([
+    {
+        name:'Aristocrat Interactive'
+    },
+    {
+        name:'Ignite Sudios'
+    }
+])
   
 return (
    <>
@@ -35,10 +45,10 @@ return (
 
 <div className='mt-11'>
     <div className='border-b-1 border-black-v4'>
-    <div className='flex bg-white-v2 gap-3 p-3 rounded-2xl mb-8 '>
-        <div className='bg-black rounded-xl py-5 text-white text-center w-full font-semibold'>Aristocrat Interactive </div>
-        <div className='py-5 rounded-xl bg-white w-full text-center font-semibold text-black-v3'>Ignite Sudios</div>
-    </div></div>
+        <div className='mb-8 '>
+<ActiveButtons buttons={activeButtons} type='activePage' />
+        </div>
+    </div>
    
    <div>
     <div className='flex items-center py-7 justify-between border-b-1 border-black-v4'>
@@ -51,12 +61,7 @@ return (
     })}</div>
 
 <div>
-    <Buttons>
-    <div className='flex gap-2.5'>
-   <p className='font-semibold'>Download</p> 
-<img className='h-4 w-4' src={'/logos/download.png'} alt="" />
-    </div>
-</Buttons></div>
+<Buttons type='download' name='Download'></Buttons></div>
    </div>
    </div>
 </div>

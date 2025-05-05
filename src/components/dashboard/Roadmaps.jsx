@@ -90,6 +90,18 @@ by:"Studio Name",
 date:"17 April"
         },
     ])
+
+    const [activeButtons,setActiveButtons]= useState([
+        {
+            name:'Aristocrat Interactive'
+        },
+        {
+            name:'Ignite Sudios'
+        },
+        {
+            name:'All Roadmap Downloads'
+        }
+    ])
   return (
    
    <>
@@ -101,10 +113,8 @@ date:"17 April"
 <h1 className='text-5xl font-medium'>Roadmaps</h1>
 
 
-    <div className='flex bg-white-v2 gap-3 p-3 rounded-2xl mb-8 '>
-        <div className='bg-black rounded-xl py-5 text-white text-center w-full font-semibold'>Aristocrat Interactive </div>
-        <div className='py-5 rounded-xl bg-white w-full text-center font-semibold text-black-v3'>Ignite Sudios</div>
-        <div className='py-5 rounded-xl bg-white w-full text-center font-semibold text-black-v3'>All Roadmap Downloads</div>
+    <div className=' mb-8 '>
+    <ActiveButtons buttons={activeButtons} type='activePage' />
     </div>
 
     </div>
@@ -125,7 +135,7 @@ date:"17 April"
 <div className='grid grid-cols-4'>
 {games.map((item)=>{
     return(
-        <GameCard gameImage={item.image} title={item.title} by={item.by} date={item.date} />
+        <GameCard game={item} />
     )
 })}
 </div>
