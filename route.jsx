@@ -1,20 +1,14 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import Dashboard from './src/pages/dashboard';
 import DashboardLayout from './src/layout/DashboardLayout';
-import AddForm from './src/components/dashboard/AddForm';
-import AllTables from './src/components/dashboard/AllTables';
 import RootLayout from './src/layout/RootLayout';
 import Login from './src/pages/login';
-import Hierarchy from './src/components/dashboard/chat/hierarchy';
 import Certificates from './src/components/dashboard/certificates';
 import MasterGame from './src/components/dashboard/MasterGame';
 import ContactUs from './src/components/dashboard/ContactUs';
 import Roadmaps from './src/components/dashboard/Roadmaps';
 import GamePage from './src/components/dashboard/GamePage';
 import EngagementTools from './src/components/dashboard/EngagementTools';
-import DetailGame from './src/components/dashboard/DetailGame';
 import Homepage from './src/components/dashboard/Homepage';
-import Footer from './src/components/header-footer/Footer';
 
 
 const Route = () => {
@@ -25,7 +19,7 @@ const Route = () => {
             children:[
                 {
                     path: '/',
-                    element:<Login type={"login"}/>
+                    element:<Login />
                 },
                 {
                     path: '/forgot-password',
@@ -37,7 +31,7 @@ const Route = () => {
                             children:[
                                 {
                                     path: '/dashboard',
-                                    element:  <Dashboard />,
+                                    element:  <Homepage />,
                                 },
                                
                                 {
@@ -57,7 +51,7 @@ const Route = () => {
                                     element:<Roadmaps/>
                                 },
                                 {
-                                    path:'/dashboard/games',
+                                    path:'/dashboard/game-page',
                                     element:<GamePage/>
                                 },
                                 {
@@ -75,6 +69,7 @@ const Route = () => {
                                
 
                                 
+                              
                                 // {
                                 //     path: '/dashboard/manage-categories',
                                 //     element: <AllTables  type="categories"/>
