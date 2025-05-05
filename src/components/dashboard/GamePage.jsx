@@ -177,6 +177,8 @@ date:"17 April"
                     </div>
                 </div>
 
+                
+
 <div className='grid grid-cols-4 gap-x-10 gap-y-16'>
 {games.map((item)=>{
     return(

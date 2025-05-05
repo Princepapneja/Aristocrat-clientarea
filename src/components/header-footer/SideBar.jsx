@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 const SideBar = () => {
-    const [open, setOpen] = useState(null); // Start with null
+    const [open, setOpen] = useState(null); 
     const { sideBarOpen, setSideBarOpen, height, navigate } = useGlobal();
     const location = useLocation(); 
 
@@ -63,7 +63,7 @@ const SideBar = () => {
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/login');
+        navigate('/');
     };
 
     return (
@@ -86,7 +86,7 @@ const SideBar = () => {
                                     <button
                                         key={index}
                                         onClick={handleLogout}
-                                        className={`capitalize w-full text-left whitespace-nowrap duration-300 ${isActive ? 'text-white-v1 bg-black' : 'text-black'} rounded-xl font-semibold hover:text-primary hover:bg-background p-4 flex items-center gap-2`}
+                                        className={`capitalize w-full text-left whitespace-nowrap duration-300 ${isActive ? 'text-white-v1 bg-black' : 'text-black'} rounded-xl font-semibold hover:text-white-v1 hover:bg-black p-4 flex items-center gap-2`}
                                     >
                                         {item.icon}
                                         <span>{item.name}</span>
@@ -102,7 +102,7 @@ const SideBar = () => {
                                             setOpen(open === index ? null : index); 
                                             setSideBarOpen(false); 
                                         }}
-                                        className={`capitalize block no-underline whitespace-nowrap duration-300 ${isActive ? 'text-white-v1 bg-black' : 'text-black'} rounded-xl font-semibold hover:text-primary hover:bg-background p-4`}
+                                        className={`capitalize block no-underline whitespace-nowrap duration-300 ${isActive ? 'text-white-v1 bg-black' : 'text-black'} rounded-xl font-semibold hover:text-white-v1 hover:bg-black p-4`}
                                     >
                                         <div className='flex justify-between items-center'>
                                             <div className='flex gap-2 items-center'>
@@ -124,7 +124,7 @@ const SideBar = () => {
                                                     to={sub.href}
                                                     onClick={() => setSideBarOpen(false)}
                                                     key={i}
-                                                    className={`capitalize no-underline rounded-lg py-3 px-2 flex gap-2 pl-5 items-center ${location.pathname === sub.href ? 'text-primary bg-background' : 'text-desc'}`}
+                                                    className={`capitalize no-underline rounded-lg py-3 px-2 flex gap-2 pl-5 items-center ${location.pathname === sub.href ? 'hover:text-white-v1 hover:bg-black' : 'text-desc'}`}
                                                 >
                                                     {sub.icon}
                                                     <span className='whitespace-nowrap'>{sub.name}</span>
