@@ -9,6 +9,7 @@ import Roadmaps from './src/components/dashboard/Roadmaps';
 import GamePage from './src/components/dashboard/GamePage';
 import EngagementTools from './src/components/dashboard/EngagementTools';
 import Homepage from './src/components/dashboard/Homepage';
+import DetailGame from './src/components/dashboard/DetailGame';
 
 
 const Route = () => {
@@ -21,6 +22,8 @@ const Route = () => {
                     path: '/',
                     element:<Login />
                 },
+
+                
                 {
                     path: '/forgot-password',
                     element: <Login type={"forgot pass"}/>
@@ -51,7 +54,7 @@ const Route = () => {
                                     element:<Roadmaps/>
                                 },
                                 {
-                                    path:'/dashboard/game-page',
+                                    path:'/dashboard/games',
                                     element:<GamePage/>
                                 },
                                 {
@@ -64,7 +67,7 @@ const Route = () => {
                                 },
                                 {
                                   path:"/dashboard/detail-game",
-                                  element:<DetailGame/>
+                                  element:<DetailGame />
                                 },
                                
 
