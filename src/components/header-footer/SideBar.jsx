@@ -50,9 +50,9 @@ const SideBar = () => {
             href: "/dashboard/engagement-tools"
         },
         {
-            name: "Contact Us",
+            name: "Support",
             icon: <Phone />,
-            href: "/dashboard/contact-us"
+            href: "/dashboard/support"
         },
         {
             name: "Logout",

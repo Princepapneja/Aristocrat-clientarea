@@ -4,6 +4,7 @@ import Buttons from '../utils/buttons'
 import DashboardHeader from '../header-footer/dashBoardHeader'
 import ActiveButtons from '../utils/ActiveButtons'
 function MasterGame() {
+    const [active,setActive]= useState(0)
 
 const[gameAssets, setGameAssets]=useState(
     [
@@ -19,6 +20,7 @@ const[gameLists, setGameLists]=useState(
     [
         {
             title:"Wizard Games Master Game List",
+            
         }
     ]
 )
@@ -36,9 +38,6 @@ return (
    <>
    <div className='container'>
 
-<div className='mb-11'>
-<DashboardHeader options={gameAssets}/>
-</div>
 
 <h1 className='text-5xl font-medium'>Master Game List</h1>
 
@@ -46,7 +45,7 @@ return (
 <div className='mt-11'>
     <div className='border-b-1 border-black-v4'>
         <div className='mb-8 '>
-<ActiveButtons buttons={activeButtons} type='activePage' />
+<ActiveButtons buttons={activeButtons} active={active} setActive={setActive} type='activePage' />
         </div>
     </div>
    

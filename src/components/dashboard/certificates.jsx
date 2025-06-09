@@ -101,11 +101,6 @@ const[gamesList, setGameLists]=useState(
 
             <div className='container'>
 
-                <div className='mb-11'>
-<DashboardHeader options={certificateSelect}/>
-                </div>
-
-
 
                 {/*  section */}
                 <div className='flex justify-between mb-14'>

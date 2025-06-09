@@ -44,19 +44,21 @@ const InputField = ({
   return (
     <>
       <div className={`${className} ${(type === "textarea" || type === "textEditor") ? "md:col-span-2 xl:col-span-3" : type === "checkbox" ? "flex  gap-1 items-center" : "space-y-2 w-full "} normal-case `}>
+      {label && (
         <div className="flex gap-1 items-center">
 
-        {label && (
+       
           <label className="capitalize font-medium block whitespace-nowrap" htmlFor={id}>
             {label}
           </label>
-        )}
+        
         {
           required && 
           <span className="text-red-500 text-sm">*</span>
 
         }
         </div>
+        )}
 
         {
           type === "select" ? (

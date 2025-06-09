@@ -29,7 +29,7 @@ apiHandler.interceptors.request.use(
     const trimmedBaseUrl = baseUrl.endsWith('/') ? baseUrl.slice(0, -1) : baseUrl;
 
     // Construct apiUrl based on whether url starts with '/'
-    apiUrl = `${trimmedBaseUrl}/api/v1/admin${url.startsWith('/') ? url : `/${url}`}`;
+    apiUrl = `${trimmedBaseUrl}/api/v1/user${url.startsWith('/') ? url : `/${url}`}`;
 
     // Get token from local storage
     const token = localStorage.getItem('token');
@@ -40,7 +40,10 @@ apiHandler.interceptors.request.use(
     }
 
     // Set Content-Type header to JSON
-    config.headers['Content-Type'] = 'application/json';
+    if (!(data instanceof FormData)) {
+      config.headers['Content-Type'] = 'application/json';
+    }
+
 
     return {
       ...config,
