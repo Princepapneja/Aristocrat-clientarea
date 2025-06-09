@@ -1,43 +1,42 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-const ActiveButtons = ({ buttons, active, setActive,type }) => {
- 
+const styleMap = {
+  primary: {
+    active: 'bg-black-v1 text-white-v1 ',
+    inactive: 'bg-white-v1 text-black-v1 ',
+    common:"p-5 rounded-xl"
+  },
+  secondary: {
+    active: 'text-black-v1',
+    inactive: 'text-white-v3',
+    common:"p-2"
+  },
+  danger: {
+    active: 'bg-red-600 text-white',
+    inactive: 'bg-white text-red-600 border border-red-600',
+  },
+};
+
+const ActiveButtons = ({ buttons, className, active, setActive, type = 'primary' }) => {
+  const { active: activeClass, inactive: nonActiveClass,common } = styleMap[type] || styleMap['primary'];
+
   return (
-<div>
-    {
-      type === 'activePage' ? 
-      <div className='flex bg-white-v2 gap-3 p-3 rounded-2xl '>
-        {buttons?.map((button,index)=>{
-          return(
-<div className={`${active===index ? 'bg-black text-white': 'bg-white text-black-v3'}  rounded-xl py-5  text-center w-full font-semibold`} key={index}
-onClick={() => {
-  setActive(index);
-  button?.func && button.func()
-}}
->{button.name}</div>
-          )
-        })}
-
-  </div>
-      : <div className='flex gap-3 overflow-auto md:w-[calc(100vw-320px)] w-[calc(100vw-4rem)]'>
+    <div className={`${className} flex gap-3 overflow-auto md:w-[calc(100vw-320px)] w-[calc(100vw-4rem)]`}>
       {buttons?.map((button, index) => (
         <button
-          className={`${
-            active === index ? '!border-primary text-primary' : 'text-gray-600'
-          } px-2 py-0.5 border-b-2 mb-1 border-transparent duration-300 hover:border-primary `}
           key={index}
+          className={`${
+            active === index ? activeClass : nonActiveClass
+          }  ${common} w-full duration-300`}
           onClick={() => {
             setActive(index);
-            button?.func && button.func()
+            button?.func && button.func();
           }}
         >
           {button.name}
         </button>
       ))}
     </div>
-    }
-
-</div>
   );
 };
 

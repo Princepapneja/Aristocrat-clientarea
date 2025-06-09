@@ -10,6 +10,7 @@ import GamePage from './src/components/dashboard/GamePage';
 import EngagementTools from './src/components/dashboard/EngagementTools';
 import Homepage from './src/components/dashboard/Homepage';
 import DetailGame from './src/components/dashboard/DetailGame';
+import FolderUploader from './src/components/dashboard/fileUploader';
 
 
 const Route = () => {
@@ -46,7 +47,7 @@ const Route = () => {
                                     element:<MasterGame/>
                                 },
                                 {
-                                    path:'/dashboard/contact-us',
+                                    path:'/dashboard/support',
                                     element:<ContactUs/>
                                 },
                                 {
@@ -66,8 +67,12 @@ const Route = () => {
                                     element:<Homepage/>
                                 },
                                 {
-                                  path:"/dashboard/detail-game",
+                                  path:"/dashboard/detail-game/:id",
                                   element:<DetailGame />
+                                },
+                                {
+                                  path:"/dashboard/test",
+                                  element:<FolderUploader />
                                 },
                                
 

@@ -49,9 +49,15 @@ const DashboardLayout = () => {
         {user?.systemGeneratedPass &&
           <ChangePass initialValue={user?.systemGeneratedPass} />
         }
-        <div className={`w-screen md:w-[calc(100vw-230px)] `} >
-          <div className={`main p-4 space-y-8 overflow-y-auto ${sideBarOpen ? "blur":""} duration-500 `} style={{ height: `calc(100vh - ${height}px)` }}>
+        
+        <div className='  flex-grow' >
+        <DashBoardHeader />
+
+          <div className={`main   space-y-8  overflow-y-auto ${sideBarOpen ? "blur":""} duration-500 `} style={{ height: `calc(100vh - ${174}px)` }}>
+            <div className='container '>
+
             <Outlet context={context} />
+            </div>
           </div>
         </div>
       </div>

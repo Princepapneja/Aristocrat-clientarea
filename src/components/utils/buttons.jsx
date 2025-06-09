@@ -25,7 +25,7 @@ const Buttons = ({ type = "primary", children, spinner = false, disabled, big = 
     </div>
           {children}
         </a>
-        : <button disabled={disabled} onClick={handleClick} className={`relative rounded-xl ${big ? "text-lg px-8 py-2.5" : "text-sm py-1 px-4"}  ${type === "border" ? "text-primary-dark  border border-primary-dark border-solid disabled:opacity-70 disabled:text-desc" : type === "danger" ? "bg-red-500 text-white" : "bg-primary-dark text-white"} select-none ${className} disabled:opacity-50 font-semibold`}>
+        : <button disabled={disabled} onClick={handleClick} className={` relative rounded-xl  py-2.5 px-8 ${type === "border" ? "text-primary-dark  border border-primary-dark border-solid disabled:opacity-70 disabled:text-desc" : type === "danger" ? "bg-red-500 text-white" : "bg-primary-dark text-white"} select-none $ disabled:opacity-50 font-semibold ${className}`}>
         {
           spinner &&
           <span className="absolute left-2 top-3">

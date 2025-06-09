@@ -4,6 +4,8 @@ import InputField from '../utils/InputFields'
 import ActiveButtons from '../utils/ActiveButtons'
 import DashboardHeader from '../header-footer/dashBoardHeader'
 function Roadmaps() {
+    const [activeStudio,setActiveStudio]= useState(0)
+    const [activeYear,setActiveYear]= useState(0)
     const [regions,setRegions]  = useState([
         {
             name:"Region",
@@ -108,13 +110,12 @@ date:"17 April"
    <div className='container'>
    <div>
 <div className='space-y-11'>
-<DashboardHeader options={gameAssets}/>
 
 <h1 className='text-5xl font-medium'>Roadmaps</h1>
 
 
     <div className=' mb-8 '>
-    <ActiveButtons buttons={activeButtons} type='activePage' />
+    <ActiveButtons active={activeStudio} className={"grid grid-cols-3 gap-4"} setActive={setActiveStudio} buttons={activeButtons} />
     </div>
 
     </div>
@@ -130,9 +131,9 @@ date:"17 April"
 </div>
  
 <div className='mb-14'>
-    <ActiveButtons buttons={months} />
+    <ActiveButtons active={activeYear} setActive={setActiveYear} type="secondary" buttons={months} />
 </div>
-<div className='grid grid-cols-4'>
+<div className='grid grid-cols-4 gap-8'>
 {games.map((item)=>{
     return(
         <GameCard game={item} />
