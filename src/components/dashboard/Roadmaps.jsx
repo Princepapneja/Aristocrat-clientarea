@@ -126,7 +126,7 @@ date:"17 April"
 <p className='text-3xl font-medium'>United Kingdom</p>
 </div>
 <div className='w-70'>
-    <InputField type='select' options={regions} id='region'
+    <InputField type='selects' options={regions} id='region'
                        />
 </div>
 </div>

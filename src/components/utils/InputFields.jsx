@@ -117,7 +117,7 @@ console.log(selected);
         </div>
       )}
 
-      {type === "select" ? (
+      {type === "selects" ? (
         <div ref={ref} className={`relative w-full`}>
          
             <div
@@ -177,6 +177,27 @@ console.log(selected);
             </div>
           )}
         </div>
+      ): type === "select" ? (
+          <select
+            value={value}
+            onChange={handleInputChange}
+            name={id}
+            id={id}
+            className="block w-full bg-transparent p-[0.6rem] border-2 border-gray-200 placeholder:font-light focus:outline-primary-dark rounded-xl text-desc"
+          >
+            {options?.map((option, key) => {
+              return (
+                <option
+                  key={key}
+                  disabled={option?.disable}
+                  selected={option?.selected}
+                  value={option?.value}
+                >
+                  {option?.name}
+                </option>
+              );
+            })}
+          </select>
       ) : type === "textarea" ? (
         <textarea
           id={id}

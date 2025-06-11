@@ -149,7 +149,7 @@ function GamePage() {
             <div className='space-y-5'>
                 <div className='grid grid-cols-4 gap-10'>
                     <InputField
-                        type='select'
+                        type='selects'
                         id='studio'
                         label="Studio"
                         value={filters?.studio}
@@ -157,7 +157,7 @@ function GamePage() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         id='region'
                         label="Region"
                         value={filters?.region}
@@ -165,7 +165,7 @@ function GamePage() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         label="Volatility"
                         id='volatility'
                         value={filters?.volatility}
@@ -173,7 +173,7 @@ function GamePage() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         id='theme'
                         label="Theme"
                         value={filters?.theme}
@@ -184,7 +184,7 @@ function GamePage() {
 
                 <div className='grid grid-cols-4 gap-10'>
                     <InputField
-                        type='select'
+                        type='selects'
                         label="Features"
                         id='features'
                         value={filters?.features}
@@ -192,7 +192,7 @@ function GamePage() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         label="Family"
                         id='family'
                         value={filters?.family}
@@ -200,7 +200,7 @@ function GamePage() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         label="Game Type"
                         id='gameType'
                         value={filters?.gameType}
@@ -208,7 +208,7 @@ function GamePage() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         label="Jackpot"
                         id='jackpot'
                         value={filters?.jackpot}

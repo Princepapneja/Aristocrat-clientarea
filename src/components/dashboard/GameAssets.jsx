@@ -180,7 +180,7 @@ const[gamesList, setGameLists]=useState(
             <div className='space-y-5'>
                 <div className='grid grid-cols-4 gap-10'>
                     <InputField
-                        type='select'
+                        type='selects'
                         id='studio'
                         label="Studio"
                         value={filters?.studio}
@@ -188,7 +188,7 @@ const[gamesList, setGameLists]=useState(
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         id='region'
                         label="Region"
                         value={filters?.region}
@@ -196,7 +196,7 @@ const[gamesList, setGameLists]=useState(
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         label="Certificate"
                         id='Certificate'
                         value={filters?.volatility}
@@ -204,7 +204,7 @@ const[gamesList, setGameLists]=useState(
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         id='gameTitle'
                         label="Game Title"
                         value={filters?.theme}

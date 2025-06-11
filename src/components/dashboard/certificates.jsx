@@ -182,7 +182,7 @@ function Certificates() {
             <div className='space-y-5'>
                 <div className='grid grid-cols-4 gap-10'>
                     <InputField
-                        type='select'
+                        type='selects'
                         id='studio'
                         label="Studio"
                         value={filters?.studio}
@@ -190,7 +190,7 @@ function Certificates() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         id='region'
                         label="Region"
                         value={filters?.region}
@@ -198,7 +198,7 @@ function Certificates() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         label="Certificate"
                         id='Certificate'
                         value={filters?.volatility}
@@ -206,7 +206,7 @@ function Certificates() {
                         handleInputChange={onFilterChange}
                     />
                     <InputField
-                        type='select'
+                        type='selects'
                         id='gameTitle'
                         label="Game Title"
                         value={filters?.theme}
