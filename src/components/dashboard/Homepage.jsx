@@ -35,9 +35,11 @@ function Homepage() {
     setLoading(true);
     try {
       const [aristocratRes, igniteRes] = await Promise.all([
-        apiHandler.get(`games?skip=0&limit=10&studio=d538d8e3-6616-42e7-adb3-69f2e73f78dd`),
-        apiHandler.get(`games?skip=0&limit=10&studio=974c3fc0-214c-456a-8b36-68d6813cb8b3`)
+        apiHandler.get(`games?skip=0&limit=10&studio=1`),
+        apiHandler.get(`games?skip=0&limit=10&studio=1`)
       ]);
+      console.log(aristocratRes);
+      
       setAristocratGames(aristocratRes.data.data.games || []);
       setIgniteGames(igniteRes.data.data.games || []);
     } catch (error) {
@@ -48,9 +50,9 @@ function Homepage() {
 
   return (
     <>
-      <div className='container'>
+      <div className='md:w-full'>
         {/* Hero Slider */}
-        <div className='w-full'>
+        <div className='w-full '>
           <Swiper
             onSwiper={(swiper) => (swiperRef.current = swiper)}
             onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
@@ -106,7 +108,7 @@ function Homepage() {
           </div>
         </div>
 
-        <div className='mb-16'>
+        <div className='mb-16 cstm-swiper'>
           {loading ? (
             <p>Loading Aristocrat Games...</p>
           ) : (
@@ -132,7 +134,7 @@ function Homepage() {
         </div>
 
         {/* Ignite Games */}
-        <div className='flex justify-between mb-14'>
+        <div className='flex justify-between mb-14 '>
           <h3 className='text-3xl font-medium'>Ignite Releases</h3>
           <div className='flex gap-3.5'>
             <button
@@ -150,7 +152,7 @@ function Homepage() {
           </div>
         </div>
 
-        <div className='mb-24'>
+        <div className='mb-24 cstm-swiper'>
           {loading ? (
             <p>Loading Ignite Games...</p>
           ) : (

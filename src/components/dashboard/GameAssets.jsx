@@ -4,11 +4,12 @@ import GameCard from '../utils/GameCard';
 import DashboardHeader from '../header-footer/dashBoardHeader';
 import apiHandler from '../../functions/apiHandler';
 import cross from '/logos/cross.png';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Buttons from '../utils/buttons';
 import { X } from 'lucide-react';
-
-function GamePage() {
+import { Download } from "lucide-react";
+import logo from '../../assets/logos/texas-longhorn-country-western-bull-cattle-vintage-label-logo-design-vector.jpg'
+function GameAssets() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
     console.log(studio)
@@ -141,10 +142,40 @@ function GamePage() {
         setFilters({ skip: 0, limit: 16 });
     };
     const [showFilterModal, setShowFilterModal] = useState(false);
+const[gamesList, setGameLists]=useState(
+    [
+        {
+            icon:'/logos/gameIcon.png',
+            title: "Amun Ra King Of The Gods...",
+            by: "Studio Name"
+        },
+        {
+            icon:'/logos/gameIcon.png',
+            title: "Amun Ra King Of The Gods...",
+            by: "Studio Name"
+        },
+        {
+            icon:'/logos/gameIcon.png',
+            title: "Amun Ra King Of The Gods...",
+            by: "Studio Name"
+        }
+    ]
+)
 
 
     return (
         <div className='space-y-16 group' >
+
+            <div className='flex justify-between mb-14'>
+                    <h1 className='text-5xl font-medium'>Game Assets</h1>
+                    <Link
+                                        to="/dashboard/certificates"
+                                        className="flex items-center gap-2.5 py-2.5 px-4 border-2 border-black-v4 rounded-xl justify-between"
+                                    >
+                                        <p className="text-center font-medium">Go to Certificate</p>
+                                        <img className="h-5 w-5" src="/logos/rightArrow.png" alt="Arrow" />
+                                    </Link>
+                </div>
             {/* Filter Inputs */}
             <div className='space-y-5'>
                 <div className='grid grid-cols-4 gap-10'>
@@ -166,56 +197,23 @@ function GamePage() {
                     />
                     <InputField
                         type='select'
-                        label="Volatility"
-                        id='volatility'
+                        label="Certificate"
+                        id='Certificate'
                         value={filters?.volatility}
                         options={dropdowns.volatilityOption}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
                         type='select'
-                        id='theme'
-                        label="Theme"
+                        id='gameTitle'
+                        label="Game Title"
                         value={filters?.theme}
                         options={dropdowns.themeOption}
                         handleInputChange={onFilterChange}
                     />
                 </div>
 
-                <div className='grid grid-cols-4 gap-10'>
-                    <InputField
-                        type='select'
-                        label="Features"
-                        id='features'
-                        value={filters?.features}
-                        options={dropdowns.featuresOption}
-                        handleInputChange={onFilterChange}
-                    />
-                    <InputField
-                        type='select'
-                        label="Family"
-                        id='family'
-                        value={filters?.family}
-                        options={dropdowns.familyOption}
-                        handleInputChange={onFilterChange}
-                    />
-                    <InputField
-                        type='select'
-                        label="Game Type"
-                        id='gameType'
-                        value={filters?.gameType}
-                        options={dropdowns.gameTypeOption}
-                        handleInputChange={onFilterChange}
-                    />
-                    <InputField
-                        type='select'
-                        label="Jackpot"
-                        id='jackpot'
-                        value={filters?.jackpot}
-                        options={dropdowns.jackpotOption}
-                        handleInputChange={onFilterChange}
-                    />
-                </div>
+             
             </div>
 
 
@@ -278,19 +276,48 @@ function GamePage() {
             </div>
 
             {/* Game List */}
-            <div className='grid grid-cols-4 gap-x-10 gap-y-16 p-4'>
-                {games.map((item, index) => (
-                    <GameCard key={index} game={item} className='w-[280px]' />
-                ))}
-                {!loading && games.length === 0 && (
-                    <p className='text-center col-span-4 text-gray-500 text-lg'>No games found.</p>
-                )}
-            </div>
+            <div className='bg-white-v2 px-7 pt-8 pb-1 space-y-8 rounded-t-3xl '>
 
-            {/* Loading Indicator */}
-            {loading && (
-                <div className='text-center text-sm text-gray-400 mt-8'>Loading more games...</div>
-            )}
+                    {/*  button */}
+                    <div className='flex justify-end '>
+                    <Buttons type='download' name='Download All'></Buttons>
+                    </div>
+                    {/*  button */}
+
+                    <div>
+                        {gamesList?.map((game) => {
+                            return (
+<div className="flex items-center justify-between px-4 py-3 mb-7 bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
+  {/* Left */}
+  <div className="flex items-center gap-14">
+    <input type="checkbox" className="w-5 h-5 accent-emerald-500" />
+    <img src={game.icon} alt="Game Icon" className="w-44 h-28 mb-2" />
+    <div>
+      <h2 className="text-emerald-600 font-medium text-3xl mb-2">
+        United Kingdom Certificate
+      </h2>
+      <p className="text-xl text-gray-800 font-medium mb-4">{game.title}</p>
+      <p className="text-base text-gray-400 mb-2">By: {game.by}</p>
+    </div>
+  </div>
+
+  {/* Right */}
+  <div className="flex items-center gap-14">
+    <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full" />
+    <p className="text-xl text-gray-600 font-normal">4 GB</p>
+    <button className="cursor-pointer flex items-center gap-2 px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+      Download
+      <Download size={16} />
+    </button>
+  </div>
+</div>
+
+
+                            )
+                        })}
+                    </div>
+
+                </div>
 
             {showFilterModal && (
                 <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">
@@ -329,4 +356,4 @@ function GamePage() {
     );
 }
 
-export default GamePage;
+export default GameAssets;

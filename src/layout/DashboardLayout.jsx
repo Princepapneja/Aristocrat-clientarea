@@ -6,6 +6,7 @@ import SideBar from '../components/header-footer/SideBar';
 import DashBoardHeader from '../components/header-footer/dashBoardHeader';
 import ChangePass from '../components/auth/ChangePass';
 import { useNavigate } from 'react-router-dom';
+import Footer from '../components/header-footer/Footer';
 const DashboardLayout = () => {
   const context = useGlobal()
   const navigate= useNavigate()
@@ -58,6 +59,8 @@ const DashboardLayout = () => {
 
             <Outlet context={context} />
             </div>
+          {/* <Footer/> */}
+
           </div>
         </div>
       </div>

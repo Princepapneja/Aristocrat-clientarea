@@ -103,7 +103,7 @@ const Login = () => {
           <div className="w-full bg-[url(/Images/login-back.png)] h-screen p-12  ">
             <img className="w-[431px] h-[348px]" src="/logos/logo-black.png" alt="" />
             <h1
-              class="text-black-v1 font-medium text-[56px] not-italic leading-none font-ot-sono pl-9 max-w-[544px] w-full">
+              className="text-black-v1 font-medium text-[56px] not-italic leading-none font-ot-sono pl-9 max-w-[544px] w-full">
               Log in to
               Aristocrat Interactive
               Client Area
@@ -118,7 +118,7 @@ const Login = () => {
 
              >
 
-                <h3 className='font-semibold text-2xl not-italic  mb-2'>Log in to Our Client Area</h3>
+                <h3 className='font-semibold text-2xl not-italic  mb-3'>Log in to Our Client Area</h3>
 
              
 
@@ -130,11 +130,24 @@ const Login = () => {
                         return <InputField key={index} handleInputChange={handleInput} id={ele?.id}  type={ele.type} value={inputValues?.[ele.id]} placeholder={ele.placeholder} />
                       })
                     }
+
+                          <label className="flex items-start gap-3 px-5 mt-10 mb-10">
+                                            <input
+                                                type="checkbox"
+                                                name="consent"
+                                                className="mt-1 border border-[#A8A8A8] w-5 h-5 bg-white checked:bg-[#00B290] appearance-none
+        checked:after:content-['✓'] checked:after:text-white checked:after:text-sm checked:after:font-bold
+        checked:after:flex checked:after:justify-center checked:after:items-center"
+                                            />
+                                            <span>
+                                               Remember Me
+                                            </span>
+                                        </label>
                     <div className="space-y-6">
                       <Buttons spinner={false} onClick={ 
                         handleLogin
-                      } big={true} className={"w-full"}>{ "Log in" }</Buttons>
-                      <Buttons spinner={false} onClick={ handleLogin } big={true} type="border" className={"w-full"}>{ "Create an Account" }</Buttons>
+                      } big={true} className={"w-full hover:bg-[black]"}>{ "Log in" }</Buttons>
+                      <Buttons spinner={false} onClick={()=>navigate("/sign-up")} big={true} type="border" className={"w-full hover:bg-[#00B2901A]"}>{ "Create an Account" }</Buttons>
                       
                     </div>
                   </div>

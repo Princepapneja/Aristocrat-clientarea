@@ -11,6 +11,9 @@ import EngagementTools from './src/components/dashboard/EngagementTools';
 import Homepage from './src/components/dashboard/Homepage';
 import DetailGame from './src/components/dashboard/DetailGame';
 import FolderUploader from './src/components/dashboard/fileUploader';
+import SignUp from './src/pages/SignUp';
+import ForgotPassword from './src/pages/ForgotPassword';
+import GameAssets from './src/components/dashboard/GameAssets';
 
 
 const Route = () => {
@@ -21,13 +24,17 @@ const Route = () => {
             children:[
                 {
                     path: '/',
-                    element:<Login />
+                    element:<Login   />
                 },
 
                 
                 {
                     path: '/forgot-password',
-                    element: <Login type={"forgot pass"}/>
+                    element: <ForgotPassword />
+                },
+                {
+                    path: '/sign-up',
+                    element: <SignUp />
                 },
                         {
                             path: '/dashboard',
@@ -41,6 +48,10 @@ const Route = () => {
                                 {
                                     path:'/dashboard/certificates',
                                     element:<Certificates/>
+                                },
+                                 {
+                                    path:'/dashboard/game-assets',
+                                    element:<GameAssets/>
                                 },
                                 {
                                     path:'/dashboard/master-game-list',

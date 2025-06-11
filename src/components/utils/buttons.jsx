@@ -19,7 +19,7 @@ const Buttons = ({ type = "primary", children, spinner = false, disabled, big = 
         
         type === 'download'?
         <a href={href}>
-           <div className='flex gap-2.5 bg-primary-dark px-8 py-2.5 rounded-xl items-center'>
+           <div className='flex gap-2.5 bg-primary-dark hover:bg-[black] px-8 py-2.5 rounded-xl items-center'>
         <p className='font-semibold text-white '>{name}</p>
         <img className='h-4 w-4' src={"/logos/download.png"} alt="" />
     </div>

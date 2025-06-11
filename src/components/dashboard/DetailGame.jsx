@@ -53,7 +53,6 @@ function DetailGame() {
         try {
             const { data } = await apiHandler.get(`/game/${id}`);
             setGame(data?.data);
-            debugger
             setVolatility(data?.data?.categories?.filter(q=>q.type==="volatility"))
             setTheme(data?.data?.categories?.filter(q=>q.type==="theme"))
             setFeatures(data?.data?.categories?.filter(q=>q.type==="feature"))
@@ -89,7 +88,7 @@ function DetailGame() {
                         <div>
 
                             <h1 className='text-4xl font-medium'>{game?.title}</h1>
-                            <p className='mt-2 mb-4'>By: {game?.studio?.name}</p>
+                            <p className='mt-4 mb-4 text-base'>By: {game?.studio?.name}</p>
 
                             <div className='space-y-6'>
                                 <p className='text-lg text-black-v3 max-w-[650px] w-full'>{game?.description}
@@ -112,15 +111,17 @@ function DetailGame() {
                                     slidesPerView={1}
                                     className='h-[384px] w-[540px] absolute top-[-413px] left-0'
                                 >
-                                    {sliderData.map((slide) => {
-                                        return (
-                                            <SwiperSlide>
-                                                <img src={slide.img} className='h-full w-full object-cover' />
-                                            </SwiperSlide>
-                                        )
-                                    })}
+                                     {sliderData.map((slide, index) => (
+                                                  <SwiperSlide key={index}>
+                                                    <div className='relative'>
+                                                      <img className='h-80 w-full' src={slide.img} alt='' />
+                                                      
+                                                    </div>
+                                                  </SwiperSlide>
+                                                ))}
 
                                 </Swiper>
+                                
                                 <div className="flex justify-center space-x-2 mt-4 absolute top-[377px] left-[250px] z-10">
                                     {sliderData.map((_, index) => {
                                         return (
@@ -135,9 +136,7 @@ function DetailGame() {
                                     })}
                                 </div>
                                 <img src={"/Images/frog.png"} alt="" className='absolute w-[170px] h-[164px] top-[297px] right-[-43px] z-50 ' />
-                                <div className=''>
-                                    <Buttons>Play Game</Buttons>
-                                </div>
+                               
                             </div>
 
                         </div>

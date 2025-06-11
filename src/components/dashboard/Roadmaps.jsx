@@ -120,18 +120,19 @@ date:"17 April"
 
     </div>
 
-   <div className='flex justify-between items-center mb-5'>
+   <div className='flex justify-between items-center mb-5 w-full'>
 <div className='flex gap-3.5 items-center'>
 <img src={"/Images/uk.jpg"} className='h-12 w-12 rounded-full' alt="" />
 <p className='text-3xl font-medium'>United Kingdom</p>
 </div>
-<div>
-    <InputField type='select' options={regions}/>
+<div className='w-70'>
+    <InputField type='select' options={regions} id='region'
+                       />
 </div>
 </div>
  
 <div className='mb-14'>
-    <ActiveButtons active={activeYear} setActive={setActiveYear} type="secondary" buttons={months} />
+    <ActiveButtons active={activeYear} setActive={setActiveYear} type="roadmap" buttons={months}  />
 </div>
 <div className='grid grid-cols-4 gap-8'>
 {games.map((item)=>{

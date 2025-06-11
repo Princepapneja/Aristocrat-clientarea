@@ -68,10 +68,10 @@ function ContactUs() {
                         <p className='font-medium text-5xl'>Support </p>
                         <div className='space-y-5'>
 
-                        <p className=' text-black-v3 '>Dear</p>
-                        <p className=' text-black-v3 '>If you are encountering any difficulties with our products, are unable to locate a specific document or asset, or would like further information about a particular game, please contact us at   <a href="mailto:support@aristocratinteractive.com" className=' font-semibold'>support@aristocratinteractive.com</a> . A member of our team will respond to your inquiry as promptly as possible.</p>
-                        <p className=' text-black-v3 '>Thank you</p>
-                        <p className=' text-black-v3 '>Use the button below for a quicker way to reach us!</p>
+                        <p className=' text-black-v3 text-2xl '>Dear</p>
+                        <p className=' text-black-v3 text-2xl'>If you are encountering any difficulties with our products, are unable to locate a specific document or asset, or would like further information about a particular game, please contact us at   <a href="mailto:support@aristocratinteractive.com" className=' font-semibold'>support@aristocratinteractive.com</a> . A member of our team will respond to your inquiry as promptly as possible.</p>
+                        <p className=' text-black-v3 text-2xl '>Thank you</p>
+                        <p className=' text-black-v3 text-2xl'>Use the button below for a quicker way to reach us!</p>
                         </div>
 
                         <Buttons  className={"flex items-center gap-2"} >

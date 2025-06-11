@@ -10,7 +10,8 @@ import {
     Puzzle, 
     Phone, 
     LogOut, 
-    ChevronDown 
+    ChevronDown, 
+    Layers
 } from "lucide-react";
 
 const SideBar = () => {
@@ -28,6 +29,11 @@ const SideBar = () => {
             name: "Games",
             icon: <CalendarCheck />,
             href: "/dashboard/games"
+        },
+        {
+            name: "Game Assets",
+            icon: <Layers />,
+            href: "/dashboard/game-assets"
         },
         {
             name: "Certificates",
