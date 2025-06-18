@@ -36,7 +36,7 @@ const [activeButtons,setActiveButtons] = useState([
   
 return (
    <>
-   <div className='container'>
+   <div className='container h-100'>
 
 
 <h1 className='text-5xl font-medium'>Master Game List</h1>

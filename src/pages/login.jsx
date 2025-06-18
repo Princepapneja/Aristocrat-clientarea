@@ -72,7 +72,9 @@ const Login = () => {
       setMainLoader(true);
 
       const { data } = await apiHandler.post("/login", inputValues);
-      if (data?.data?.access === "blocked") {
+      console.log(data);
+      
+      if (data?.data?.user?.access === "blocked" || data?.data?.user?.access === "pending") {
         navigate("/")
         error("Your account has been blocked. Please contact us for more information.")
         return

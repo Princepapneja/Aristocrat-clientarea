@@ -59,7 +59,7 @@ const DashboardLayout = () => {
 
             <Outlet context={context} />
             </div>
-          {/* <Footer/> */}
+          <Footer/>
 
           </div>
         </div>

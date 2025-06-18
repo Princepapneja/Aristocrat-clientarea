@@ -36,7 +36,7 @@ function Homepage() {
     try {
       const [aristocratRes, igniteRes] = await Promise.all([
         apiHandler.get(`games?skip=0&limit=10&studio=1`),
-        apiHandler.get(`games?skip=0&limit=10&studio=1`)
+        apiHandler.get(`games?skip=0&limit=10&studio=2`)
       ]);
       console.log(aristocratRes);
       
@@ -120,7 +120,7 @@ function Homepage() {
             >
               {aristocratGames.map((game, index) => (
                 <SwiperSlide key={index}>
-                  <GameCard game={game} />
+                  <GameCard game={game}  key={game?.id}/>
                 </SwiperSlide>
               ))}
             </Swiper>

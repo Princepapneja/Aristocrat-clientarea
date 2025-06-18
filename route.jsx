@@ -14,6 +14,8 @@ import FolderUploader from './src/components/dashboard/fileUploader';
 import SignUp from './src/pages/SignUp';
 import ForgotPassword from './src/pages/ForgotPassword';
 import GameAssets from './src/components/dashboard/GameAssets';
+import ProtectedRoute from './src/components/auth/ProtectedRoute';
+import CreatePassword from './src/pages/CreatePassword';
 
 
 const Route = () => {
@@ -32,6 +34,10 @@ const Route = () => {
                     path: '/forgot-password',
                     element: <ForgotPassword />
                 },
+                  {
+                    path: '/change-password',
+                    element: <CreatePassword />
+                },
                 {
                     path: '/sign-up',
                     element: <SignUp />
@@ -42,48 +48,48 @@ const Route = () => {
                             children:[
                                 {
                                     path: '/dashboard',
-                                    element:  <Homepage />,
+                                    element:<ProtectedRoute> <Homepage /></ProtectedRoute>  ,
                                 },
                                
                                 {
                                     path:'/dashboard/certificates',
-                                    element:<Certificates/>
+                                    element:<ProtectedRoute><Certificates/></ProtectedRoute>
                                 },
                                  {
                                     path:'/dashboard/game-assets',
-                                    element:<GameAssets/>
+                                    element:<ProtectedRoute><GameAssets/></ProtectedRoute>
                                 },
                                 {
                                     path:'/dashboard/master-game-list',
-                                    element:<MasterGame/>
+                                    element:<ProtectedRoute><MasterGame/></ProtectedRoute>
                                 },
                                 {
                                     path:'/dashboard/support',
-                                    element:<ContactUs/>
+                                    element:<ProtectedRoute><ContactUs/></ProtectedRoute>
                                 },
                                 {
                                     path:'/dashboard/roadmaps',
-                                    element:<Roadmaps/>
+                                    element:<ProtectedRoute><Roadmaps/></ProtectedRoute>
                                 },
                                 {
                                     path:'/dashboard/games',
-                                    element:<GamePage/>
+                                    element:<ProtectedRoute><GamePage/></ProtectedRoute>
                                 },
                                 {
                                     path:'/dashboard/engagement-tools',
-                                    element:<EngagementTools/>
+                                    element:<ProtectedRoute><EngagementTools/></ProtectedRoute>
                                 },
                                 {
                                     path:'/dashboard/home',
-                                    element:<Homepage/>
+                                    element:<ProtectedRoute><Homepage/></ProtectedRoute>
                                 },
                                 {
                                   path:"/dashboard/detail-game/:id",
-                                  element:<DetailGame />
+                                  element:<ProtectedRoute><DetailGame /></ProtectedRoute>
                                 },
                                 {
                                   path:"/dashboard/test",
-                                  element:<FolderUploader />
+                                  element:<ProtectedRoute><FolderUploader /></ProtectedRoute>
                                 },
                                
 

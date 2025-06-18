@@ -100,7 +100,7 @@ function GamePage() {
         setLoading(true);
         try {
             const queryParams = new URLSearchParams(filters).toString();
-            const { data } = await apiHandler.get(`games?${queryParams}`);
+            const { data } = await apiHandler.get(`games/`);
             const newGames = data.data.games || [];
             setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
@@ -126,6 +126,7 @@ function GamePage() {
     setFilters(updatedFilters);
 };
 
+console.log(filters);
 
 
     const clearFilter = (key) => {
