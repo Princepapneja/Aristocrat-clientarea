@@ -133,10 +133,8 @@ const data= {
             const { data } = await apiHandler.get(`/companies`);
 
             console.log(data);
-
-            setCompanyList(data.data)
-
-
+const options= data?.data?.map((e)=>({name:e.name,value:e.id}))
+            setCompanyList(options)
         } catch (error) {
             console.error('Failed to fetch games:', error);
         }
@@ -173,6 +171,7 @@ const data= {
         //     error("Password and Confirm Password do not match.");
         //     return;
         //   }
+        debugger
         const payload = {
             firstName: inputValues?.firstName,
             lastName: inputValues?.lastName,
@@ -190,7 +189,6 @@ const data= {
             const { data } = await apiHandler.post("/register", payload);
             console.log(data);
 
-            success(data.message);
             success(data.message);
 
             setInputValues({
@@ -266,7 +264,7 @@ const data= {
 
                                     {
                                         items?.map((ele, index) => {
-                                            return <InputField key={index} handleInputChange={handleInput} id={ele?.id} options={companyList} type={ele.type} value={inputValues?.[ele.id]} placeholder={ele.placeholder} />
+                                            return <InputField key={index} handleInputChange={handleInput} id={ele?.id} name={ele?.id} options={companyList} type={ele.type} value={inputValues?.[ele.id]} placeholder={ele.placeholder} />
                                         })
                                     }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { act, useEffect, useRef, useState } from 'react'
 import Buttons from '../utils/buttons'
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -9,14 +9,15 @@ import { Pagination, Autoplay } from 'swiper/modules';
 import { useParams } from 'react-router-dom';
 import apiHandler from '../../functions/apiHandler';
 import moment from 'moment';
-import { dateFormat } from '../../../constants';
+import { baseUrl, dateFormat } from '../../../constants';
 import ActiveButtons from '../utils/ActiveButtons';
 
 function DetailGame() {
     const [activeIndex, setActiveIndex] = useState(0)
     const [active, setActive] = useState(0)
-    const [volatility,setVolatility]= useState([])
-    const [theme,setTheme]= useState([])
+    const [files, setFiles] = useState([])
+    const [volatility, setVolatility] = useState([])
+    const [theme, setTheme] = useState([])
     const swiperRef = useRef(null)
     const [dateOption, setDateOption] = useState(
         [
@@ -42,20 +43,59 @@ function DetailGame() {
     const { id } = useParams();
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [features,setFeatures]= useState([])
+    const [features, setFeatures] = useState([])
 
     useEffect(() => {
         fetchGame();
     }, [id]);
-
+    const handleDownload = async (name, type) => {
+        try {
+          const folder = buttons?.[active]?.key;
+      
+          if (!id || !name || !type || !folder) {
+            console.warn("Missing required parameters");
+            return;
+          }
+      
+          const url = `/games/${id}/download?type=${type}&name=${encodeURIComponent(name)}&folder=${folder}`;
+          debugger
+      
+          const response = await apiHandler.get(url, {
+            responseType: 'blob', // Needed to process binary data (zip or file)
+          });
+      
+          // Extract filename from response headers or fallback
+          const contentDisposition = response.headers['content-disposition'];
+          let filename = `${name}.zip`; // fallback to zipped folder name
+          if (contentDisposition) {
+            const match = contentDisposition.match(/filename="?([^"]+)"?/);
+            if (match?.[1]) {
+              filename = match[1];
+            }
+          }
+          // Create a download link
+          const blob = new Blob([response.data]);
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = filename;
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          URL.revokeObjectURL(link.href);
+        } catch (error) {
+          console.error("Download failed:", error);
+        }
+      };
+      
+      
     const fetchGame = async () => {
         setLoading(true);
         try {
             const { data } = await apiHandler.get(`/game/${id}`);
             setGame(data?.data);
-            setVolatility(data?.data?.categories?.filter(q=>q.type==="volatility"))
-            setTheme(data?.data?.categories?.filter(q=>q.type==="theme"))
-            setFeatures(data?.data?.categories?.filter(q=>q.type==="feature"))
+            setVolatility(data?.data?.categories?.filter(q => q.type === "volatility"))
+            setTheme(data?.data?.categories?.filter(q => q.type === "theme"))
+            setFeatures(data?.data?.categories?.filter(q => q.type === "feature"))
 
         } catch (error) {
             console.error('Failed to fetch game:', error);
@@ -63,22 +103,34 @@ function DetailGame() {
             setLoading(false);
         }
     };
+    const fetchFiles = async () => {
+        try {
+            const { data } = await apiHandler.get(`files/${id}?type=${buttons?.[active]?.key}`)
+            setFiles(data?.data)
+        } catch (error) {
 
-    const buttons= [
+        }
+
+    }
+    const buttons = [
 
         {
-            name:"Media Pack"
+            name: "Media Pack",
+            key: "Media Packs"
         },
         {
-            name:"Game Sheet"
+            name: "Game Sheet"
         },
         {
-            name:"Game Rules"
+            name: "Game Rules"
         },
         {
-            name:"Certificates"
+            name: "Certificates"
         },
     ]
+    useEffect(() => {
+        fetchFiles()
+    }, [active])
 
     return (
         <>
@@ -111,17 +163,17 @@ function DetailGame() {
                                     slidesPerView={1}
                                     className='h-[384px] w-[540px] absolute top-[-413px] left-0'
                                 >
-                                     {sliderData.map((slide, index) => (
-                                                  <SwiperSlide key={index}>
-                                                    <div className='relative'>
-                                                      <img className='h-80 w-full' src={slide.img} alt='' />
-                                                      
-                                                    </div>
-                                                  </SwiperSlide>
-                                                ))}
+                                    {sliderData.map((slide, index) => (
+                                        <SwiperSlide key={index}>
+                                            <div className='relative'>
+                                                <img className='h-80 w-full' src={slide.img} alt='' />
+
+                                            </div>
+                                        </SwiperSlide>
+                                    ))}
 
                                 </Swiper>
-                                
+
                                 <div className="flex justify-center space-x-2 mt-4 absolute top-[377px] left-[250px] z-10">
                                     {sliderData.map((_, index) => {
                                         return (
@@ -136,7 +188,7 @@ function DetailGame() {
                                     })}
                                 </div>
                                 <img src={"/Images/frog.png"} alt="" className='absolute w-[170px] h-[164px] top-[297px] right-[-43px] z-50 ' />
-                               
+
                             </div>
 
                         </div>
@@ -149,7 +201,7 @@ function DetailGame() {
                     <div className='bg-black rounded-3xl'>
                         <div className='flex pt-11 pb-9 ml-12 gap-20 max-w-[1354px] w-full'>
                             <div>
-                                <p className='font-semibold text-3xl text-white mb-1.5'>{game?.categories?.find(q=>q.type==="gameType")?.title}</p>
+                                <p className='font-semibold text-3xl text-white mb-1.5'>{game?.categories?.find(q => q.type === "gameType")?.title}</p>
                                 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Game Type</p></div>
 
                             <div>
@@ -192,27 +244,27 @@ function DetailGame() {
                             <p className='text-xl text-black-v3 mt-20 mb-5 '>Free Spins Symbols</p>
                             <p className='text-xl font-semibold'>
                                 {
-                                    game?.freeSpins ? "YES": "NO"
+                                    game?.freeSpins ? "YES" : "NO"
                                 }
-                                </p>
+                            </p>
                         </div>
                         <div>
                             <div>
-                            <p className='text-xl text-black-v3 mb-5'>Volatility:</p>
-                            {
-                                volatility?.map((e)=>{
-                            return <p key={e.id} className='text-xl font-semibold'>{e.title}</p>
+                                <p className='text-xl text-black-v3 mb-5'>Volatility:</p>
+                                {
+                                    volatility?.map((e) => {
+                                        return <p key={e.id} className='text-xl font-semibold'>{e.title}</p>
 
-                                })
-                            }
-                            
+                                    })
+                                }
+
                             </div>
                             <div>
 
-                            <p className='mt-20 text-xl text-black-v3 '>Game Theme</p>
-                            <p className="text-xl mt-5 mb-20 font-semibold">
-  {theme?.map((e) => e.title).join(', ')}
-</p>
+                                <p className='mt-20 text-xl text-black-v3 '>Game Theme</p>
+                                <p className="text-xl mt-5 mb-20 font-semibold">
+                                    {theme?.map((e) => e.title).join(', ')}
+                                </p>
 
                             </div>
 
@@ -220,10 +272,7 @@ function DetailGame() {
                                 <p>Game Key</p>
                                 <img className='h-4 w-4 ' src={"/logos/filterarrowBlack.png"} alt="" />
                             </div>
-
                         </div>
-
-
                         <div>
                             <p className='text-xl text-black-v3 mb-5'>RTP</p>
                             <p className='text-xl font-semibold'>Var_99     96.66%</p>
@@ -238,17 +287,17 @@ function DetailGame() {
                         </div>
 
                         <div>
-                        <p className='text-xl text-black-v3 mb-4'>Special Features</p>
+                            <p className='text-xl text-black-v3 mb-4'>Special Features</p>
 
                             {
-                                features?.map((feature)=>{
+                                features?.map((feature) => {
                                     return (
                                         <p key={feature.id} className='text-xl font-semibold'>{feature?.title}</p>
                                     )
 
                                 })
                             }
-                          
+
 
                         </div>
 
@@ -260,19 +309,43 @@ function DetailGame() {
                     <h1 className='font-medium text-4xl  text-center'>Download all necessary assets and certificates below</h1>
                     <div className=''>
 
-                    {
-                        <ActiveButtons active={active} setActive={setActive} buttons={buttons} />
-                    }
-                      
-                    </div>
+                        {
+                            <ActiveButtons active={active} setActive={setActive} buttons={buttons} />
+                        }
 
-                        <div className='flex justify-end gap-7 bg-white  rounded-lg  py-10'>
+
+
+                    </div>
+                    <div className='bg-white py-10 px-4'>
+                        <div className='flex justify-end gap-7   rounded-lg  '>
                             <Buttons type='download' name='Download Selected'></Buttons>
                             <Buttons type='download' name='Download All'></Buttons>
                         </div>
-                        {
+                        <div className='grid gap-4  mt-4'>
+                            {
+                                files?.folders?.map((e, i) => {
+                                    return <div key={i} className='flex justify-between'>
+                                        <h4>{e}</h4>
+                                        <Buttons big={false} onClick={()=>
+                                            {handleDownload(e,"folder")}
+                                        }>Download</Buttons>
+                                    </div>
+                                })
+                            }
+                            {
+                                files?.files?.map((e, i) => {
+                                    return <div key={i} className='flex justify-between'>
+                                        <h4>{e}</h4>
+                                        <Buttons big={false} onClick={()=>
+                                            {handleDownload(e,"file")}
+                                        }>Download</Buttons>
+                                    </div>
+                                })
+                            }
+                        </div>
+                    </div>
 
-                        }
+
                 </div>
             </div>
 
