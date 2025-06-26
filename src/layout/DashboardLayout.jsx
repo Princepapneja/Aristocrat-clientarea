@@ -1,28 +1,32 @@
-import { useEffect, useState } from 'react'
-import useGlobal from '../hooks/useGlobal'
-import { Outlet } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useGlobal from '../hooks/useGlobal';
+import { Outlet, useNavigate } from 'react-router-dom';
 import apiHandler from '../functions/apiHandler';
 import SideBar from '../components/header-footer/SideBar';
 import DashBoardHeader from '../components/header-footer/dashBoardHeader';
 import ChangePass from '../components/auth/ChangePass';
-import { useNavigate } from 'react-router-dom';
 import Footer from '../components/header-footer/Footer';
+import MobileMenu from '../components/header-footer/MobileMenu';
+
 const DashboardLayout = () => {
-  const context = useGlobal()
-  const navigate= useNavigate()
-  const { height, sideBarOpen, user, setUser, setCounts, token, render } = context
+  const context = useGlobal();
+  const navigate = useNavigate();
+  const { height, sideBarOpen, user, setUser, setCounts, token, render } = context;
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+
   const fetchDetails = async () => {
-    const { data } = await apiHandler.get("me")
+    const { data } = await apiHandler.get("me");
     if (data?.data?.access === "blocked") {
-      localStorage.removeItem("token")
-      navigate("/")
+      localStorage.removeItem("token");
+      navigate("/");
     }
-    setUser(data.data)
-    // navigate("/dashboard")
-  }
+    setUser(data.data);
+  };
+
   const automation = async () => {
-    const { data } = await apiHandler.patch("/automation")
-  }
+    await apiHandler.patch("/automation");
+  };
+
   const fetchCounts = async () => {
     try {
       const currentYear = new Date().getFullYear();
@@ -31,42 +35,57 @@ const DashboardLayout = () => {
     } catch (error) {
       console.error("Error fetching counts:", error);
     }
-  }
+  };
 
   useEffect(() => {
-    automation()
-  }, [])
+    automation();
+  }, []);
 
   useEffect(() => {
     if (!token) return;
-    fetchDetails()
-    fetchCounts()
-  }, [token, render])
+    fetchDetails();
+    fetchCounts();
+  }, [token, render]);
 
   return (
-    <>
-      <div className='flex  bg-background'>
+    <div className="flex flex-col lg:flex-row min-h-screen bg-background">
+      {/* Sidebar for desktop */}
+      <div className="hidden lg:block fixed top-0 left-0 h-full w-[240px] z-30">
         <SideBar />
-        {user?.systemGeneratedPass &&
-          <ChangePass initialValue={user?.systemGeneratedPass} />
-        }
-        
-        <div className='  flex-grow' >
-        <DashBoardHeader />
-
-          <div className={`main   space-y-8  overflow-y-auto ${sideBarOpen ? "blur":""} duration-500 `} style={{ height: `calc(100vh - ${174}px)` }}>
-            <div className='container '>
-
-            <Outlet context={context} />
-            </div>
-          <Footer/>
-
-          </div>
-        </div>
       </div>
 
-    </>
-  )
-}
+      {/* Mobile menu */}
+      <div className="block lg:hidden w-full">
+        <MobileMenu />
+      </div>
 
-export default DashboardLayout
+      {/* Main content area */}
+      <div className="flex flex-col w-full md:w-[calc(100vw-240px)] lg:ml-[230px]">
+        {user?.systemGeneratedPass && (
+          <ChangePass initialValue={user?.systemGeneratedPass} />
+        )}
+
+        {/* <p className="text-2xl sm:text-3xl mt-4 mb-4 text-center font-medium">
+          Welcome to Arictocrat Interactive Client Area
+        </p> */}
+
+        <div className="hidden lg:block">
+          <DashBoardHeader />
+        </div>
+
+        <div
+          className={`main duration-500 ${sideBarOpen ? 'blur' : ''}`}
+          style={{ minHeight: `calc(100vh - 280px)` }}
+        >
+          <div className=" container w-full max-w-screen-md  space-y-6">
+            <Outlet context={context} />
+          </div>
+
+          <Footer />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DashboardLayout;

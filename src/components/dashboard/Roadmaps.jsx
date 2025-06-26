@@ -104,6 +104,8 @@ date:"17 April"
             name:'All Roadmap Downloads'
         }
     ])
+
+
   return (
    
    <>
@@ -115,12 +117,12 @@ date:"17 April"
 
 
     <div className=' mb-8 '>
-    <ActiveButtons active={activeStudio} className={"grid grid-cols-3 gap-4"} setActive={setActiveStudio} buttons={activeButtons} />
+    <ActiveButtons active={activeStudio} className={"grid grid-cols-1 md:grid-cols-3 gap-4 bg-[#F4F4F4]"} setActive={setActiveStudio} buttons={activeButtons} />
     </div>
 
     </div>
 
-   <div className='flex justify-between items-center mb-5 w-full'>
+   <div className='flex gap-10 flex-col md:flex-row justify-between items-center mb-5 w-full'>
 <div className='flex gap-3.5 items-center'>
 <img src={"/Images/uk.jpg"} className='h-12 w-12 rounded-full' alt="" />
 <p className='text-3xl font-medium'>United Kingdom</p>
@@ -132,9 +134,9 @@ date:"17 April"
 </div>
  
 <div className='mb-14'>
-    <ActiveButtons active={activeYear} setActive={setActiveYear} type="roadmap" buttons={months}  />
+    <ActiveButtons active={activeYear} setActive={setActiveYear} type="roadmap" buttons={months}   />
 </div>
-<div className='grid grid-cols-4 gap-8'>
+<div className='grid grid-cols-1 md:grid-cols-4 gap-8 mb-10'>
 {games.map((item)=>{
     return(
         <GameCard game={item} />

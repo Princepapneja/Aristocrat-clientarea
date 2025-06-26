@@ -39,13 +39,13 @@ return (
    <div className='container h-100'>
 
 
-<h1 className='text-5xl font-medium'>Master Game List</h1>
+<h1 className='text-3xl md:4xl font-medium'>Master Game List</h1>
 
 
 <div className='mt-11'>
     <div className='border-b-1 border-black-v4'>
         <div className='mb-8 '>
-<ActiveButtons buttons={activeButtons} active={active} setActive={setActive} type='activePage' />
+<ActiveButtons buttons={activeButtons} active={active} setActive={setActive} type='activePage' className={"bg-[#F4F4F4] flex-col md:flex-row"}/>
         </div>
     </div>
    

@@ -13,56 +13,57 @@ import { dateFormat } from '../../../constants';
 import ActiveButtons from '../utils/ActiveButtons';
 import { ChevronDown, ChevronRight, Download } from 'lucide-react';
 const data = [
-  {
-    id: 1,
-    name: 'Ontario',
-    children: [],
-  },
-  {
-    id: 2,
-    name: 'West Virginia',
-    children: [],
-  },
-  {
-    id: 3,
-    name: 'New Jersey',
-    children: [
-      { id: 31, name: 'Certificate' },
-      { id: 32, name: 'Sybol Mapping' },
-    ],
-  },
-  {
-    id: 4,
-    name: 'Michigan',
-    children: [],
-  },
-  {
-    id: 5,
-    name: 'New Jersey',
-    children: [
-      { id: 31, name: 'Certificate' },
-      { id: 32, name: 'Sybol Mapping' },
-    ],
-  },
-  {
-    id: 67,
-    name: 'New Jersey',
-    children: [
-    
-    ],
-  },
+    {
+        id: 1,
+        name: 'Ontario',
+        children: [],
+    },
+    {
+        id: 2,
+        name: 'West Virginia',
+        children: [],
+    },
+    {
+        id: 3,
+        name: 'New Jersey',
+        children: [
+            { id: 31, name: 'Certificate' },
+            { id: 32, name: 'Sybol Mapping' },
+        ],
+    },
+    {
+        id: 4,
+        name: 'Michigan',
+        children: [],
+    },
+    {
+        id: 5,
+        name: 'New Jersey',
+        children: [
+            { id: 31, name: 'Certificate' },
+            { id: 32, name: 'Sybol Mapping' },
+        ],
+    },
+    {
+        id: 67,
+        name: 'New Jersey',
+        children: [
+
+        ],
+    },
 ];
 function DetailGame() {
     const [activeIndex, setActiveIndex] = useState(0)
     const [active, setActive] = useState(0)
     const [volatility, setVolatility] = useState([])
     const [theme, setTheme] = useState([])
-const [folders,setFolders]= useState([])
+    const [folders, setFolders] = useState([])
+    const [files, setFiles] = useState([])
     const [expanded, setExpanded] = useState({});
 
-  const toggleExpand = (id) => {
-    setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
+    const toggleExpand = (id) => {
+        setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
+    };
 
     const swiperRef = useRef(null)
     const [dateOption, setDateOption] = useState(
@@ -107,102 +108,222 @@ const [folders,setFolders]= useState([])
         }
     };
 
-    const [buttons,setButtons] =useState( [
+    const [buttons, setButtons] = useState([
 
     ])
-const [rootLevels,setRootLevels]=useState([])
+    const [rootLevels, setRootLevels] = useState([])
 
 
 
-const fetchRootLevels=async ()=>{
-    let url=   `games/${id}/folders`
-    const {data} = await apiHandler.get(url)
+    const fetchRootLevels = async () => {
+        let url = `games/${id}/folders`
+        const { data } = await apiHandler.get(url)
 
-setRootLevels(data?.data?.folders||[])
+        setRootLevels(data?.data?.folders || [])
 
-//    setFiles(data?.data?.files)
+        //    setFiles(data?.data?.files)
 
 
 
-    
-    
-    // setUploadedFolders(data?.data?.files)
-}
-useEffect(()=>{
-fetchRootLevels()
-},[])
-useEffect(()=>{
-fetchFiles()
-},[active,rootLevels])
-const fetchFiles=async ()=>{
-    if(rootLevels?.length===0) return
-const folderId= rootLevels?.[active]?.id
-   let url=   `games/${id}/folders`
-//     const {data} = await apiHandler.get(url)
-// setFolders(data?.data?.folders||[])
-//    setFiles(data?.data?.files)
-    if(folderId){
-  url+=`?folder=${folderId}`
-}
-    const {data} = await apiHandler.get(url)
-console.log(data);
-setFolders(data?.data?.folders)
 
-}
-const renderFiles = (folders) => {
-    // console.log(folders);
-    
-  return folders?.map((folder) =>
-    
-    {
-        console.log(folder);
-        
-        return (
-    <div key={folder.id}>
-      {/* Folder Row */}
-      <div className="flex items-center justify-between py-3 border-b border-gray-200">
-        <div className="flex items-center gap-2">
-          <button onClick={() => toggleExpand(folder.id)}>
-            {folder.subfolders?.length > 0 || folder.files?.length > 0 ? (
-              expanded[folder.id] ? <ChevronDown size={18} /> : <ChevronRight size={18} />
-            ) : (
-              <div className="w-[18px]" />
-            )}
-          </button>
-          <input type="checkbox" className="cursor-pointer" />
-          <span className="text-sm font-medium text-black">{folder.name}</span>
+
+        // setUploadedFolders(data?.data?.files)
+    }
+    useEffect(() => {
+        fetchRootLevels()
+    }, [])
+    useEffect(() => {
+        fetchFiles()
+    }, [active, rootLevels])
+    const fetchFiles = async () => {
+        if (rootLevels?.length === 0) return
+        const folderId = rootLevels?.[active]?.id
+        let url = `games/${id}/folders`
+        //     const {data} = await apiHandler.get(url)
+        // setFolders(data?.data?.folders||[])
+        //    setFiles(data?.data?.files)
+        if (folderId) {
+            url += `?folder=${folderId}`
+        }
+        const { data } = await apiHandler.get(url)
+        console.log(data);
+        setFolders(data?.data?.folders)
+        setFiles(data?.data?.files)
+
+    }
+    const renderFiles = (folders, files) => {
+        // console.log(folders);
+
+        return <div>
+            {
+                folders?.map((folder) => {
+
+                    return (
+                        <div key={folder.id}>
+                            {/* Folder Row */}
+                            <div className="flex items-center justify-between py-3 border-b border-gray-200">
+                                <div className="flex items-center gap-2">
+                                    <button onClick={() => toggleExpand(folder.id)}>
+                                        {folder?.subfolders?.length > 0 || folder.files?.length > 0 ? (
+                                            expanded[folder.id] ? <ChevronDown size={18} /> : <ChevronRight size={18} />
+                                        ) : (
+                                            <div className="w-[18px]" />
+                                        )}
+                                    </button>
+                                    <input type="checkbox" className="cursor-pointer" />
+                                    <span className="text-sm font-medium text-black">{folder.name}</span>
+                                </div>
+
+                                <button onClick={() => { downloadById("folder", folder.id) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
+                                    Download <Download size={14} />
+                                </button>
+                            </div>
+
+                            {/* Expanded Subfolders and Files */}
+                            {expanded[folder.id] && (
+                                <div className="ml-10 space-y-2">
+                                    {/* Render Files */}
+                                    {folder.files?.map((file) => {
+                                        // console.log(file);
+
+                                        return (
+                                            <div key={file.id} className="flex items-center justify-between py-2">
+                                                <div className="flex items-center gap-2">
+                                                    <input type="checkbox" className="cursor-pointer" />
+                                                    <span className="text-sm text-black">{file.name}</span>
+                                                </div>
+                                                <button onClick={() => { downloadById("file", file.id) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
+                                                    Download <Download size={14} />
+                                                </button>
+                                            </div>
+                                        )
+                                    })}
+
+                                    {/* Recursive Subfolders */}
+                                    {folder.subfolders?.length > 0 && renderFiles(folder.subfolders)}
+                                </div>
+                            )}
+                        </div>
+                    )
+                })
+            }
+            {files?.map((file) => {
+                // console.log(file);
+
+                return (
+                    <div key={file.id} className="flex items-center justify-between py-2">
+                        <div className="flex items-center gap-2">
+                            <input type="checkbox" className="cursor-pointer" />
+                            <span className="text-sm text-black">{file.name}</span>
+                        </div>
+                        <button onClick={() => { downloadById("file", file.id) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
+                            Download <Download size={14} />
+                        </button>
+                    </div>
+                )
+            })}
         </div>
-        <button className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white">
-          Download <Download size={14} />
-        </button>
-      </div>
+    };
 
-      {/* Expanded Subfolders and Files */}
-      {expanded[folder.id] && (
-        <div className="ml-10 space-y-2">
-          {/* Render Files */}
-          {folder.files?.map((file) => {    
-            // console.log(file);
-            
-            return(
-            <div key={file.id} className="flex items-center justify-between py-2">
-              <div className="flex items-center gap-2">
-                <input type="checkbox" className="cursor-pointer" />
-                <span className="text-sm text-black">{file.name}</span>
-              </div>
-              <Buttons type='download' name="Download" className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white">
-                {/* Download <Download size={14} /> */}
-              </Buttons>
-            </div>
-          )})}
 
-          {/* Recursive Subfolders */}
-          {folder.subfolders?.length > 0 && renderFiles(folder.subfolders)}
-        </div>
-      )}
-    </div>
-  )});
-};
+    const zippedFileDownload = async () => {
+        try {
+            const response = await apiHandler.get(`/games/${id}/download-zip`, {
+                responseType: 'blob',
+            });
+
+            // Extract filename from headers
+            const disposition = response.headers['content-disposition'];
+            let filename = 'game-files.zip'; // default fallback
+            debugger
+
+            if (disposition && disposition.includes('filename=')) {
+                const match = disposition.match(/filename="?([^"]+)"?/);
+                if (match && match[1]) {
+                    filename = match[1];
+                }
+            }
+
+            const blob = new Blob([response.data], { type: 'application/zip' });
+            const url = window.URL.createObjectURL(blob);
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Failed to fetch game zip:', error);
+        }
+    };
+
+    const downloadById = async (type, id) => {
+        try {
+            const query = type === 'file' ? `fileId=${id}` : `folderId=${id}`;
+            const response = await apiHandler.get(`/download?${query}`, {
+                responseType: 'blob',
+            });
+
+            const disposition = response.headers['content-disposition'];
+            let filename = type === 'file' ? 'file' : 'folder.zip';
+
+            if (disposition && disposition.includes('filename=')) {
+                const match = disposition.match(/filename="?([^"]+)"?/);
+                if (match && match[1]) {
+                    filename = match[1];
+                }
+            }
+
+            const blob = new Blob([response.data]);
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Download failed:', error);
+        }
+    };
+    const selectedFilesDownload = async () => {
+        try {
+            const response = await apiHandler.post(
+                'download-selected',
+                {
+                    gameId: 28,
+                    folderIds: [183, 184],
+                    fileIds: [],
+                },
+                {
+                    responseType: 'blob',
+                }
+            );
+
+            const blob = new Blob([response.data], { type: 'application/zip' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+
+            link.href = url;
+            link.download = 'selected_assets.zip'; // Optional: name it based on game title
+            document.body.appendChild(link);
+            link.click();
+
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error('Download failed:', error);
+        }
+    };
+
+
+
 
     return (
         <>
@@ -246,8 +367,8 @@ const renderFiles = (folders) => {
                                             key={index}
                                             onClick={() => swiperRef.current?.slideToLoop(index)}
                                             className={`w-2.5 h-2.5 rounded-full ${activeIndex === index
-                                                    ? 'w-20 h-2.5 rounded-xl bg-primary-dark'
-                                                    : 'bg-black-v4'
+                                                ? 'w-20 h-2.5 rounded-xl bg-primary-dark'
+                                                : 'bg-black-v4'
                                                 }`}
                                         ></button>
                                     ))}
@@ -409,23 +530,23 @@ const renderFiles = (folders) => {
 
                     </div>
 
-                 <div>
-                    {
-                        active==0 && <div className="bg-white rounded-lg p-10">
-  <div className="flex justify-end gap-7 mb-4">
-    <Buttons type="download" name="Download Selected" />
-    <Buttons type="download" name="Download All" />
-  </div>
+                    <div>
+                        {
+                         <div className="bg-white rounded-lg p-10">
+                                <div className="flex justify-end gap-7 mb-4">
+                                    <Buttons onClick={selectedFilesDownload}  >Download Selected</Buttons>
+                                    <Buttons onClick={zippedFileDownload}>Download All</Buttons>
+                                </div>
 
-  <hr className="border-1 border-[#A8A8A8] mb-5" />
+                                <hr className="border-1 border-[#A8A8A8] mb-5" />
 
-  <div className="space-y-1 max-h-[400px] overflow-y-auto">
-    {renderFiles(folders)}
-  </div>
-</div>
+                                <div className="space-y-1 max-h-[400px] overflow-y-auto">
+                                    {renderFiles(folders, files)}
+                                </div>
+                            </div>
 
-                    }
-                 </div>
+                        }
+                    </div>
                 </div>
 
 

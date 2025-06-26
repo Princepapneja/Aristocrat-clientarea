@@ -62,20 +62,20 @@ function ContactUs() {
     )
     return (
         <>
-            <div className='container'>
+            <div className=''>
                 <div className=''>
                     <div className='space-y-7'>
                         <p className='font-medium text-5xl mt-10'>Support </p>
-                        <div className='space-y-5'>
+                        <div className='space-y-5 '>
 
-                        <p className=' text-black-v3 text-2xl mt-8'>Dear</p>
-                        <p className=' text-black-v3 text-2xl mt-8 '>If you are encountering any difficulties with our products, are unable to locate a specific document or asset, or would like further information about a particular game, please contact us at   <a href="mailto:support@aristocratinteractive.com" className=' font-semibold text-primary-dark underline'>support@aristocratinteractive.com</a> . A member of our team will respond to your inquiry as promptly as possible.</p>
-                        <p className=' text-black-v3 text-2xl mt-8'>Thank you</p>
-                        <p className=' text-black-v3 text-2xl mt-8'>Use the button below for a quicker way to reach us!</p>
+                        <p className=' text-black-v3 text-2xl mt-8 font-normal'>Dear</p>
+                        <p className=' text-black-v3 text-2xl mt-8 font-normal w-full'>If you are encountering any difficulties with our products, are unable to locate a specific document or asset, or would like further information about a particular game, please contact us at   <a href="mailto:support@aristocratinteractive.com" className='break-all w-100 cursor-pointer font-semibold text-primary-dark underline'>support@aristocratinteractive.com</a>. A member of our team will respond to your inquiry as promptly as possible.</p>
+                        <p className=' text-black-v3 text-2xl mt-8 font-normal'>Thank you</p>
+                        <p className=' text-black-v3 text-2xl mt-8 font-normal'>Use the button below for a quicker way to reach us!</p>
                         </div>
 
-                        <Buttons  className={"flex items-center gap-2 mt-20 mb-25"} >
-                            <span className=' font-semibold text-xl '>support@aristocratinteractive.com</span>
+                        <Buttons  className={"flex items-center gap-2 mt-20 mb-25 "} >
+                            <span className=' font-normal  text-lg '>support@aristocratinteractive.com</span>
                             <img src={'/logos/email.svg'} alt="" className='w-5' />
                         </Buttons>
 

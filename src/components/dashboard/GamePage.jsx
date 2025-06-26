@@ -148,7 +148,7 @@ console.log(filters);
         <div className='space-y-16 group' >
             {/* Filter Inputs */}
             <div className='space-y-5'>
-                <div className='grid grid-cols-4 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
                     <InputField
                         type='selects'
                         id='studio'
@@ -183,7 +183,7 @@ console.log(filters);
                     />
                 </div>
 
-                <div className='grid grid-cols-4 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
                     <InputField
                         type='selects'
                         label="Features"
@@ -279,7 +279,7 @@ console.log(filters);
             </div>
 
             {/* Game List */}
-            <div className='grid grid-cols-4 gap-x-10 gap-y-16 p-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-16 p-4'>
                 {games.map((item, index) => (
                     <GameCard key={index} game={item} className='w-[280px]' />
                 ))}

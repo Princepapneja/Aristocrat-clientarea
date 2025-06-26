@@ -111,14 +111,17 @@ const data= {
 
   return (
     <>
-      <div className={` h-screen     `}>
-        <div className="flex  ">
-          <div className="w-full bg-[url(/Images/login-back.png)] h-screen p-12  ">
-            <img className="w-[431px] h-[348px]" src="/logos/logo-black.png" alt="" />
-            <h1
-              className="text-black-v1 font-medium text-[56px] not-italic leading-none font-ot-sono pl-9 max-w-[544px] w-full">
-           Reset Your Password
-            </h1>
+      <div className="min-h-screen w-full flex flex-col lg:flex-row">
+     
+          <div className="w-full min-h-[200px] bg-[url('/Images/login-back.png')]  bg-center sm:p-2 lg:p-12 flex flex-col justify-center">
+           <img
+          className="md:max-w-96 max-w-48 w-full"
+          src="/logos/logo-black.png"
+          alt="Logo"
+        />
+        <h1 className="text-black-v1 font-medium text-[30px] sm:text-[56px] lg:text-[56px] not-italic leading-tight font-ot-sono  pl-4 sm:pl-4 lg:pl-9">
+          Reset Your Password
+        </h1>
 
           </div>
           <div className="w-full grid place-items-center ">
@@ -180,7 +183,7 @@ const data= {
             </div>}
           </div>
 
-        </div>
+       
 
 
       </div>

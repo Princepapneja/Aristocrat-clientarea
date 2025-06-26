@@ -183,7 +183,7 @@ console.log(selected);
             onChange={handleInputChange}
             name={id}
             id={id}
-            className="block w-full bg-transparent p-[0.6rem] border-2 border-gray-200 placeholder:font-light focus:outline-primary-dark rounded-xl text-desc"
+            className="block w-full bg-transparent p-1.5 border-2 border-gray-200 placeholder:font-light focus:outline-primary-dark rounded-lg text-desc"
           >
             {options?.map((option, key) => {
               
@@ -206,7 +206,7 @@ console.log(selected);
           value={value}
           placeholder={placeholder}
           onChange={handleInputChange && handleInputChange}
-          className="bg-transparent p-3 text-desc placeholder:font-light border-2 border-gray-200 focus:outline-primary-dark rounded-xl w-full"
+          className="bg-transparent p-3 text-desc placeholder:font-light border-2 border-gray-200 focus:outline-primary-dark rounded-lg w-full"
         ></textarea>
       ) : type === "switch" ? (
         <label className="flex justify-end cursor-pointer text-right">
@@ -216,7 +216,7 @@ console.log(selected);
       ) : type === "textEditor" ? (
         <JoditEditor value={value} onChange={handleEditorChange} />
       ) : (
-        <div className="flex items-center border border-black-v4 rounded-xl outline-none">
+        <div className="flex items-center border border-black-v4 rounded-lg outline-none">
           {prefix && prefix()}
           <input
             id={id}
@@ -241,7 +241,7 @@ console.log(selected);
             inputMode={type === "tel" ? "numeric" : undefined}
             accept={type === "file" ? "image/*" : undefined}
             onChange={handleChange}
-            className={`bg-white-v1 accent-primary-dark text-desc bg-transparent leading-0 p-1 sm:p-2 w-full placeholder:font-light placeholder:text-sm focus:outline-none disabled:bg-gray-200 ${type !== "password" ? "rounded-xl" : "rounded-l-xl"}`}
+            className={`bg-white-v1 accent-primary-dark text-desc  leading-0 p-2   w-full placeholder:font-light placeholder:text-sm focus:outline-none disabled:bg-gray-200 ${type !== "password" ? "rounded-lg" : "rounded-lg"}`}
             disabled={isDisable}
           />
 

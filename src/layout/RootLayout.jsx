@@ -18,6 +18,18 @@ const RootLayout = () => {
   const [progress, setProgress] = useState(0);
   const [user, setUser] = useState(null);
   const [mainLoader, setMainLoader] = useState(false)
+  
+ const [collapsed, setCollapsedState] = useState(() => {
+  const stored = localStorage.getItem('sidebarCollapsed');
+  return stored === 'true';
+});
+
+const setCollapsed = (value) => {
+  localStorage.setItem('sidebarCollapsed', value);
+  setCollapsedState(value);
+};
+
+  
   const success = (msg) => toast.success(msg, {
     position: "top-center",
     autoClose: 5000,
@@ -64,6 +76,7 @@ const RootLayout = () => {
   fetchNavHeight()
  },[navElement])
 
+
   return (
     <>
       {/* <Header/> */}
@@ -88,7 +101,7 @@ const RootLayout = () => {
         <Loader />
       }
       <main className="">
-        <Outlet context={{ disable, setDisable, availableQuestions, setAvailableQuestions, mainLoader, setMainLoader, user, counts, setCounts, navigate, token, setToken, setUser, render, setRender, height, success, error, progress, setProgress, sideBarOpen, setSideBarOpen }} />
+        <Outlet context={{ collapsed, setCollapsed,disable, setDisable, availableQuestions, setAvailableQuestions, mainLoader, setMainLoader, user, counts, setCounts, navigate, token, setToken, setUser, render, setRender, height, success, error, progress, setProgress, sideBarOpen, setSideBarOpen }} />
       </main>
       {/* <Footer/> */}
     </>
