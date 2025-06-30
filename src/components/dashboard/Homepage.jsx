@@ -36,7 +36,7 @@ function Homepage() {
     try {
       const [aristocratRes, igniteRes] = await Promise.all([
         apiHandler.get(`games?skip=0&limit=10&studio=1`),
-        apiHandler.get(`games?skip=0&limit=10&studio=1`)
+        apiHandler.get(`games?skip=0&limit=10&studio=2`)
       ]);
       console.log(aristocratRes);
       
@@ -50,7 +50,8 @@ function Homepage() {
 
   return (
     <>
-      <div className='md:w-full'>
+      <div className='w-full'>
+        
         {/* Hero Slider */}
         <div className='w-full '>
           <Swiper
@@ -61,11 +62,12 @@ function Homepage() {
             autoplay
             spaceBetween={50}
             slidesPerView={1}
+            
           >
             {heroSlider.map((slide, index) => (
               <SwiperSlide key={index}>
                 <div className='relative'>
-                  <img className='h-80 w-full' src={slide.img} alt='' />
+                  <img className='h-100 md:h-80 w-full object-cover  rounded-xl' src={slide.img} alt='' />
                   <p className='absolute top-3 left-3 font-semibold px-3.5 py-2.5 primary-gradient rounded-xl'>
                     Coming Soon
                   </p>
@@ -90,9 +92,9 @@ function Homepage() {
         </div>
 
         {/* Aristocrat Games */}
-        <div className='flex justify-between mb-14 mt-16'>
-          <h3 className='font-medium text-3xl'>Aristocrat Interactive Releases</h3>
-          <div className='flex gap-3.5'>
+        <div className='flex flex-col md:flex-row  justify-between my-6 md:my-10 lg:my-15'>
+          <h3 className='font-medium text-3xl md:4xl'>Aristocrat Interactive Releases</h3>
+          <div className='flex justify-end   gap-3.5'>
             <button
               onClick={() => ref.current?.slidePrev()}
               className='w-12 h-12 rounded-xl bg-white-v2 text-black-v4 flex justify-center items-center'
@@ -113,17 +115,39 @@ function Homepage() {
             <p>Loading Aristocrat Games...</p>
           ) : (
             <Swiper
-              onSwiper={(swiper) => (ref.current = swiper)}
-              spaceBetween={40}
-              slidesPerView={4}
-              loop={true}
-            >
-              {aristocratGames.map((game, index) => (
-                <SwiperSlide key={index}>
-                  <GameCard game={game} />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+  onSwiper={(swiper) => (ref.current = swiper)}
+  spaceBetween={20}
+  loop={true}
+  breakpoints={{
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    640: {
+      slidesPerView: 2,
+      spaceBetween: 15,
+    },
+    768: {
+      slidesPerView: 3,
+      spaceBetween: 20,
+    },
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 30,
+    },
+    1280: {
+      slidesPerView: 4,
+      spaceBetween: 40,
+    },
+  }}
+>
+  {aristocratGames.map((game, index) => (
+    <SwiperSlide key={game?.id || index}>
+      <GameCard game={game} />
+    </SwiperSlide>
+  ))}
+</Swiper>
+
           )}
         </div>
 
@@ -134,17 +158,17 @@ function Homepage() {
         </div>
 
         {/* Ignite Games */}
-        <div className='flex justify-between mb-14 '>
-          <h3 className='text-3xl font-medium'>Ignite Releases</h3>
-          <div className='flex gap-3.5'>
+      <div className='flex flex-col md:flex-row  justify-between my-6 md:my-10 lg:my-15'>
+          <h3 className='font-medium text-3xl md:4xl'>Ignite Releases</h3>
+          <div className='flex justify-end   gap-3.5'>
             <button
-              onClick={() => igniteRef.current?.slidePrev()}
+              onClick={() => ref.current?.slidePrev()}
               className='w-12 h-12 rounded-xl bg-white-v2 text-black-v4 flex justify-center items-center'
             >
               <ChevronLeft />
             </button>
             <button
-              onClick={() => igniteRef.current?.slideNext()}
+              onClick={() => ref.current?.slideNext()}
               className='w-12 h-12 rounded-xl bg-primary-dark text-white flex justify-center items-center'
             >
               <ChevronRight />
@@ -158,9 +182,30 @@ function Homepage() {
           ) : (
             <Swiper
               onSwiper={(swiper) => (igniteRef.current = swiper)}
-              spaceBetween={40}
-              slidesPerView={4}
               loop={true}
+              spaceBetween={20}
+                breakpoints={{
+    320: {
+      slidesPerView: 1,
+      spaceBetween: 10,
+    },
+    640: {
+      slidesPerView: 2,
+      spaceBetween: 15,
+    },
+    768: {
+      slidesPerView: 3,
+      spaceBetween: 20,
+    },
+    1024: {
+      slidesPerView: 4,
+      spaceBetween: 30,
+    },
+    1280: {
+      slidesPerView: 4,
+      spaceBetween: 40,
+    },
+  }}
             >
               {igniteGames.map((game, index) => (
                 <SwiperSlide key={index}>
@@ -171,7 +216,7 @@ function Homepage() {
           )}
         </div>
 
-        <div className='flex justify-center'>
+        <div className='flex justify-center mb-10'>
           <Link to={'/dashboard/games?studio=974c3fc0-214c-456a-8b36-68d6813cb8b3'}>
             <Buttons>Discover More</Buttons>
           </Link>

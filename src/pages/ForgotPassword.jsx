@@ -43,9 +43,9 @@ const ForgotPassword = () => {
   const [items, setItems] = useState([])
   const [otpBlock, setOtpBlock] = useState(false)
   const [forgotToken, setForgotToken] = useState("")
-const [newPassword,setNewPassword]=useState(true)
+
+const [newPassword,setNewPassword]=useState(false)
 const [resend, setResend] = useState(false);
-const [showBtn,setShowBtn]=useState(false)
   function handleInput(event) {
 
     setInputValues((prev) => {
@@ -65,12 +65,12 @@ const [showBtn,setShowBtn]=useState(false)
 
   }, [])
 
-  const handleLogin = async () => {
+  const handleForgetPass = async () => {
 
-    const { email, password } = inputValues;
+    const { email } = inputValues;
 
-    if (!email || !password) {
-      error("Both email and password are required.");
+    if (!email) {
+      error("email are required.");
       return;
     }
 
@@ -82,19 +82,17 @@ const [showBtn,setShowBtn]=useState(false)
     try {
       setMainLoader(true);
 
-      const { data } = await apiHandler.post("/login", inputValues);
-      if (data?.data?.access === "blocked") {
-        navigate("/")
-        error("Your account has been blocked. Please contact us for more information.")
-        return
-      }
-      localStorage.setItem("token", data.data.accessToken);
-
-
-      setUser(data.admin);
-      setInputValues(null)
+      const { data } = await apiHandler.post("/forgot-password", inputValues);
       success(data.message);
-      navigate("/dashboard");
+setResend(true)
+  const url = new URL(data.data);
+  console.log(url);
+  
+
+   setTimeout(() => {
+  const url = new URL(data.data);
+  navigate(`${url.pathname}${url.search}`);
+}, 5000);
     } catch (err) {
       console.error("Error during login:", err);
       error(err.message);
@@ -113,18 +111,21 @@ const data= {
 
   return (
     <>
-      <div className={` h-screen     `}>
-        <div className="flex  ">
-          <div className="w-full bg-[url(/Images/login-back.png)] h-screen p-12  ">
-            <img className="w-[431px] h-[348px]" src="/logos/logo-black.png" alt="" />
-            <h1
-              className="text-black-v1 font-medium text-[56px] not-italic leading-none font-ot-sono pl-9 max-w-[544px] w-full">
-            {newPassword && resend ? "Enter Your Username or Email Address": newPassword?"Change Password":"Reset Your Password"} 
-            </h1>
+      <div className="min-h-screen w-full flex flex-col lg:flex-row">
+     
+          <div className="w-full min-h-[200px] bg-[url('/Images/login-back.png')]  bg-center sm:p-2 lg:p-12 flex flex-col justify-center">
+           <img
+          className="md:max-w-96 max-w-48 w-full"
+          src="/logos/logo-black.png"
+          alt="Logo"
+        />
+        <h1 className="text-black-v1 font-medium text-[30px] sm:text-[56px] lg:text-[56px] not-italic leading-tight font-ot-sono  pl-4 sm:pl-4 lg:pl-9">
+          Reset Your Password
+        </h1>
 
           </div>
           <div className="w-full grid place-items-center ">
-             {resend ? <SucessLogReg data={data} resend={resend} showBtn={showBtn}/> :
+             {resend ? <SucessLogReg data={data} resend={resend} showBtn={true}/> :
                              <div className={`p-4 max-w-xl w-full`}
 
 
@@ -157,7 +158,7 @@ const data= {
 
                 <div className="space-y-6">
                   <Buttons spinner={false} onClick={
-                    handleLogin
+                    handleForgetPass
                   } big={true} className={"w-full mt-6 hover:bg-[black]"}>{newPassword?"Change Password":"Get New Password"}</Buttons>
 
                 </div>
@@ -182,7 +183,7 @@ const data= {
             </div>}
           </div>
 
-        </div>
+       
 
 
       </div>

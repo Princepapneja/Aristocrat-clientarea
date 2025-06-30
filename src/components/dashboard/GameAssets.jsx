@@ -167,18 +167,18 @@ const[gamesList, setGameLists]=useState(
         <div className='space-y-16 group' >
 
             <div className='flex justify-between mb-14'>
-                    <h1 className='text-5xl font-medium'>Game Assets</h1>
+                    <h1 className='text-3xl md:4xl font-medium'>Game Assets</h1>
                     <Link
                                         to="/dashboard/certificates"
-                                        className="flex items-center gap-2.5 py-2.5 px-4 border-2 border-black-v4 rounded-xl justify-between"
+                                        className="flex items-center gap-2 py-2.5 px-4 md:border-2 md:border-black-v4 rounded-xl justify-between"
                                     >
-                                        <p className="text-center font-medium">Go to Certificate</p>
+                                        <p className="text-center text-base font-normal">Go to Certificate</p>
                                         <img className="h-5 w-5" src="/logos/rightArrow.png" alt="Arrow" />
                                     </Link>
                 </div>
             {/* Filter Inputs */}
             <div className='space-y-5'>
-                <div className='grid grid-cols-4 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
                     <InputField
                         type='selects'
                         id='studio'
@@ -279,20 +279,30 @@ const[gamesList, setGameLists]=useState(
             <div className='bg-white-v2 px-7 pt-8 pb-1 space-y-8 rounded-t-3xl '>
 
                     {/*  button */}
-                    <div className='flex justify-end '>
-                    <Buttons type='download' name='Download All'></Buttons>
+                    <div className='flex  md:justify-end w-full '>
+                    <button className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+      Download All
+      <Download size={16} />
+    </button>
                     </div>
                     {/*  button */}
 
                     <div>
                         {gamesList?.map((game) => {
                             return (
-<div className="flex items-center justify-between px-4 py-3 mb-7 bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
+    <div className="flex justify-between items-center w-full md:hidden">
+   
+    <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full " />
+     <input type="checkbox" className="w-5 h-5 accent-emerald-500 " />
+
+
+    </div>
   {/* Left */}
-  <div className="flex items-center gap-14">
-    <input type="checkbox" className="w-5 h-5 accent-emerald-500" />
-    <img src={game.icon} alt="Game Icon" className="w-44 h-28 mb-2" />
-    <div>
+  <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
+    <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
+    <img src={game.icon} alt="Game Icon" className="w-44 h-28 md:mb-2" />
+    <div className='text-center md:text-left'>
       <h2 className="text-emerald-600 font-medium text-3xl mb-2">
         United Kingdom Certificate
       </h2>
@@ -302,10 +312,10 @@ const[gamesList, setGameLists]=useState(
   </div>
 
   {/* Right */}
-  <div className="flex items-center gap-14">
-    <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full" />
+  <div className="flex flex-col md:flex-row items-center gap-7 md:gap-14 w-full md:w-[unset]">
+    <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full hidden md:block" />
     <p className="text-xl text-gray-600 font-normal">4 GB</p>
-    <button className="cursor-pointer flex items-center gap-2 px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+    <button className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
       Download
       <Download size={16} />
     </button>

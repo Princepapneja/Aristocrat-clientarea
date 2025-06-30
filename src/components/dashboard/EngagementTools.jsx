@@ -59,9 +59,9 @@ function EngagementTools() {
     const [active, setActive] = useState(0)
     return (
         <>
-            <div className='container '>
+            <div className=' '>
                 <div className='space-y-12'>
-                    <h1 className='text-5xl font-medium'>Engagement Tools</h1>
+                    <h1 className='text-3xl md:4xl font-medium'>Engagement Tools</h1>
                     <div className='space-y-5'>
                         <p className='text-lg text-black-v3 max-w-[1111px]'>
                             We are committed to delivering the highest performance results for our partners, combining endless entertainment with the most effective
@@ -71,10 +71,10 @@ function EngagementTools() {
                             That is why, along with our attractive set of games, we provide a variety of powerful engagement tools, specifically designed for seamless use and integration, to maximize your attraction and retention rates.
                         </p>
                     </div>
-                    <div className='flex rounded-3xl bg-white-v2 gap-10 justify-between p-10 items-center mb-8'>
-                        <ActiveButtons active={active} setActive={setActive} className="flex-col max-w-[275px] !w-full " buttons={activeButtons} type='activePage' />
+                    <div className='flex flex-col md:flex-row rounded-3xl bg-white-v2 gap-10 justify-between p-2 items-center mb-8 w-full'>
+                        <ActiveButtons active={active} setActive={setActive} className="grid  grid-cols-2 md:grid-cols-1 gap-4 md:max-w-[275px] w-full" buttons={activeButtons} type='activePage' />
 
-                        <div className="bg-white-v2 rounded-3xl p-6 md:p-10">
+                        <div className="bg-white-v2 rounded-3xl p-2 md:p-10">
                             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-20 mb-6">
                                 <img
                                     src={
@@ -92,13 +92,13 @@ function EngagementTools() {
                                 />
                             </div>
 
-                            <div className="space-y-4 text-black-v3">
-                                <p className="text-lg max-w-xl">
+                            <div className="space-y-4 text-[#6F6F6F]">
+                                <p className="text-2xl md:text-lg max-w-xl">
                                     {
                                         activeButtons?.[active]?.description1
                                     }
                                 </p>
-                                <p className="text-lg">
+                                <p className="text-2xl md:text-lg">
                                     {
                                         activeButtons?.[active]?.description2
                                     }

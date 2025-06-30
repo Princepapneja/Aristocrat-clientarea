@@ -100,7 +100,7 @@ function GamePage() {
         setLoading(true);
         try {
             const queryParams = new URLSearchParams(filters).toString();
-            const { data } = await apiHandler.get(`games?${queryParams}`);
+            const { data } = await apiHandler.get(`games/`);
             const newGames = data.data.games || [];
             setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
@@ -126,6 +126,7 @@ function GamePage() {
     setFilters(updatedFilters);
 };
 
+console.log(filters);
 
 
     const clearFilter = (key) => {
@@ -147,7 +148,7 @@ function GamePage() {
         <div className='space-y-16 group' >
             {/* Filter Inputs */}
             <div className='space-y-5'>
-                <div className='grid grid-cols-4 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
                     <InputField
                         type='selects'
                         id='studio'
@@ -182,7 +183,7 @@ function GamePage() {
                     />
                 </div>
 
-                <div className='grid grid-cols-4 gap-10'>
+                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
                     <InputField
                         type='selects'
                         label="Features"
@@ -278,7 +279,7 @@ function GamePage() {
             </div>
 
             {/* Game List */}
-            <div className='grid grid-cols-4 gap-x-10 gap-y-16 p-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-16 p-4'>
                 {games.map((item, index) => (
                     <GameCard key={index} game={item} className='w-[280px]' />
                 ))}

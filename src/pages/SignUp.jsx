@@ -133,8 +133,10 @@ const data= {
             const { data } = await apiHandler.get(`/companies`);
 
             console.log(data);
-const options= data?.data?.map((e)=>({name:e.name,value:e.id}))
-            setCompanyList(options)
+
+            setCompanyList([{name:"Select a Company",value:""} , ...data?.data?.map((e)=>({name:e?.name,value:e?.id}))])
+
+
         } catch (error) {
             console.error('Failed to fetch games:', error);
         }
@@ -217,17 +219,19 @@ const options= data?.data?.map((e)=>({name:e.name,value:e.id}))
 
     return (
         <>
-            <div className={` h-screen     `}>
-                <div className="flex  ">
-                    <div className="w-full bg-[url(/Images/login-back.png)] h-screen p-12  ">
-                        <img className="w-[431px] h-[348px]" src="/logos/logo-black.png" alt="" />
-                        <h1
-                            className="text-black-v1 font-medium text-[56px] not-italic leading-none font-ot-sono pl-9 max-w-[600px] w-full">
-                            Weclome to the Aristocrat Interactive Client Area
-                        </h1>
-
-                    </div>
-                    <div className="w-full grid place-items-center ">
+            <div className='min-h-screen w-full flex flex-col lg:flex-row'>
+               
+                   <div className="w-full min-h-[200px] bg-[url('/Images/login-back.png')]  bg-center sm:p-2 lg:p-12 flex flex-col justify-center">
+        <img
+          className="md:max-w-96 max-w-48 w-full"
+          src="/logos/logo-black.png"
+          alt="Logo"
+        />
+        <h1 className="text-black-v1 font-medium text-[30px] sm:text-[56px] lg:text-[56px] not-italic leading-tight font-ot-sono  pl-4 sm:pl-4 lg:pl-9">
+          Weclome to the Aristocrat Interactive Client Area
+        </h1>
+      </div>
+                    <div className="w-full grid place-items-center">
 
                         {registrationSuccess ? <SucessLogReg data={data} /> :
                             <div className={`p-4 max-w-xl w-full`}
@@ -245,7 +249,7 @@ const options= data?.data?.map((e)=>({name:e.name,value:e.id}))
 
                                 <div className="py-4 space-y-4">
 
-                                    <div className="flex gap-4">
+                                    <div className="flex flex-col md:flex-row  gap-4">
                                         <InputField
                                             handleInputChange={handleInput}
                                             id="firstName"
@@ -324,7 +328,7 @@ const options= data?.data?.map((e)=>({name:e.name,value:e.id}))
                 </div>
 
 
-            </div>
+           
         </>
     )
 }
