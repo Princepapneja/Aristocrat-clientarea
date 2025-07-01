@@ -12,7 +12,6 @@ import logo from '../../assets/logos/texas-longhorn-country-western-bull-cattle-
 function GameAssets() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
-    console.log(studio)
     const [filters, setFilters] = useState({ skip: 0, limit: 16, studio: studio || "" });
     const [games, setGames] = useState([]);
     const [hasMore, setHasMore] = useState(true);
@@ -101,8 +100,8 @@ function GameAssets() {
         setLoading(true);
         try {
             const queryParams = new URLSearchParams(filters).toString();
-            const { data } = await apiHandler.get(`games?${queryParams}`);
-            const newGames = data.data.games || [];
+            const { data } = await apiHandler.get(`root-folders?${queryParams}`);
+            const newGames = data.data.resp || [];
             setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
             setTotalGames(data.data.total);
@@ -288,7 +287,7 @@ const[gamesList, setGameLists]=useState(
                     {/*  button */}
 
                     <div>
-                        {gamesList?.map((game) => {
+                        {games?.map((game) => {
                             return (
 <div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
     <div className="flex justify-between items-center w-full md:hidden">
@@ -304,10 +303,11 @@ const[gamesList, setGameLists]=useState(
     <img src={game.icon} alt="Game Icon" className="w-44 h-28 md:mb-2" />
     <div className='text-center md:text-left'>
       <h2 className="text-emerald-600 font-medium text-3xl mb-2">
-        United Kingdom Certificate
+        {game.name}
       </h2>
-      <p className="text-xl text-gray-800 font-medium mb-4">{game.title}</p>
-      <p className="text-base text-gray-400 mb-2">By: {game.by}</p>
+      <p className="text-xl text-gray-800 font-medium mb-4">{game?.game?.title}</p>
+      
+      <p className="text-base text-gray-400 mb-2">By: {game?.game?.subStudio?.name}</p>
     </div>
   </div>
 
