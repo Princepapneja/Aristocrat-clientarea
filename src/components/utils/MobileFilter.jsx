@@ -1,5 +1,7 @@
 import React from 'react'
 import { ChevronRight, X, ArrowLeft } from 'lucide-react';
+import InputField from './InputFields';
+import cross from '/logos/cross.png';
 
 const chosenFilters = [
   { label: 'Region: USA: Michigan' },
@@ -18,55 +20,140 @@ const filterCounts = {
   'Game Type': 0,
   Jackpots: 0,
 };
-const MobileFilter = () => {
+const MobileFilter = ({setShowFilter,filters,showFilterModal,onFilterChange,dropdowns,studios,clearFilter,clearAllFilters}) => {
+
+
+ 
+    
+    
   return (
-    <div className="w-full max-w-sm mx-auto p-4 text-sm font-medium">
+    <div className="w-full max-w-sm mx-auto p-4 text-sm font-medium  overflow-y-auto max-h-[100vh]
+">
       {/* Header */}
-      <div className="flex items-center mb-4">
+      <div className="flex items-center  mb-4">
+        <div className="flex items-center"  onClick={() => setShowFilter(false)}>
         <ArrowLeft className="mr-2 h-5 w-5" />
-        <h2 className="text-lg font-semibold">Filters</h2>
+<span>Back</span>
+
+        </div>
+        <h2 className="text-lg font-semibold mx-auto">Filters</h2>
+        
       </div>
 
       {/* Chosen Filters */}
-      <p className="text-sm text-gray-600 mb-2">Choosen Filters</p>
+
+      {showFilterModal || (
+        <>
+        
+         <p className="text-sm text-gray-600 mb-2">Choosen Filters</p>
       <div className="flex flex-wrap gap-2 mb-4">
-        {chosenFilters.map((item, i) => (
-          <div
-            key={i}
-            className="flex items-center bg-gray-100 rounded-md px-2 py-1 text-xs text-gray-700"
-          >
-            {item.label}
-            <X className="ml-1 h-4 w-4 text-gray-500 cursor-pointer" />
-          </div>
-        ))}
+      <div className="flex flex-wrap gap-3 max-h-[400px] overflow-y-auto">
+                                  {Object.entries(filters).map(([key, val]) => {
+                                      if (['skip', 'limit'].includes(key) || !val) return null;
+      
+                                      return (
+                                          <div key={key} className='flex items-center gap-3 py-2.5 px-3.5  bg-[#F4F4F4]  rounded'>
+                                              <p className='text-sm text-black-v3'>{
+                                                  key
+                                              }</p>
+                                               <button onClick={() => clearFilter(key)}>
+                                                                                          <X  className="text-black-v3" size={20}/>
+                                                                                      </button>
+                                             
+                                          </div>
+                                      );
+                                  })}
+                              </div>
       </div>
+        
+        
+        </>
+      )}
+     
 
       {/* Filter Options */}
-      <div className="space-y-3 mb-6">
-        {Object.entries(filterCounts).map(([name, count]) => (
-          <div
-            key={name}
-            className="flex items-center justify-between border-b pb-2 cursor-pointer"
-          >
-            <span className="text-gray-800">{name}</span>
-            <div className="flex items-center space-x-2">
-              {count > 0 && (
-                <span className="text-white bg-green-400 text-xs px-2 py-0.5 rounded-full">
-                  {count}
-                </span>
-              )}
-              <ChevronRight className="h-4 w-4 text-gray-400" />
-            </div>
-          </div>
-        ))}
-      </div>
+   
+
+                      <InputField
+                        type='mobileSelect'
+                        id='studio'
+                      className=" top-0 mb-2 "
+                        value={filters?.studio}
+                        options={studios}
+                        handleInputChange={onFilterChange}
+                    />
+                    <InputField
+                        type='mobileSelect'
+                        id='region'
+                       className="top-0 mb-2 "
+                        value={filters?.region}
+                        options={dropdowns.regionOption}
+                        handleInputChange={onFilterChange}
+                    />
+                    <InputField
+                        type='mobileSelect'
+                        className="top-0 mb-2 "
+                        id='volatility'
+                        value={filters?.volatility}
+                        options={dropdowns.volatilityOption}
+                        handleInputChange={onFilterChange}
+                    />
+                    <InputField
+                        type='mobileSelect'
+                        id='theme'
+                        className="top-0 mb-2 "
+                        value={filters?.theme}
+                        options={dropdowns.themeOption}
+                        handleInputChange={onFilterChange}
+                    />
+
+                      <InputField
+                        type='mobileSelect'
+                       className="top-0 mb-2 "
+                        id='features'
+                        value={filters?.features}
+                        options={dropdowns.featuresOption}
+                        handleInputChange={onFilterChange}
+                    />
+                    <InputField
+                        type='mobileSelect'
+                       className="top-0 mb-2 "
+                        id='family'
+                        value={filters?.family}
+                        options={dropdowns.familyOption}
+                        handleInputChange={onFilterChange}
+                    />
+                    <InputField
+                        type='mobileSelect'
+                      className="top-0 mb-2 "
+                        id='gameType'
+                        value={filters?.gameType}
+                        options={dropdowns.gameTypeOption}
+                        handleInputChange={onFilterChange}
+                    />
+                    <InputField
+                        type='mobileSelect' 
+                         className="top-0 mb-2 "
+                        id='jackpot'
+                        value={filters?.jackpot}
+                        options={dropdowns.jackpotOption}
+                        handleInputChange={onFilterChange}
+                    />
+
+
+      
+                   
+             
+     
 
       {/* Footer Buttons */}
       <div className="flex justify-between items-center">
-        <button className="bg-green-500 text-white text-sm font-semibold px-4 py-2 rounded-md flex-1 mr-2">
-          Show Options: 4
+        <button className="bg-[#00B290] text-white text-sm font-semibold px-4 py-2 rounded-md flex-1 mr-2" onClick={() => setShowFilter(false)}>
+          Show Options: {Object.entries(filters).length > 3 && Object.entries(filters)?.length-3}
         </button>
-        <button className="border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-md flex-1">
+
+        
+        <button className="border border-gray-300 text-gray-700 text-sm px-4 py-2 rounded-md flex-1" onClick={clearAllFilters}>
           Clear All
         </button>
       </div>

@@ -66,7 +66,7 @@ const MobileMenu = () => {
       </div>
 
       {open && (
-        <div className="fixed top-0 inset-0 z-50 md:hidden bg-[url(/Images/sidebar.png)] bg-center bg-cover text-black   transition-all">
+        <div className="fixed top-0 inset-0 z-50 md:hidden bg-[url(/Images/sidebar.png)] bg-center bg-cover text-black   transition-all h-[100vh]">
           <div className="flex justify-between items-center p-4">
             <img src="/logos/logo-black.png" alt="Logo" className="w-40" />
             <button onClick={() => setOpen(false)} className="border p-1 rounded-xl">

@@ -59,7 +59,7 @@ function EngagementTools() {
     const [active, setActive] = useState(0)
     return (
         <>
-            <div className=' '>
+            <div className='container'>
                 <div className='space-y-12'>
                     <h1 className='text-3xl md:4xl font-medium'>Engagement Tools</h1>
                     <div className='space-y-5'>

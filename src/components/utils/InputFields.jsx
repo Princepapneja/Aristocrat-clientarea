@@ -22,6 +22,8 @@ const InputField = ({
   placeholder = "",
   checked,
   prefix = false,
+  
+  
 }) => {
   const [showPass, setShowPass] = useState(false);
   const [open, setOpen] = useState(false);
@@ -66,10 +68,11 @@ const InputField = ({
 
 
 
- console.log(options);
+//  console.log(options);
  
 
   const filteredData = options?.filter((data) =>{
+    
     const dataName =data?.name || data?.title
     
     return(
@@ -80,30 +83,39 @@ dataName.toLowerCase().includes(searchTerm.toLowerCase())
     
   );
   const [selected, setSelected] = useState([]);
+// console.log(selected);
 
 
-const handleCheck = (selectedData) => {
-  const updatedSelection = selected.includes(selectedData)
-    ? selected.filter((item) => item !== selectedData)
-    : [...selected, selectedData];
-
-  setSelected(updatedSelection);
-};
-const handleAddFilter = () => {
-  if (handleInputChange && selected.length > 0) {
-    const filterPayload = selected.map((item) => ({
-      name: item.name,          
-      value: item.value,      
-    }));
-    
-console.log(filterPayload);
-
-    handleInputChange(filterPayload);
+  const handleCheck = (selectedData) => {
+    const updatedSelection = selected.some((item) => item.value === selectedData.value)
+      ? selected.filter((item) => item.value !== selectedData.value)
+      : [...selected, selectedData];
+    setSelected(updatedSelection);
   }
-  setOpen(false); // Close dropdown after adding filter
-};
 
-console.log(selected);
+  const handleAddFilter = () => {
+    // console.log(selected);
+    
+    if (handleInputChange && selected.length > 0) {
+      const filterPayload = selected.map((item) => ({
+        name: item?.name,
+        value: item.value,
+        id:id
+      }));
+
+      
+      handleInputChange(filterPayload,selected);
+    }
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    if (type === 'selects' && !value) {
+      setSelected([]);
+    }
+  }, [value]);
+
+// console.log(selected);
 
   return (
     <div className={`${className} ${(type === "textarea" || type === "textEditor") ? "md:col-span-2 xl:col-span-3" : type === "checkbox" ? "flex gap-1 items-center" : "space-y-2 w-full "} normal-case`}>
@@ -117,20 +129,78 @@ console.log(selected);
         </div>
       )}
 
-      {type === "selects" ? (
+      {type=== "mobileSelect" ? (  <div ref={ref} className={`relative w-full`}>
+         
+            <div
+              className="border-2 border-gray-200 rounded-md p-2 cursor-pointer flex items-center justify-between bg-[#F4F4F4]"
+              onClick={toggleDropdown}
+            >
+              <span className="text-[#6F6F6F] font-semibold text-base capitalize">{id} {selected?.length>0 && <span className="bg-[#94FF80] px-2 py-1 rounded-bl-sm text-[#6F6F6F]" >{selected?.length}</span>}</span>
+              {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+            </div>
+          
+
+          {open && (
+            <div className={`${className} absolute mt-2 bg-white shadow-lg rounded-md border border-gray-200 z-50 p-4 w-full`}>
+              <div className="flex items-center px-3 py-2 border border-gray-300 rounded-md">
+                <Search size={16} className="text-gray-500 mr-2" />
+                <input
+                  type="text"
+                  className="w-full outline-none text-sm"
+                  placeholder="Keyword"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+
+              <div className="max-h-48 overflow-y-auto px-3 py-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-100">
+                {filteredData?.map((data, index) => (
+                  <label key={data.value} className="flex items-center space-x-2 py-1">
+                    <input
+                      type="checkbox"
+                     checked={selected.some(item => item.value === data.value)}
+                      onChange={() => handleCheck(data)}
+                      className="accent-green-600"
+                    />
+                    <span className="text-sm text-gray-800">{data?.name || data?.title}</span>
+                  </label>
+                ))}
+                {filteredData?.length === 0 && (
+                  <div className="text-sm text-gray-500 text-center py-2">No results found</div>
+                )}
+              </div>
+
+
+                <div className="flex justify-between items-center px-3 py-2">
+                  <button
+                    className="cursor-pointer bg-[#00B290] hover:bg-black text-white px-4 py-1 rounded-md text-sm"
+                     onClick={handleAddFilter}
+                  >
+                    Add Filters
+                  </button>
+                  <button
+                    className="px-3 py-1 text-sm border rounded-md bg-white hover:text-black hover:border-black border-[#A8A8A8] text-gray-700" onClick={() => setSelected([])} 
+                  >
+                    Clear All
+                  </button>
+                </div>
+              
+            </div>
+          )}
+        </div>) :type === "selects" ? (
         <div ref={ref} className={`relative w-full`}>
          
             <div
               className="border-2 border-gray-200 rounded-md p-2 cursor-pointer flex items-center justify-between bg-[#F4F4F4]"
               onClick={toggleDropdown}
             >
-              <span className="text-[#6F6F6F] font-semibold text-base capitalize">{id}</span>
+              <span className="text-[#6F6F6F] font-semibold text-base capitalize">{label}</span>
               {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
             </div>
           
 
           {open && (
-            <div className={`absolute mt-2 bg-white shadow-lg rounded-md border border-gray-200 z-50 p-4 w-full`}>
+            <div className={`${className} absolute mt-2 bg-white shadow-lg rounded-md border border-gray-200 z-50 p-4 w-full`}>
               <div className="flex items-center px-3 py-2 border border-gray-300 rounded-md">
                 <Search size={16} className="text-gray-500 mr-2" />
                 <input

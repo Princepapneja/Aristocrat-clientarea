@@ -77,7 +77,7 @@ const DashboardLayout = () => {
           className={`main duration-500 ${sideBarOpen ? 'blur' : ''}`}
           style={{ minHeight: `calc(100vh - 280px)` }}
         >
-          <div className=" container w-full max-w-screen-md  space-y-6">
+          <div className="space-y-6">
             <Outlet context={context} />
           </div>
 

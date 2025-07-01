@@ -11,7 +11,7 @@ import apiHandler from '../../functions/apiHandler';
 import moment from 'moment';
 import { dateFormat } from '../../../constants';
 import ActiveButtons from '../utils/ActiveButtons';
-import { ChevronDown, ChevronRight, Download } from 'lucide-react';
+import { ChevronDown, ChevronRight, Download, X } from 'lucide-react';
 const data = [
     {
         id: 1,
@@ -60,6 +60,7 @@ function DetailGame() {
     const [folders, setFolders] = useState([])
     const [files, setFiles] = useState([])
     const [expanded, setExpanded] = useState({});
+    const [showPopup, setShowPopup] = useState(false);
 
     const toggleExpand = (id) => {
         setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -85,6 +86,22 @@ function DetailGame() {
     const [game, setGame] = useState(null);
     const [loading, setLoading] = useState(false);
     const [features, setFeatures] = useState([])
+
+
+    const [showReleaseDropdown, setShowReleaseDropdown] = useState(false);
+    const [selectedRelease, setSelectedRelease] = useState({
+        country: 'United Kingdom',
+        date: '10 Jan, 2025',
+    });
+
+    const releaseDates = [
+        { country: 'USA', date: '01 Jan, 2025' },
+        { country: 'Canada', date: '05 Jan, 2025' },
+        { country: 'United Kingdom', date: '10 Jan, 2025' },
+        { country: 'Europe', date: '22 Jan, 2025' },
+        { country: 'Europe', date: '31 Jan, 2025' },
+    ];
+
 
     useEffect(() => {
         fetchGame();
@@ -175,7 +192,7 @@ function DetailGame() {
                                 </div>
 
                                 <button onClick={() => { downloadById("folder", folder.id) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
-                                    Download <Download size={14} />
+                                    <span className='hidden md:block'>Download</span>  <Download size={20} />
                                 </button>
                             </div>
 
@@ -235,7 +252,7 @@ function DetailGame() {
             // Extract filename from headers
             const disposition = response.headers['content-disposition'];
             let filename = 'game-files.zip'; // default fallback
-            debugger
+
 
             if (disposition && disposition.includes('filename=')) {
                 const match = disposition.match(/filename="?([^"]+)"?/);
@@ -323,13 +340,15 @@ function DetailGame() {
     };
 
 
+console.log(game);
+
 
 
     return (
         <>
             <div className=' pt-1 '>
-                <div className='mt-10'>
-                    <div className='flex gap-5 items-stretch'>
+                <div className='container mt-10'>
+                    <div className='flex flex-col-reverse md:flex-row gap-5 items-stretch'>
                         <div className='w-full md:w-1/2 flex flex-col'>
                             <h1 className='text-4xl font-medium'>{game?.title}</h1>
                             <p className='mt-4 mb-4 text-base'>By: {game?.studio?.name}</p>
@@ -386,31 +405,63 @@ function DetailGame() {
 
 
 
-                <div className='mt-14 md:w-full'>
-                    <div className='bg-black rounded-3xl w-full p-12 '>
-                        <div className='flex justify-between items-center  gap-10  '>
-                            <div className='flex flex-col items-center justify-between'>
+                <div className='container mt-14 md:w-full'>
+                    <div className='bg-black rounded-3xl w-full p-10 '>
+                        <div className='flex flex-col md:flex-row justify-start md:justify-between items-start md:items-center  gap-10  '>
+                            <div className='flex flex-col items-start md:items-center justify-between'>
                                 <p className='font-semibold text-3xl text-white mb-1.5'>{game?.categories?.find(q => q.type === "gameType")?.title}</p>
                                 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Game Type</p></div>
 
-                            <div className='flex flex-col items-center justify-between'>
-                                <p className='font-semibold text-3xl text-white mb-1.5'>{game?.paylines} Paylines</p>
+                            <div className='flex flex-col items-start md:items-center justify-between'>
+                                <p className='font-semibold text-3xl text-white mb-1.5'>{game?.livesWays}</p>
                                 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Lines / Ways</p>
                             </div>
 
-                            <div className='flex flex-col items-center justify-between'>
+                            <div className='flex flex-col items-start md:items-center justify-between'>
                                 <p className='font-semibold text-3xl text-white mb-1.5'>{game?.realType}</p>
                                 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Reel Type</p>
                             </div>
 
 
-                            <div className='border-2 text-white p-4 border-black-v3 rounded-lg  flex flex-col items-center justify-between' >
-                                <h6>Release Date</h6>
-                                {moment(game?.releaseDate).format(dateFormat)}
+                            <div className=' relative p-4 border-2 text-white  border-black-v3 rounded-lg  flex flex-col items-start md:items-center justify-between' >
+                                <div
+                                    className=" w-full"
+                                    onClick={() => setShowReleaseDropdown(!showReleaseDropdown)}
+                                >
+                                    <p className="text-[#00B290] font-semibold text-sm mb-1">Release Date</p>
+                                    <div className="flex justify-between items-center">
+                                        <div>
+                                            <p className="text-white text-sm">{selectedRelease.country}</p>
+                                            <p className="text-white text-lg font-bold">{selectedRelease.date}</p>
+                                        </div>
+                                        <ChevronDown className="text-white w-5 h-5" />
+                                    </div>
+                                    {showReleaseDropdown && (
+                                        <div className="absolute mt-6 left-0   w-full max-h-[180px] bg-white shadow-lg rounded-md overflow-y-auto z-20">
+                                            {releaseDates.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${selectedRelease.country === item.country &&
+                                                            selectedRelease.date === item.date
+                                                            ? 'font-bold text-black'
+                                                            : 'text-gray-400'
+                                                        }`}
+                                                    onClick={() => {
+                                                        setSelectedRelease(item);
+                                                        setShowReleaseDropdown(false);
+                                                    }}
+                                                >
+                                                    <p>{item.country}</p>
+                                                    <p>{item.date}</p>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
+                                </div>
                             </div>
 
 
-                            <div className='flex flex-col items-center justify-between'>
+                            <div className='flex flex-col items-start md:items-center justify-between'>
                                 <img src={"/Images/platform.png"} alt="" className='w-32 h-10 mb-1.5' />
                                 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Platform</p>
                             </div>
@@ -422,8 +473,8 @@ function DetailGame() {
                 </div>
 
 
-                <div className='mt-20'>
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-x-12 gap-y-12 mt-10 text-[16px] leading-[24px] text-[#1A1A1A]">
+                <div className='container mt-20'>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-y-12 mt-10 text-[16px] leading-[24px] text-[#1A1A1A]">
                         {/* Column 1 */}
                         <div className="flex flex-col justify-between h-full">
                             <div>
@@ -460,7 +511,7 @@ function DetailGame() {
                             </div>
 
                             <div className="mt-16">
-                                <div className="bg-[#00FF7F] text-black font-semibold rounded-xl px-4 py-2.5 flex items-center gap-2 w-fit">
+                                <div className="bg-[#00FF7F] text-black font-semibold rounded-xl px-4 py-2.5 flex items-center gap-2 w-fit cursor-pointer" onClick={() => setShowPopup(true)}>
                                     <span>Game Key</span>
                                     <img src="/logos/filterarrowBlack.png" alt="Arrow" className="w-4 h-4" />
                                 </div>
@@ -520,22 +571,22 @@ function DetailGame() {
 
 
 
-                <div className='bg-white-v2 rounded-3xl mt-24 space-y-7 py-12 px-8 mb-20'>
+                <div className='container bg-white-v2 rounded-3xl mt-24 space-y-7 py-12 px-8 mb-20'>
                     <h1 className='font-medium text-4xl  text-center'>Download all necessary assets and certificates below</h1>
                     <div className=''>
 
                         {
-                            <ActiveButtons active={active} setActive={setActive} buttons={rootLevels} />
+                            <ActiveButtons active={active} setActive={setActive} buttons={rootLevels} className={"grid grid-cols-2 md:grid-cols-4 gap-4"} />
                         }
 
                     </div>
 
                     <div>
                         {
-                         <div className="bg-white rounded-lg p-10">
-                                <div className="flex justify-end gap-7 mb-4">
-                                    <Buttons onClick={selectedFilesDownload}  >Download Selected</Buttons>
-                                    <Buttons onClick={zippedFileDownload}>Download All</Buttons>
+                            <div className="bg-white rounded-lg p-3 md:p-10">
+                                <div className="flex flex-col md:flex-row justify-end gap-7 mb-4">
+                                    <Buttons onClick={selectedFilesDownload} className="w-full cursor-pointer"  >Download Selected</Buttons>
+                                    <Buttons onClick={zippedFileDownload} className="w-full cursor-pointer" >Download All</Buttons>
                                 </div>
 
                                 <hr className="border-1 border-[#A8A8A8] mb-5" />
@@ -551,6 +602,24 @@ function DetailGame() {
 
 
             </div>
+
+            {showPopup && (
+                <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center w-full">
+                    <div
+                        className="bg-white rounded-[15px] shadow-lg p-6 w-[80%] h-[80%] md:h-auto md:w-[25%]  transform transition-all duration-300 translate-y-10 opacity-0 animate-popup"
+                    >
+                        <div className='flex items-baseline justify-end '>
+                            <X
+                                size={30}
+                                className="text-black cursor-pointer hover:text-black border-1 border-[#000000] rounded-[10px]"
+                                onClick={() => setShowPopup(false)}
+                            />
+                        </div>
+                        <p>{game?.gameKey}</p>
+
+                    </div>
+                </div>
+            )}
 
         </>
     )

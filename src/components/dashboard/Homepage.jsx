@@ -50,7 +50,7 @@ function Homepage() {
 
   return (
     <>
-      <div className='w-full'>
+      <div className='container w-full'>
         
         {/* Hero Slider */}
         <div className='w-full '>
