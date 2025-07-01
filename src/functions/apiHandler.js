@@ -67,7 +67,7 @@ apiHandler.interceptors.response.use(
 
       const { data } = error.response;
       if (data === "TokenExpiredError" || data === "JsonWebTokenError") {
-        handleLogout(); // Call debounced logout function
+        handleLogout(); 
       }
       return Promise.reject(data);
     } else if (error.request) {

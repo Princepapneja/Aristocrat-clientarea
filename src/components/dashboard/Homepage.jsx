@@ -7,7 +7,6 @@ import 'swiper/css/pagination';
 import { Pagination, Autoplay } from 'swiper/modules';
 import GameCard from '../utils/GameCard';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import DashBoardHeader from '../header-footer/dashBoardHeader';
 import { Link } from 'react-router-dom';
 import apiHandler from '../../functions/apiHandler';
 

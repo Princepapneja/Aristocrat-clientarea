@@ -12,7 +12,6 @@ const DashboardLayout = () => {
   const context = useGlobal();
   const navigate = useNavigate();
   const { height, sideBarOpen, user, setUser, setCounts, token, render } = context;
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const fetchDetails = async () => {
     const { data } = await apiHandler.get("me");
@@ -23,28 +22,10 @@ const DashboardLayout = () => {
     setUser(data.data);
   };
 
-  const automation = async () => {
-    await apiHandler.patch("/automation");
-  };
-
-  const fetchCounts = async () => {
-    try {
-      const currentYear = new Date().getFullYear();
-      const { data } = await apiHandler.get(`counts/${currentYear}`);
-      setCounts(data.data);
-    } catch (error) {
-      console.error("Error fetching counts:", error);
-    }
-  };
-
-  useEffect(() => {
-    automation();
-  }, []);
 
   useEffect(() => {
     if (!token) return;
     fetchDetails();
-    fetchCounts();
   }, [token, render]);
 
   return (
