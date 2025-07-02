@@ -1,5 +1,5 @@
-// export const baseUrl = "https://ca-dev.omniflow.media/api"
-export const baseUrl = "http://localhost:8000"
+export const baseUrl = "https://ca-dev.omniflow.media/api"
+// export const baseUrl = "http://localhost:8000"
 export const dateFormat = "MM/DD/YYYY"
 export const S3AccessKey = import.meta.env.VITE_DO_SPACES_KEY;
 export const S3Secret = import.meta.env.VITE_DO_SPACES_SECRET;

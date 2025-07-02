@@ -95,12 +95,43 @@ function GameAssets() {
             console.error("Failed to fetch categories:", error);
         }
     };
+    const downloadById = async (type, id) => {
+        try {
+            const query = type === 'file' ? `fileId=${id}` : `folderId=${id}`;
+            const response = await apiHandler.get(`/download?${query}`, {
+                responseType: 'blob',
+            });
 
+            const disposition = response.headers['content-disposition'];
+            let filename = type === 'file' ? 'file' : 'folder.zip';
+
+            if (disposition && disposition.includes('filename=')) {
+                const match = disposition.match(/filename="?([^"]+)"?/);
+                if (match && match[1]) {
+                    filename = match[1];
+                }
+            }
+
+            const blob = new Blob([response.data]);
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Download failed:', error);
+        }
+    };
     const fetchGames = async () => {
         setLoading(true);
         try {
             const queryParams = new URLSearchParams(filters).toString();
-            const { data } = await apiHandler.get(`root-folders?${queryParams}`);
+            const { data } = await apiHandler.get(`root-folders?type=exclude_certificates&${queryParams}`);
             const newGames = data.data.resp || [];
             setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
@@ -315,7 +346,7 @@ const[gamesList, setGameLists]=useState(
   <div className="flex flex-col md:flex-row items-center gap-7 md:gap-14 w-full md:w-[unset]">
     <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full hidden md:block" />
     <p className="text-xl text-gray-600 font-normal">4 GB</p>
-    <button className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+    <button onClick={() => { downloadById("folder", game.id) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
       Download
       <Download size={16} />
     </button>
