@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { menu } from "./SideBar";
 import Logo from '../../assets/logos/mobileLogo.png'
 import DashBoardHeader from "./dashBoardHeader";
-
+import menuLogo from '../../assets/icons/equal-sign--interface-math-equal-sign-mathematics.svg'
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -53,12 +53,15 @@ const MobileMenu = () => {
           {
             openSearch?  <button onClick={() => setOpenSearch(false)} className="border p-1 rounded-xl">
               <X className="w-9 h-9" />
+              
             </button>: 
              <button
             onClick={() => setOpen(true)}
             className="p-2 border border-black rounded-xl hover:bg-gray-100 transition"
           >
-            <Menu className="w-9 h-9 text-black" />
+            {/* <Menu className="w-9 h-9 text-black" /> */}
+              <img src={menuLogo} alt=""  className="w-9 h-9 text-black"/>
+
           </button>
           }
          

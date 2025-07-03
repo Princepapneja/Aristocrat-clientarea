@@ -290,7 +290,7 @@ const[gamesList, setGameLists]=useState(
                     <div>
                         {gamesList?.map((game) => {
                             return (
-<div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
+<div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow hover:shadow transition-shadow duration-300">
     <div className="flex justify-between items-center w-full md:hidden">
    
     <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full " />
@@ -301,7 +301,7 @@ const[gamesList, setGameLists]=useState(
   {/* Left */}
   <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
     <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
-    <img src={game.icon} alt="Game Icon" className="w-44 h-28 md:mb-2" />
+    <img src={game.icon} alt="Game Icon" className=" md:mb-2" />
     <div className='text-center md:text-left'>
       <h2 className="text-emerald-600 font-medium text-3xl mb-2">
         United Kingdom Certificate

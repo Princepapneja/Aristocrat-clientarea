@@ -7,7 +7,7 @@ import InputField from "../components/utils/InputFields";
 import Buttons from "../components/utils/buttons";
 import OtpInput from "../components/utils/OTP";
 import useGlobal from "../hooks/useGlobal";
-import { validateEmail } from "../functions/emailValidator";
+import { isValidPassword, validateEmail } from "../functions/emailValidator";
 import SucessLogReg from "../components/utils/SucessLogReg";
 
 const loginInput = [
@@ -60,7 +60,7 @@ const SignUp = () => {
     const [otpBlock, setOtpBlock] = useState(false)
     const [forgotToken, setForgotToken] = useState("")
     const [companyList, setCompanyList] = useState([])
-const [registrationSuccess, setRegistrationSuccess] = useState(false);
+    const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
     function handleInput(event) {
 
@@ -81,11 +81,11 @@ const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
     }, [])
 
-const data= {
-    head:"Your registration was successful!",
-    content:"Your account is currently under review. Once approved, you'll receive an email confirming your access."
+    const data = {
+        head: "Your registration was successful!",
+        content: "Your account is currently under review. Once approved, you'll receive an email confirming your access."
 
-}
+    }
 
     const handleLogin = async () => {
 
@@ -134,7 +134,7 @@ const data= {
 
             console.log(data);
 
-            setCompanyList([{name:"Select a Company",value:""} , ...data?.data?.map((e)=>({name:e?.name,value:e?.id}))])
+            setCompanyList([{ name: "Select a Company", value: "" }, ...data?.data?.map((e) => ({ name: e?.name, value: e?.id }))])
 
 
         } catch (error) {
@@ -149,30 +149,32 @@ const data= {
 
     const handleRegister = async () => {
 
-
         const {
             email,
             company,
             password,
-            Confirmpassword,
+            ConfirmPassword,
             firstName,
             lastName,
         } = inputValues;
 
-        //   if (!email || !company ||  !password || !Confirmpassword ||   firstName ||  lastName) {
-        //     error("Please fill in all required fields.");
-        //     return;
-        //   }
 
-        //   if (!validateEmail(email)) {
-        //     error("Please enter a valid email address.");
-        //     return;
-        //   }
+        const result = isValidPassword(password);
+        if (!validateEmail(email)) {
+            error("Please enter a valid email address.");
+            return;
+        }
 
-        //   if (Createpassword !== Confirmpassword) {
-        //     error("Password and Confirm Password do not match.");
-        //     return;
-        //   }
+        if (!result.valid) {
+            error(result.error);
+            return;
+        }
+
+
+        if (password !== ConfirmPassword) {
+            error("Password and Confirm Password do not match.");
+            return;
+        }
         const payload = {
             firstName: inputValues?.firstName,
             lastName: inputValues?.lastName,
@@ -220,115 +222,115 @@ const data= {
     return (
         <>
             <div className='min-h-screen w-full flex flex-col lg:flex-row'>
-               
-                   <div className="w-full min-h-[200px] bg-[url('/Images/login-back.png')]  bg-center sm:p-2 lg:p-12 flex flex-col justify-center">
-        <img
-          className="md:max-w-96 max-w-48 w-full"
-          src="/logos/logo-black.png"
-          alt="Logo"
-        />
-        <h1 className="text-black-v1 font-medium text-[30px] sm:text-[56px] lg:text-[56px] not-italic leading-tight font-ot-sono  pl-4 sm:pl-4 lg:pl-9">
-          Weclome to the Aristocrat Interactive Client Area
-        </h1>
-      </div>
-                    <div className="w-full grid place-items-center">
 
-                        {registrationSuccess ? <SucessLogReg data={data} /> :
-                            <div className={`p-4 max-w-xl w-full`}
+                <div className="w-full min-h-[200px] bg-[url('/Images/login-back.png')]  bg-center sm:p-2 lg:p-12 flex flex-col justify-center">
+                    <img
+                        className="md:max-w-96 max-w-48 w-full"
+                        src="/logos/logo-black.png"
+                        alt="Logo"
+                    />
+                    <h1 className="text-black-v1 font-medium text-[30px] sm:text-[56px] lg:text-[56px] not-italic leading-tight font-ot-sono  pl-4 sm:pl-4 lg:pl-9">
+                        Weclome to the Aristocrat Interactive Client Area
+                    </h1>
+                </div>
+                <div className="w-full grid place-items-center">
 
-
-
-
-                            >
-
-                                <h3 className='font-semibold text-2xl not-italic  mb-2'>Create an account</h3>
+                    {registrationSuccess ? <SucessLogReg data={data} /> :
+                        <div className={`p-4 max-w-xl w-full`}
 
 
 
 
+                        >
 
-                                <div className="py-4 space-y-4">
-
-                                    <div className="flex flex-col md:flex-row  gap-4">
-                                        <InputField
-                                            handleInputChange={handleInput}
-                                            id="firstName"
-                                            type="text"
-                                            value={inputValues.firstName}
-                                            placeholder="Enter your first name"
-                                        />
-                                        <InputField
-                                            handleInputChange={handleInput}
-                                            id="lastName"
-                                            type="text"
-                                            value={inputValues.lastName}
-                                            placeholder="Enter your last name"
-                                        />
-                                    </div>
-
-                                    {
-                                        items?.map((ele, index) => {
-                                            return <InputField key={index} handleInputChange={handleInput} id={ele?.id} options={companyList} type={ele.type} value={inputValues?.[ele.id]} placeholder={ele.placeholder} />
-                                        })
-                                    }
-
-                                    <div className="space-y-4 text-sm text-gray-700 leading-[24px] ">
-                                        <label className="flex items-start gap-3">
-                                            <input
-                                                type="checkbox"
-                                                name="consent"
-                                                className="mt-1 border border-[#A8A8A8] w-5 h-5 bg-white checked:bg-[#00B290] appearance-none
-        checked:after:content-['✓'] checked:after:text-white checked:after:text-sm checked:after:font-bold
-        checked:after:flex checked:after:justify-center checked:after:items-center"
-                                            />
-                                            <span>
-                                                I consent to the processing of my personal data for the purpose <br />of entering the Client Area as described in the{' '}
-                                                <a href="#" className="underline font-medium text-gray-900">
-                                                    Privacy Policy.
-                                                </a>
-                                            </span>
-                                        </label>
-
-                                        <label className="flex items-start gap-3">
-                                            <input
-                                                type="checkbox"
-                                                name="marketing"
-                                                className="mt-1 border border-[#A8A8A8] w-5 h-5 bg-white checked:bg-[#00B290] appearance-none
-        checked:after:content-['✓'] checked:after:text-white checked:after:text-sm checked:after:font-bold
-        checked:after:flex checked:after:justify-center checked:after:items-center"
-                                            />
-                                            <div className="space-y-1">
-                                                <p>I consent to receive marketing communications.</p>
-                                                <p className="font-semibold">Opt-out is available anytime.</p>
-                                            </div>
-                                        </label>
-                                    </div>
-
-                                    <div className="space-y-6">
-                                        <Buttons spinner={false} onClick={
-                                            handleRegister
-                                        } big={true} className={"w-full hover:bg-[black]"}>{"Register"}</Buttons>
-                                        {/* <Buttons spinner={false} onClick={ handleLogin } big={true} type="border" className={"w-full"}>{ "Create an Account" }</Buttons> */}
-
-                                    </div>
-                                    <p className="flex items-center gap-2"><span>Already have an account?</span>  <Link to="/" className="capitalize  underline block cursor-pointer">
-                                        Login
-                                    </Link></p>
+                            <h3 className='font-semibold text-2xl not-italic  mb-2'>Create an account</h3>
 
 
+
+
+
+                            <div className="py-4 space-y-4">
+
+                                <div className="flex flex-col md:flex-row  gap-4">
+                                    <InputField
+                                        handleInputChange={handleInput}
+                                        id="firstName"
+                                        type="text"
+                                        value={inputValues.firstName}
+                                        placeholder="Enter your first name"
+                                    />
+                                    <InputField
+                                        handleInputChange={handleInput}
+                                        id="lastName"
+                                        type="text"
+                                        value={inputValues.lastName}
+                                        placeholder="Enter your last name"
+                                    />
                                 </div>
 
+                                {
+                                    items?.map((ele, index) => {
+                                        return <InputField key={index} handleInputChange={handleInput} id={ele?.id} options={companyList} type={ele.type} value={inputValues?.[ele.id]} placeholder={ele.placeholder} />
+                                    })
+                                }
+
+                                <div className="space-y-4 text-sm text-gray-700 leading-[24px] ">
+                                    <label className="flex items-start gap-3">
+                                        <input
+                                            type="checkbox"
+                                            name="consent"
+                                            className="mt-1 border border-[#A8A8A8] w-5 h-5 bg-white checked:bg-[#00B290] appearance-none
+        checked:after:content-['✓'] checked:after:text-white checked:after:text-sm checked:after:font-bold
+        checked:after:flex checked:after:justify-center checked:after:items-center"
+                                        />
+                                        <span>
+                                            I consent to the processing of my personal data for the purpose <br />of entering the Client Area as described in the{' '}
+                                            <a href="#" className="underline font-medium text-gray-900">
+                                                Privacy Policy.
+                                            </a>
+                                        </span>
+                                    </label>
+
+                                    <label className="flex items-start gap-3">
+                                        <input
+                                            type="checkbox"
+                                            name="marketing"
+                                            className="mt-1 border border-[#A8A8A8] w-5 h-5 bg-white checked:bg-[#00B290] appearance-none
+        checked:after:content-['✓'] checked:after:text-white checked:after:text-sm checked:after:font-bold
+        checked:after:flex checked:after:justify-center checked:after:items-center"
+                                        />
+                                        <div className="space-y-1">
+                                            <p>I consent to receive marketing communications.</p>
+                                            <p className="font-semibold">Opt-out is available anytime.</p>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <Buttons spinner={false} onClick={
+                                        handleRegister
+                                    } big={true} className={"w-full hover:bg-[black]"}>{"Register"}</Buttons>
+                                    {/* <Buttons spinner={false} onClick={ handleLogin } big={true} type="border" className={"w-full"}>{ "Create an Account" }</Buttons> */}
+
+                                </div>
+                                <p className="flex items-center gap-2"><span>Already have an account?</span>  <Link to="/" className="capitalize  underline block cursor-pointer">
+                                    Login
+                                </Link></p>
+
+
+                            </div>
 
 
 
-                            </div>}
 
-                    </div>
+                        </div>}
 
                 </div>
 
+            </div>
 
-           
+
+
         </>
     )
 }

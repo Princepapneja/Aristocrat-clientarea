@@ -102,7 +102,6 @@ const [formData, setFormData] = useState({
                 return [ ...items]
             }
 
-            console.log(options("feature"));
             
             setDropdowns({
                 regionOption: options("region"),
@@ -164,7 +163,7 @@ const onFilterChange = (filterArray) => {
 
 
 // console.log(Object.entries(filters));
-// console.log(formData);
+console.log(filters);
 
 
     const clearFilter = (key) => {

@@ -277,38 +277,50 @@ function DetailGame() {
         }
     };
 
-    const downloadById = async (type, id) => {
-        try {
-            const query = type === 'file' ? `fileId=${id}` : `folderId=${id}`;
-            const response = await apiHandler.get(`/download?${query}`, {
-                responseType: 'blob',
-            });
+    const [downloading, setDownloading] = useState(false);
+const [downloadProgress, setDownloadProgress] = useState(0);
 
-            const disposition = response.headers['content-disposition'];
-            let filename = type === 'file' ? 'file' : 'folder.zip';
 
-            if (disposition && disposition.includes('filename=')) {
-                const match = disposition.match(/filename="?([^"]+)"?/);
-                if (match && match[1]) {
-                    filename = match[1];
-                }
+  const downloadById = async (type, id) => {
+    setDownloading(true);
+    setDownloadProgress(0);
+
+    try {
+        const query = type === 'file' ? `fileId=${id}` : `folderId=${id}`;
+        const response = await apiHandler.get(`/download?${query}`, {
+            responseType: 'blob',
+            onDownloadProgress: (progressEvent) => {
+                const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+                setDownloadProgress(percent);
             }
+        });
 
-            const blob = new Blob([response.data]);
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
+        const disposition = response.headers['content-disposition'];
+        let filename = type === 'file' ? 'file' : 'folder.zip';
 
-            link.href = url;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-
-            link.remove();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Download failed:', error);
+        if (disposition && disposition.includes('filename=')) {
+            const match = disposition.match(/filename="?([^"]+)"?/);
+            if (match && match[1]) filename = match[1];
         }
-    };
+
+        const blob = new Blob([response.data]);
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+
+        link.remove();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Download failed:', error);
+    } finally {
+        setDownloading(false);
+        setDownloadProgress(0);
+    }
+};
+
     const selectedFilesDownload = async () => {
         try {
             const response = await apiHandler.post(
@@ -328,7 +340,7 @@ function DetailGame() {
             const link = document.createElement('a');
 
             link.href = url;
-            link.download = 'selected_assets.zip'; // Optional: name it based on game title
+            link.download = 'selected_assets.zip'; 
             document.body.appendChild(link);
             link.click();
 
@@ -340,7 +352,6 @@ function DetailGame() {
     };
 
 
-console.log(game);
 
 
 
