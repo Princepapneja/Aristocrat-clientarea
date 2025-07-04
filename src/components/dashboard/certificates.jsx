@@ -94,16 +94,16 @@ function Certificates() {
             console.error("Failed to fetch categories:", error);
         }
     };
-    const downloadById = async (type, id) => {
+    const downloadById = async (type, item) => {
         try {
             debugger
-            const query = type === 'file' ? `fileId=${id}` : `folderId=${id}`;
+            const query = type === 'file' ? `fileId=${item?.id}` : `folderId=${item?.id}`;
             const response = await apiHandler.get(`/download?${query}`, {
                 responseType: 'blob',
             });
 
             const disposition = response.headers['content-disposition'];
-            let filename = type === 'file' ? 'file' : 'folder.zip';
+            let filename = item?.name
 
             if (disposition && disposition.includes('filename=')) {
                 const match = disposition.match(/filename="?([^"]+)"?/);
@@ -346,8 +346,14 @@ const[gamesList, setGameLists]=useState(
   
   <div className="flex flex-col md:flex-row items-center gap-7 md:gap-14 w-full md:w-[unset]">
     <img  src={game?.folder?.county?.flag}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full hidden md:block" />
-    <p className="text-xl text-gray-600 font-normal">4 GB</p>
-    <button onClick={() => { downloadById("file", game.id) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+    <p className="text-xl text-gray-600 font-normal">
+  {game?.size ? (
+    game.size >= 1024 ** 3
+      ? `${(game.size / (1024 ** 3)).toFixed(2)} GB`
+      : `${(game.size / (1024 ** 2)).toFixed(2)} MB`
+  ) : 'N/A'}
+</p>
+    <button onClick={() => { downloadById("file", game) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
       Download
       <Download size={16} />
     </button>

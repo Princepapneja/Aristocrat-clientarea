@@ -13,7 +13,7 @@ function GameAssets() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
     const [filters, setFilters] = useState({ skip: 0, limit: 16, studio: studio || "" });
-    const [games, setGames] = useState([]);
+    const [folders, setFolders] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalGames, setTotalGames] = useState(0);
@@ -95,15 +95,15 @@ function GameAssets() {
             console.error("Failed to fetch categories:", error);
         }
     };
-    const downloadById = async (type, id) => {
+    const downloadById = async (type, item) => {
         try {
-            const query = type === 'file' ? `fileId=${id}` : `folderId=${id}`;
+            const query = type === 'file' ? `fileId=${item?.id}` : `folderId=${item?.id}`;
             const response = await apiHandler.get(`/download?${query}`, {
                 responseType: 'blob',
             });
 
             const disposition = response.headers['content-disposition'];
-            let filename = type === 'file' ? 'file' : 'folder.zip';
+            let filename = item?.name
 
             if (disposition && disposition.includes('filename=')) {
                 const match = disposition.match(/filename="?([^"]+)"?/);
@@ -132,8 +132,8 @@ function GameAssets() {
         try {
             const queryParams = new URLSearchParams(filters).toString();
             const { data } = await apiHandler.get(`root-folders?type=exclude_certificates&${queryParams}`);
-            const newGames = data.data.resp || [];
-            setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
+            const newFolders = data.data.resp || [];
+            setFolders((prev) => (filters.skip === 0 ? newFolders : [...prev, ...newFolders]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
             setTotalGames(data.data.total);
         } catch (error) {
@@ -153,7 +153,7 @@ function GameAssets() {
 
     updatedFilters.skip = 0;
 
-    setGames([]);
+    setFolders([]);
     setFilters(updatedFilters);
 };
 
@@ -163,12 +163,12 @@ function GameAssets() {
         const updatedFilters = { ...filters };
         delete updatedFilters[key];
         updatedFilters.skip = 0;
-        setGames([]);
+        setFolders([]);
         setFilters(updatedFilters);
     };
 
     const clearAllFilters = () => {
-        setGames([]);
+        setFolders([]);
         setFilters({ skip: 0, limit: 16 });
     };
     const [showFilterModal, setShowFilterModal] = useState(false);
@@ -318,7 +318,7 @@ const[gamesList, setGameLists]=useState(
                     {/*  button */}
 
                     <div>
-                        {games?.map((game) => {
+                        {folders?.map((folder) => {
                             return (
 <div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
     <div className="flex justify-between items-center w-full md:hidden">
@@ -331,22 +331,20 @@ const[gamesList, setGameLists]=useState(
   {/* Left */}
   <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
     <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
-    <img src={game.icon} alt="Game Icon" className="w-44 h-28 md:mb-2" />
+    <img src={folder.icon} alt="Game Icon" className="w-44 h-28 md:mb-2" />
     <div className='text-center md:text-left'>
       <h2 className="text-emerald-600 font-medium text-3xl mb-2">
-        {game.name}
+        {folder.name}
       </h2>
-      <p className="text-xl text-gray-800 font-medium mb-4">{game?.game?.title}</p>
+      <p className="text-xl text-gray-800 font-medium mb-4">{folder?.game?.title}</p>
       
-      <p className="text-base text-gray-400 mb-2">By: {game?.game?.subStudio?.name}</p>
+      <p className="text-base text-gray-400 mb-2">By: {folder?.game?.subStudio?.name}</p>
     </div>
   </div>
 
   {/* Right */}
   <div className="flex flex-col md:flex-row items-center gap-7 md:gap-14 w-full md:w-[unset]">
-    <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full hidden md:block" />
-    <p className="text-xl text-gray-600 font-normal">4 GB</p>
-    <button onClick={() => { downloadById("folder", game.id) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+    <button onClick={() => { downloadById("folder", folder) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
       Download
       <Download size={16} />
     </button>

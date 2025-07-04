@@ -218,7 +218,7 @@ function DetailGame() {
                                     <span className="text-sm font-medium text-black">{folder.name}</span>
                                 </div>
 
-                                <button onClick={() => { downloadById("folder", folder.id) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
+                                <button onClick={() => { downloadById("folder", folder) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
                                     Download <Download size={14} />
                                 </button>
                             </div>
@@ -236,7 +236,7 @@ function DetailGame() {
                                                     <input type="checkbox" className="cursor-pointer" />
                                                     <span className="text-sm text-black">{file.name}</span>
                                                 </div>
-                                                <button onClick={() => { downloadById("file", file.id) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
+                                            <button onClick={() => { downloadById("file", file) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
                                                     Download <Download size={14} />
                                                 </button>
                                             </div>
@@ -260,7 +260,7 @@ function DetailGame() {
                             <input type="checkbox" className="cursor-pointer" />
                             <span className="text-sm text-black">{file.name}</span>
                         </div>
-                        <button onClick={() => { downloadById("file", file.id) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
+                        <button onClick={() => { downloadById("file", file) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
                             Download <Download size={14} />
                         </button>
                     </div>
@@ -304,15 +304,17 @@ function DetailGame() {
         }
     };
 
-    const downloadById = async (type, id) => {
+    const downloadById = async (type, item) => {
         try {
-            const query = type === 'file' ? `fileId=${id}` : `folderId=${id}`;
+            const query = type === 'file' ? `fileId=${item?.id}` : `folderId=${item?.id}`;
             const response = await apiHandler.get(`/download?${query}`, {
                 responseType: 'blob',
             });
 
+
             const disposition = response.headers['content-disposition'];
-            let filename = type === 'file' ? 'file' : 'folder.zip';
+debugger
+            let filename = item?.name;
 
             if (disposition && disposition.includes('filename=')) {
                 const match = disposition.match(/filename="?([^"]+)"?/);

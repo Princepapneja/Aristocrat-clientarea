@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GameCard from '../utils/GameCard'
 import InputField from '../utils/InputFields'
 import ActiveButtons from '../utils/ActiveButtons'
 import DashboardHeader from '../header-footer/dashBoardHeader'
+import apiHandler from '../../functions/apiHandler'
 function Roadmaps() {
     const [activeStudio,setActiveStudio]= useState(0)
     const [activeYear,setActiveYear]= useState(0)
+    const [selectedRegions,setSelectedRegions]= useState([])
     const [regions,setRegions]  = useState([
         {
             name:"Region",
@@ -65,33 +67,7 @@ function Roadmaps() {
         }
     ])
  
-    const [games,setGames] = useState([
-        {
-image: "/Images/game.png",
-title:"Wolf Riches Hold N Spin",
-by:"Studio Name",
-date:"05 January"
-        },
-        {
-            image:"/Images/game.png",
-            title:"Chicken Burst",
-            by:"Studio Name",
-            date:"13 February"
-                    },
-        {
-image: "/Images/game.png",
-title:"Fortune Tree Of Wealth",
-by:"Studio Name",
-date:"04 March"
-        },
-    
-        {
-image: "/Images/game.png",
-title:"Cards Fortune",
-by:"Studio Name",
-date:"17 April"
-        },
-    ])
+    const [games,setGames] = useState([])
 
     const [activeButtons,setActiveButtons]= useState([
         {
@@ -104,8 +80,25 @@ date:"17 April"
             name:'All Roadmap Downloads'
         }
     ])
-
-
+const fetchGame=async()=>{
+    let url=`games/by-country?studioId=${activeStudio + 1}`
+    
+    if(selectedRegions?.length>0){
+url+= `&countryId=${selectedRegions?.join(",")}`
+    }
+    if(activeYear>0){
+        url+=`&month=${activeYear}`
+    }
+    try {
+        const {data}= await apiHandler.get(url)
+        setGames(data?.data?.resp)
+    } catch (error) {
+        
+    }
+}
+useEffect(()=>{
+    fetchGame()
+},[activeStudio,activeYear])
   return (
    
    <>
