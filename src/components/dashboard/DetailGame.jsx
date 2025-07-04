@@ -321,7 +321,14 @@ function DetailGame() {
         }
     };
 
-    const downloadById = async (type, item) => {
+    
+    const [downloading, setDownloading] = useState(false);
+const [downloadProgress, setDownloadProgress] = useState(0);
+
+
+  const downloadById = async (type, id) => {
+    setDownloading(true);
+    setDownloadProgress(0);
         try {
             const query = type === 'file' ? `fileId=${item?.id}` : `folderId=${item?.id}`;
             const response = await apiHandler.get(`/download?${query}`, {
@@ -332,11 +339,29 @@ function DetailGame() {
             const disposition = response.headers['content-disposition'];
 debugger
             let filename = item?.name;
-    const [downloading, setDownloading] = useState(false);
-const [downloadProgress, setDownloadProgress] = useState(0);
 
+        if (disposition && disposition.includes('filename=')) {
+            const match = disposition.match(/filename="?([^"]+)"?/);
+            if (match && match[1]) filename = match[1];
+        }
 
+        const blob = new Blob([response.data]);
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
 
+        link.remove();
+        window.URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Download failed:', error);
+    } finally {
+        setDownloading(false);
+        setDownloadProgress(0);
+    }
+};
 
     const selectedFilesDownload = async () => {
         try {
