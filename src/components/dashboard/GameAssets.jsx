@@ -194,7 +194,7 @@ const[gamesList, setGameLists]=useState(
 
 
     return (
-        <div className='space-y-16 group' >
+        <div className='container space-y-16 group mb-10' >
 
             <div className='flex justify-between mb-14'>
                     <h1 className='text-3xl md:4xl font-medium'>Game Assets</h1>

@@ -62,7 +62,7 @@ function ContactUs() {
     )
     return (
         <>
-            <div className=''>
+            <div className='container'>
                 <div className=''>
                     <div className='space-y-7'>
                         <p className='font-medium text-5xl mt-10'>Support </p>

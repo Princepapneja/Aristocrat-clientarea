@@ -49,7 +49,7 @@ function Homepage() {
 
   return (
     <>
-      <div className='w-full'>
+      <div className='container w-full'>
         
         {/* Hero Slider */}
         <div className='w-full '>
@@ -96,13 +96,13 @@ function Homepage() {
           <div className='flex justify-end   gap-3.5'>
             <button
               onClick={() => ref.current?.slidePrev()}
-              className='w-12 h-12 rounded-xl bg-white-v2 text-black-v4 flex justify-center items-center'
+              className='w-12 h-12 rounded-xl bg-white-v2 text-black-v4 flex justify-center items-center hover:bg-[black] cursor-pointer'
             >
               <ChevronLeft />
             </button>
             <button
               onClick={() => ref.current?.slideNext()}
-              className='w-12 h-12 rounded-xl bg-primary-dark text-white flex justify-center items-center'
+              className='w-12 h-12 rounded-xl bg-primary-dark text-white flex justify-center items-center hover:bg-[black] cursor-pointer'
             >
               <ChevronRight />
             </button>
@@ -162,13 +162,13 @@ function Homepage() {
           <div className='flex justify-end   gap-3.5'>
             <button
               onClick={() => ref.current?.slidePrev()}
-              className='w-12 h-12 rounded-xl bg-white-v2 text-black-v4 flex justify-center items-center'
+              className='w-12 h-12 rounded-xl bg-white-v2 text-black-v4 flex justify-center items-center hover:bg-[black] cursor-pointer'
             >
               <ChevronLeft />
             </button>
             <button
               onClick={() => ref.current?.slideNext()}
-              className='w-12 h-12 rounded-xl bg-primary-dark text-white flex justify-center items-center'
+              className='w-12 h-12 rounded-xl bg-primary-dark text-white flex justify-center items-center hover:bg-[black] cursor-pointer'
             >
               <ChevronRight />
             </button>

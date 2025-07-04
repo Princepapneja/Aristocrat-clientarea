@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { menu } from "./SideBar";
 import Logo from '../../assets/logos/mobileLogo.png'
 import DashBoardHeader from "./dashBoardHeader";
-
+import menuLogo from '../../assets/icons/equal-sign--interface-math-equal-sign-mathematics.svg'
 const MobileMenu = () => {
   const [open, setOpen] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -53,12 +53,15 @@ const MobileMenu = () => {
           {
             openSearch?  <button onClick={() => setOpenSearch(false)} className="border p-1 rounded-xl">
               <X className="w-9 h-9" />
+              
             </button>: 
              <button
             onClick={() => setOpen(true)}
             className="p-2 border border-black rounded-xl hover:bg-gray-100 transition"
           >
-            <Menu className="w-9 h-9 text-black" />
+            {/* <Menu className="w-9 h-9 text-black" /> */}
+              <img src={menuLogo} alt=""  className="w-9 h-9 text-black"/>
+
           </button>
           }
          
@@ -66,7 +69,7 @@ const MobileMenu = () => {
       </div>
 
       {open && (
-        <div className="fixed top-0 inset-0 z-50 md:hidden bg-[url(/Images/sidebar.png)] bg-center bg-cover text-black   transition-all">
+        <div className="fixed top-0 inset-0 z-50 md:hidden bg-[url(/Images/sidebar.png)] bg-center bg-cover text-black   transition-all h-[100vh]">
           <div className="flex justify-between items-center p-4">
             <img src="/logos/logo-black.png" alt="Logo" className="w-40" />
             <button onClick={() => setOpen(false)} className="border p-1 rounded-xl">

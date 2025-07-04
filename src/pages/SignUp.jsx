@@ -7,7 +7,7 @@ import InputField from "../components/utils/InputFields";
 import Buttons from "../components/utils/buttons";
 import OtpInput from "../components/utils/OTP";
 import useGlobal from "../hooks/useGlobal";
-import { validateEmail } from "../functions/emailValidator";
+import { isValidPassword, validateEmail } from "../functions/emailValidator";
 import SucessLogReg from "../components/utils/SucessLogReg";
 
 const loginInput = [
@@ -149,31 +149,32 @@ const SignUp = () => {
 
     const handleRegister = async () => {
 
-
         const {
             email,
             company,
             password,
-            Confirmpassword,
+            ConfirmPassword,
             firstName,
             lastName,
         } = inputValues;
 
-        //   if (!email || !company ||  !password || !Confirmpassword ||   firstName ||  lastName) {
-        //     error("Please fill in all required fields.");
-        //     return;
-        //   }
 
-        //   if (!validateEmail(email)) {
-        //     error("Please enter a valid email address.");
-        //     return;
-        //   }
+        const result = isValidPassword(password);
+        if (!validateEmail(email)) {
+            error("Please enter a valid email address.");
+            return;
+        }
 
-        //   if (Createpassword !== Confirmpassword) {
-        //     error("Password and Confirm Password do not match.");
-        //     return;
-        //   }
-        debugger
+        if (!result.valid) {
+            error(result.error);
+            return;
+        }
+
+
+        if (password !== ConfirmPassword) {
+            error("Password and Confirm Password do not match.");
+            return;
+        }
         const payload = {
             firstName: inputValues?.firstName,
             lastName: inputValues?.lastName,

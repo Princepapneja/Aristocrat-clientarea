@@ -7,6 +7,8 @@ import cross from '/logos/cross.png';
 import { useSearchParams } from 'react-router-dom';
 import Buttons from '../utils/buttons';
 import { X } from 'lucide-react';
+import MobileFilter from '../utils/MobileFilter';
+import FilterIcon from '../../assets/icons/Group 4519.svg'
 
 function GamePage() {
     const [params] = useSearchParams()
@@ -17,14 +19,27 @@ function GamePage() {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalGames, setTotalGames] = useState(0);
+ const [showFilter, setShowFilter] = useState(false);
 
-
+   const [gameType, setGameType] = useState([]);
+  const [familyType, setFamilyType] = useState([]);
+  const [feature, setFeature] = useState([]);
+  const [theme, setTheme] = useState([]);
+  const [volatility, setVolatility] = useState([]);
+  const [jackpot, setJackpot] = useState([]);
     
     const dropdownDefaults = (label) => [
         { value: label, selected: true, name: label }
     ];
+    
     const [studios, setStudios] = useState([])
 
+const [formData, setFormData] = useState({
+    studio: [],
+    categoryIds: [],
+    region: [],
+    
+  });
     const [dropdowns, setDropdowns] = useState({
         regionOption: dropdownDefaults('Region'),
         volatilityOption: dropdownDefaults('Volatility'),
@@ -35,6 +50,7 @@ function GamePage() {
         jackpotOption: dropdownDefaults('Jackpot'),
     });
 
+    // console.log(dropdowns?.featuresOption);
 
     useEffect(() => {
         fetchGames();
@@ -46,6 +62,7 @@ function GamePage() {
 
     }, [])
 
+    
     // Scroll event to trigger infinite scroll
     useEffect(() => {
         const handleScroll = () => {
@@ -64,8 +81,9 @@ function GamePage() {
     const fetchStudios = async () => {
         try {
             const { data } = await apiHandler.get("studios");
+            
             const options = data?.data?.map((e) => ({ name: e.name, value: e.id }));
-            setStudios([{ value: "", selected: true, name: "Select one" }, ...options]);
+            setStudios([ ...options]);
         } catch (error) {
             console.error(error);
         }
@@ -74,20 +92,23 @@ function GamePage() {
         try {
             const { data } = await apiHandler.get("categories");
             const categories = data?.data || [];
-            console.log(data);
+            console.log(categories);
 
 
             const options = (type) => {
+                console.log(type);
+                
                 const items = categories?.filter((q) => q.type === type).map((e) => ({ name: e.title, value: e.id }))
-                return [{ value: "", selected: true, name: "Select one" }, ...items]
+                return [ ...items]
             }
 
+            
             setDropdowns({
                 regionOption: options("region"),
                 volatilityOption: options("volatility"),
                 themeOption: options("theme"),
-                featureOption: options("feature"),
-                jackpotOption: options("jackpot"),
+                featuresOption: options("feature"),
+                jackpotOption: options("jackpots"),
                 gameTypeOption: options("gameType"),
                 familyOption: options("family"),
             });
@@ -96,10 +117,11 @@ function GamePage() {
         }
     };
 
+
     const fetchGames = async () => {
         setLoading(true);
         try {
-            const queryParams = new URLSearchParams(filters).toString();
+            const queryParams = new URLSearchParams(formData).toString();
             const { data } = await apiHandler.get(`games/`);
             const newGames = data.data.games || [];
             setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
@@ -111,21 +133,36 @@ function GamePage() {
         setLoading(false);
     };
 
-   const onFilterChange = (filterArray) => {
-    console.log(filterArray);
 
-    const updatedFilters = { ...filters };
+const onFilterChange = (filterArray) => {
+    const updatedFormData = { ...formData };
 
-    filterArray.forEach(filter => {
-        updatedFilters[filter.name] = filter.value;
+ const updatedFilter = { ...filters };
+
+ 
+
+    filterArray.forEach(({ value,id }) => {
+      if (!updatedFormData[id]) {
+        updatedFormData[id] = [];
+      }
+      if (!updatedFormData[id].includes(value)) {
+        updatedFormData[id].push(value);
+      }
     });
 
-    updatedFilters.skip = 0;
+    
+    filterArray.forEach(filter => {
+        updatedFilter[filter.name] = filter.value;
+        
+    });
+// console.log(updatedFormData);
 
-    setGames([]);
-    setFilters(updatedFilters);
-};
+    setFormData(updatedFormData);
+    setFilters(updatedFilter);
+  };
 
+
+// console.log(Object.entries(filters));
 console.log(filters);
 
 
@@ -135,25 +172,67 @@ console.log(filters);
         updatedFilters.skip = 0;
         setGames([]);
         setFilters(updatedFilters);
+    
     };
 
-    const clearAllFilters = () => {
-        setGames([]);
-        setFilters({ skip: 0, limit: 16 });
-    };
+
+     const clearAllFilters = () => {
+    setFormData({
+      studio: [],
+      categoryIds: [],
+      region: [],
+      
+    });
+    setFilters({ skip: 0, limit: 16 });
+  };
     const [showFilterModal, setShowFilterModal] = useState(false);
 
 
+    console.log(filters);
+    
+
+
     return (
-        <div className='space-y-16 group' >
+        <div className='container space-y-16 group' >
             {/* Filter Inputs */}
             <div className='space-y-5'>
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
+                  {/* <Buttons  className={"flex items-center gap-2 mt-20 mb-25 w-full"} type='border' >
+                                            <span className=' font-normal  text-lg '>Filter</span>
+                                            <img src={FilterIcon} alt="" className='w-5' />
+                   </Buttons> */}
+
+
+                   <div className='md:hidden '>
+                    <button   onClick={() => setShowFilter(true)} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 border-1 mt-10 border-[#00B290] hover:bg-[rgba(0,178,144,0.10)]
+ text-[#00B290] text-base font-semibold rounded-md transition">
+       <span className=' font-normal  text-lg '>Filter</span>
+                                            <img src={FilterIcon} alt="" className='w-5' />
+    </button>
+
+
+
+<div
+        className={`fixed top-0 left-0 w-full max-w-sm h-full bg-white z-50 transition-transform duration-300 ease-in-out transform ${
+          showFilter ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {/* Close button */}
+        
+
+        {/* Filter Content */}
+        
+        <MobileFilter setShowFilter={setShowFilter} filters={filters} dropdowns={dropdowns&& dropdowns} onFilterChange={onFilterChange} studios={studios} clearFilter={clearFilter} clearAllFilters={clearAllFilters}/>
+      </div>
+                    
+                   </div>
+
+
+                <div className='md:grid  grid-cols-1 md:grid-cols-4 gap-10 hidden'>
                     <InputField
                         type='selects'
                         id='studio'
                         label="Studio"
-                        value={filters?.studio}
+                        value={formData.volatility}
                         options={studios}
                         handleInputChange={onFilterChange}
                     />
@@ -161,73 +240,75 @@ console.log(filters);
                         type='selects'
                         id='region'
                         label="Region"
-                        value={filters?.region}
+                        value={formData?.region}
                         options={dropdowns.regionOption}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
                         type='selects'
                         label="Volatility"
-                        id='volatility'
-                        value={filters?.volatility}
+                        id='categoryIds'
+                        value={formData?.volatility}
                         options={dropdowns.volatilityOption}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
                         type='selects'
-                        id='theme'
+                        id='categoryIds'
                         label="Theme"
-                        value={filters?.theme}
+                        value={formData?.theme}
                         options={dropdowns.themeOption}
                         handleInputChange={onFilterChange}
                     />
-                </div>
 
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
-                    <InputField
+                      <InputField
                         type='selects'
                         label="Features"
-                        id='features'
-                        value={filters?.features}
+                        id='categoryIds'
+                        value={formData?.features}
                         options={dropdowns.featuresOption}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
                         type='selects'
                         label="Family"
-                        id='family'
-                        value={filters?.family}
+                        id='categoryIds'
+                        value={formData?.family}
                         options={dropdowns.familyOption}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
                         type='selects'
                         label="Game Type"
-                        id='gameType'
-                        value={filters?.gameType}
+                        id='categoryIds'
+                        value={formData?.gameType}
                         options={dropdowns.gameTypeOption}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
                         type='selects'
                         label="Jackpot"
-                        id='jackpot'
-                        value={filters?.jackpot}
+                        id='categoryIds'
+                        value={formData?.jackpot}
                         options={dropdowns.jackpotOption}
                         handleInputChange={onFilterChange}
                     />
                 </div>
+{/* <MobileFilter/> */}
+      
             </div>
 
 
 
             {/* Filter Chip Display */}
-            <div className='flex justify-between items-center mb-20'>
+            <div className='hidden md:flex justify-between items-center mb-20 '>
                 <div className='flex gap-5 flex-wrap'>
                     {Object.entries(filters)
             .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
             .slice(0, 5)
             .map(([key, val]) => {
+                console.log(key,val);
+                
 
                         let options = []
                         if (key === "studio") {
@@ -250,7 +331,6 @@ console.log(filters);
                         }
                         if (['skip', 'limit'].includes(key)) return null;
                         if (!val) return null
-                        console.log(options, options?.find(q => q.value === val), options?.find(q => q.value === val)?.name, "name")
                         return (
                             <div key={key} className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
                                 <p className='text-sm text-black-v3'>{
@@ -279,7 +359,7 @@ console.log(filters);
             </div>
 
             {/* Game List */}
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-16 p-4'>
+            <div className='grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-16 '>
                 {games.map((item, index) => (
                     <GameCard key={index} game={item} className='w-[280px]' />
                 ))}
@@ -324,6 +404,8 @@ console.log(filters);
                     </div>
                 </div>
             )}
+
+
 
 
         </div>
