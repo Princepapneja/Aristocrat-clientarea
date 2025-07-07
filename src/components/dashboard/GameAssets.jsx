@@ -11,6 +11,7 @@ import { Download } from "lucide-react";
 import logo from '../../assets/logos/texas-longhorn-country-western-bull-cattle-vintage-label-logo-design-vector.jpg'
 import useGlobal from '../../hooks/useGlobal';
 import { Region } from '../../../constants';
+import RegionListComponent from '../utils/RegionListComponent';
 function GameAssets() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
@@ -169,12 +170,13 @@ const[gamesList, setGameLists]=useState(
                         options={studios}
                         handleInputChange={onFilterChange}
                     />
-                    <Region
+                    <RegionListComponent
                         type='selects'
                         id='region'
                         label="Region"
-                        value={filters?.region}
-                        options={dropdowns.regionOption}
+                        name="Region"
+                        value={regions}
+                        options={regions}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
