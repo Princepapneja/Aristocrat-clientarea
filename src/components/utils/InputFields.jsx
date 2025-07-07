@@ -194,7 +194,11 @@ dataName.toLowerCase().includes(searchTerm.toLowerCase())
               className="border-2 border-gray-200 rounded-md p-2 cursor-pointer flex items-center justify-between bg-[#F4F4F4]"
               onClick={toggleDropdown}
             >
-              <span className="text-[#6F6F6F] font-semibold text-base capitalize">{label}</span>
+               <span className="text-[#6F6F6F] font-semibold text-base capitalize">
+                    {label} {selected?.length > 0 && (
+                        <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{selected.length}</span>
+                    )}
+                </span>
               {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
             </div>
           

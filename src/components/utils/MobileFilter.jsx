@@ -2,6 +2,8 @@ import React from 'react'
 import { ChevronRight, X, ArrowLeft } from 'lucide-react';
 import InputField from './InputFields';
 import cross from '/logos/cross.png';
+import RegionListComponent from './RegionListComponent';
+import useGlobal from '../../hooks/useGlobal';
 
 const chosenFilters = [
   { label: 'Region: USA: Michigan' },
@@ -22,6 +24,7 @@ const filterCounts = {
 };
 const MobileFilter = ({setShowFilter,filters,showFilterModal,onFilterChange,dropdowns,studios,clearFilter,clearAllFilters}) => {
 
+    const {regions} = useGlobal()
 
  
     
@@ -82,12 +85,12 @@ const MobileFilter = ({setShowFilter,filters,showFilterModal,onFilterChange,drop
                         options={studios}
                         handleInputChange={onFilterChange}
                     />
-                    <InputField
-                        type='mobileSelect'
+                    <RegionListComponent
                         id='region'
-                       className="top-0 mb-2 "
-                        value={filters?.region}
-                        options={dropdowns.regionOption}
+                        // label="Region"
+                         className=" top-0 mb-2 "
+                        name="Region"
+                        options={regions}
                         handleInputChange={onFilterChange}
                     />
                     <InputField
