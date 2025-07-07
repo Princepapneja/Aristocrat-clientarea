@@ -595,13 +595,7 @@ debugger
                         {/* Column 4 */}
                         <div className="flex flex-col h-full">
                             <p className="text-[#7C7C7C] font-medium mb-2">Special Features</p>
-                            {/* <div className="space-y-1">
-      {features?.map((feature) => (
-        <p key={feature.id} className="font-semibold">{feature.title}</p>
-      ))}
-    </div> */}
                             <div className="space-y-1">
-
                                 <p className="font-semibold">Unlock Feature</p>
                                 <p className="font-semibold">Unlock Feature</p>
                                 <p className="font-semibold">Unlock Feature</p>

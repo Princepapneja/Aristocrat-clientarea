@@ -172,25 +172,6 @@ function Certificates() {
         setFilters({ skip: 0, limit: 16 });
     };
     const [showFilterModal, setShowFilterModal] = useState(false);
-const[gamesList, setGameLists]=useState(
-    [
-        {
-            icon:'/logos/gameIcon.png',
-            title: "Amun Ra King Of The Gods...",
-            by: "Studio Name"
-        },
-        {
-            icon:'/logos/gameIcon.png',
-            title: "Amun Ra King Of The Gods...",
-            by: "Studio Name"
-        },
-        {
-            icon:'/logos/gameIcon.png',
-            title: "Amun Ra King Of The Gods...",
-            by: "Studio Name"
-        }
-    ]
-)
 
 
     return (
@@ -277,7 +258,6 @@ const[gamesList, setGameLists]=useState(
                         }
                         if (['skip', 'limit'].includes(key)) return null;
                         if (!val) return null
-                        console.log(options, options?.find(q => q.value === val), options?.find(q => q.value === val)?.name, "name")
                         return (
                             <div key={key} className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
                                 <p className='text-sm text-black-v3'>{
@@ -322,7 +302,6 @@ const[gamesList, setGameLists]=useState(
                             return (
 <div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow hover:shadow transition-shadow duration-300">
     <div className="flex justify-between items-center w-full md:hidden">
-   {console.log(game.folder.country?.flag,"bhn fi ")}
     <img  src={game?.folder?.country?.flag}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full " />
      <input type="checkbox" className="w-5 h-5 accent-emerald-500 " />
 
@@ -331,7 +310,8 @@ const[gamesList, setGameLists]=useState(
   {/* Left */}
   <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
     <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
-    <img src={game.icon} alt="Game Icon" className=" md:mb-2" />
+    {(game?.game?.logo)}
+    <img src={encodeURIComponent(game?.game?.logo)} alt="Game Icon" className=" md:mb-2" />
     <div className='text-center md:text-left'>
       <h2 className="text-emerald-600 font-medium text-3xl mb-2">
         {game.name}
