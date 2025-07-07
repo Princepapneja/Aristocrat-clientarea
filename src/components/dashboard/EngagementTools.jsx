@@ -16,42 +16,43 @@ function EngagementTools() {
         {
           name: 'Tournaments',
           description1: "Summon your players for enticing competitions! Set up tournaments effortlessly, selecting players, games, timing, conditions, and rewards with total flexibility.",
-          description2: "Leaderboards are displayed in-game, providing another edge, as players can track their progress as they battle their way to the top.",
+          description2: "Leader boards are displayed in-game, providing another edge, as players can track their progress as they battle their way to the top.",
           icon: "/Images/trophy.png",
           image: "/Images/screen.png"
         },
         {
           name: 'Free Spins',
-          description1: "Engage users with free spin opportunities. Configure spin frequency, outcomes, and rewards to increase player excitement.",
-          description2: "A proven tool to boost retention and keep the gameplay thrilling for every participant.",
-          icon: "/Images/trophy.png",
-          image: "/Images/screen.png"
+          description1: "Configure personalized free spins in one quick step!",
+          description2: "This marketing tool allows you to easily give your players alluring incentives to try new games and keep winning in their favorite ones, while our back-office system gives you full control of the promotion settings.",
+          icon: "/Images/free spins 1.png",
+          image: "/Images/Leading content & creative talent 1.png"
         },
         {
           name: 'Spin That Wheel™',
-          description1: "Add an element of surprise with our customizable spinning wheel feature.",
-          description2: "Players can spin to win rewards, creating anticipation and frequent engagement.",
-          icon: "/Images/trophy.png",
-          image: "/Images/screen.png"
+          description1: "An irresistible game within all games ! Define your rewards and probabilities to configure this bonus feature and add excitement to your players’ experience.",
+          description2: "Spin that Wheel™ is a unique engagement tool that enhances attraction and retention in a simple and enticing manner.",
+          icon: "/Images/Speen_that_wheel_logo2 1.png",
+          image: "/Images/Spin That Wheel 1.png"
         },
         {
           name: 'Raffle Rocket',
-          description1: "Launch raffle campaigns to excite users with prize draws.",
+          description1: "The golden ticket to campaign success!",
           description2: "Encourage participation through ticket collections and scheduled raffles.",
-          icon: "/Images/trophy.png",
-          image: "/Images/screen.png"
+          description3: "Multiple reward options are available, including cash prizes and free spins.",
+          icon: "/Images/LogoRR 1.png",
+          image: "/Images/RR 1.png"
         },
         {
           name: 'Tool 5',
-          description1: "Tool 5 description goes here.",
-          description2: "Additional Tool 5 details or benefits go here.",
+          description1: "Real-Time Fraud Detection Tool",
+          description2: "Flags suspicious player behavior like bonus abuse, multi-accounting, or bot activity using AI/ML algorithms.",
           icon: "/Images/trophy.png",
           image: "/Images/screen.png"
         },
         {
           name: 'Tool 6',
-          description1: "Tool 6 description goes here.",
-          description2: "Additional Tool 6 details or benefits go here.",
+          description1: "Live Game Performance Tracker",
+          description2: "Monitors in real time how games are performing (GGR, player engagement, churn), helping operators adjust game offerings dynamically.",
           icon: "/Images/trophy.png",
           image: "/Images/screen.png"
         },
@@ -72,7 +73,7 @@ function EngagementTools() {
                         </p>
                     </div>
                     <div className='flex flex-col md:flex-row rounded-3xl bg-white-v2 gap-10 justify-between p-2 items-center mb-8 w-full'>
-                        <ActiveButtons active={active} setActive={setActive} className="grid  grid-cols-2 md:grid-cols-1 gap-4 md:max-w-[275px] w-full" buttons={activeButtons} type='activePage' />
+                        <ActiveButtons active={active} setActive={setActive} className="grid  grid-cols-2 md:grid-cols-1 gap-4 md:max-w-[275px] w-full" buttons={activeButtons} type='' />
 
                         <div className="bg-white-v2 rounded-3xl p-2 md:p-10">
                             <div className="flex flex-col md:flex-row items-center gap-6 md:gap-20 mb-6">
@@ -81,7 +82,7 @@ function EngagementTools() {
                                         activeButtons?.[active]?.icon
                                     }
                                     alt="Trophy"
-                                    className="h-28 w-auto object-contain"
+                                    className="h-28 w-auto object-contain rounded-2xl"
                                 />
                                 <img
                                     src={
@@ -101,6 +102,11 @@ function EngagementTools() {
                                 <p className="text-2xl md:text-lg">
                                     {
                                         activeButtons?.[active]?.description2
+                                    }
+                                </p>
+                                  <p className="text-2xl md:text-lg">
+                                    {
+                                        activeButtons?.[active]?.description3
                                     }
                                 </p>
                             </div>

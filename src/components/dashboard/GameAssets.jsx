@@ -9,6 +9,9 @@ import Buttons from '../utils/buttons';
 import { X } from 'lucide-react';
 import { Download } from "lucide-react";
 import logo from '../../assets/logos/texas-longhorn-country-western-bull-cattle-vintage-label-logo-design-vector.jpg'
+import useGlobal from '../../hooks/useGlobal';
+import { Region } from '../../../constants';
+import RegionListComponent from '../utils/RegionListComponent';
 function GameAssets() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
@@ -19,32 +22,14 @@ function GameAssets() {
     const [totalGames, setTotalGames] = useState(0);
 
 
-    
-    const dropdownDefaults = (label) => [
-        { value: label, selected: true, name: label }
-    ];
-    const [studios, setStudios] = useState([])
-
-    const [dropdowns, setDropdowns] = useState({
-        regionOption: dropdownDefaults('Region'),
-        volatilityOption: dropdownDefaults('Volatility'),
-        themeOption: dropdownDefaults('Theme'),
-        featuresOption: dropdownDefaults('Feature'),
-        familyOption: dropdownDefaults('Family'),
-        gameTypeOption: dropdownDefaults('Game Type'),
-        jackpotOption: dropdownDefaults('Jackpot'),
-    });
+    const {regions,studios,dropdowns } = useGlobal()
 
 
     useEffect(() => {
         fetchGames();
     }, [filters]);
 
-    useEffect(() => {
-        fetchStudios()
-        fetchCategories()
 
-    }, [])
 
     // Scroll event to trigger infinite scroll
     useEffect(() => {
@@ -61,40 +46,8 @@ function GameAssets() {
     }, [loading, hasMore]);
 
 
-    const fetchStudios = async () => {
-        try {
-            const { data } = await apiHandler.get("studios");
-            const options = data?.data?.map((e) => ({ name: e.name, value: e.id }));
-            setStudios([{ value: "", selected: true, name: "Select one" }, ...options]);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    const fetchCategories = async () => {
-        try {
-            const { data } = await apiHandler.get("categories");
-            const categories = data?.data || [];
-            console.log(data);
 
 
-            const options = (type) => {
-                const items = categories?.filter((q) => q.type === type).map((e) => ({ name: e.title, value: e.id }))
-                return [{ value: "", selected: true, name: "Select one" }, ...items]
-            }
-
-            setDropdowns({
-                regionOption: options("region"),
-                volatilityOption: options("volatility"),
-                themeOption: options("theme"),
-                featureOption: options("feature"),
-                jackpotOption: options("jackpot"),
-                gameTypeOption: options("gameType"),
-                familyOption: options("family"),
-            });
-        } catch (error) {
-            console.error("Failed to fetch categories:", error);
-        }
-    };
     const downloadById = async (type, item) => {
         try {
             const query = type === 'file' ? `fileId=${item?.id}` : `folderId=${item?.id}`;
@@ -217,12 +170,13 @@ const[gamesList, setGameLists]=useState(
                         options={studios}
                         handleInputChange={onFilterChange}
                     />
-                    <InputField
+                    <RegionListComponent
                         type='selects'
                         id='region'
                         label="Region"
-                        value={filters?.region}
-                        options={dropdowns.regionOption}
+                        name="Region"
+                        value={regions}
+                        options={regions}
                         handleInputChange={onFilterChange}
                     />
                     <InputField

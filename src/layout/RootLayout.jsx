@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../components/utils/loader';
+import apiHandler from '../functions/apiHandler';
 const RootLayout = () => {
   const navigate = useNavigate()
   const [height, setHeight] = useState(0);
@@ -76,6 +77,99 @@ const setCollapsed = (value) => {
   fetchNavHeight()
  },[navElement])
 
+const [regions,setRegions]=useState([])
+  const [studios, setStudios] = useState([])
+
+      const dropdownDefaults = (label) => [
+        { value: label, selected: true, name: label }
+    ];
+
+    
+   const [dropdowns, setDropdowns] = useState({
+        volatilityOption: dropdownDefaults('Volatility'),
+        themeOption: dropdownDefaults('Theme'),
+        featuresOption: dropdownDefaults('Feature'),
+        familyOption: dropdownDefaults('Family'),
+        gameTypeOption: dropdownDefaults('Game Type'),
+        jackpotOption: dropdownDefaults('Jackpot'),
+    });
+
+
+const loggedUser=localStorage.getItem("token")
+
+     const fecthRegions = async () => {
+  if (!loggedUser) return;
+
+        try {
+            const { data } = await apiHandler.get(`/regions/`);
+            
+            // const newSubstudio = data?.data?.map((e) => {
+            //     return {
+            //         name: e?.name,
+            //         id: e?.id,
+                    
+            //     }
+            // }) || [];
+            //  setRegion([
+            //     { name: "Select SubStudio", id: "", },
+            //     ...newSubstudio
+            // ]);
+            // setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
+            // setHasMore((filters.skip + filters.limit) < data.data.total);
+            setRegions(data.data);
+        } catch (error) {
+            console.error('Failed to fetch games:', error);
+        }
+    };
+
+     const fetchStudios = async () => {
+       if (!loggedUser) return;
+        try {
+            const { data } = await apiHandler.get("sub-studios");
+            
+            const options = data?.data?.map((e) => ({ name: e.name, value: e.id }));
+            setStudios([ ...options]);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+        const fetchCategories = async () => {
+       if (!loggedUser) return;
+
+        try {
+            const { data } = await apiHandler.get("categories");
+            const categories = data?.data || [];
+            console.log(categories);
+
+
+            const options = (type) => {
+                console.log(type);
+                
+                const items = categories?.filter((q) => q.type === type).map((e) => ({ name: e.title, value: e.id }))
+                return [ ...items]
+            }
+
+            
+            setDropdowns({
+                volatilityOption: options("volatility"),
+                themeOption: options("theme"),
+                featuresOption: options("feature"),
+                jackpotOption: options("jackpots"),
+                gameTypeOption: options("gameType"),
+                familyOption: options("family"),
+            });
+        } catch (error) {
+            console.error("Failed to fetch categories:", error);
+        }
+    };
+
+    useEffect(()=>{
+fecthRegions()
+fetchStudios()
+fetchCategories()
+
+    },[loggedUser])
 
   return (
     <>
@@ -101,7 +195,7 @@ const setCollapsed = (value) => {
         <Loader />
       }
       <main className="">
-        <Outlet context={{ collapsed, setCollapsed,disable, setDisable, availableQuestions, setAvailableQuestions, mainLoader, setMainLoader, user, counts, setCounts, navigate, token, setToken, setUser, render, setRender, height, success, error, progress, setProgress, sideBarOpen, setSideBarOpen }} />
+        <Outlet context={{ collapsed, setCollapsed,disable, setDisable, availableQuestions, setAvailableQuestions, mainLoader, setMainLoader, user, counts, setCounts, navigate, token, setToken, setUser, render, setRender, height, success, error, progress, setProgress, sideBarOpen, setSideBarOpen,regions,studios,dropdowns}} />
       </main>
       {/* <Footer/> */}
     </>

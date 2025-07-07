@@ -9,6 +9,9 @@ import Buttons from '../utils/buttons';
 import { X } from 'lucide-react';
 import MobileFilter from '../utils/MobileFilter';
 import FilterIcon from '../../assets/icons/Group 4519.svg'
+import RegionListComponent from '../utils/RegionListComponent';
+import useGlobal from '../../hooks/useGlobal';
+
 
 function GamePage() {
     const [params] = useSearchParams()
@@ -27,12 +30,10 @@ function GamePage() {
   const [theme, setTheme] = useState([]);
   const [volatility, setVolatility] = useState([]);
   const [jackpot, setJackpot] = useState([]);
+    const {regions,studios,dropdowns } = useGlobal()
     
-    const dropdownDefaults = (label) => [
-        { value: label, selected: true, name: label }
-    ];
+
     
-    const [studios, setStudios] = useState([])
 
 const [formData, setFormData] = useState({
     studio: [],
@@ -40,15 +41,7 @@ const [formData, setFormData] = useState({
     region: [],
     
   });
-    const [dropdowns, setDropdowns] = useState({
-        regionOption: dropdownDefaults('Region'),
-        volatilityOption: dropdownDefaults('Volatility'),
-        themeOption: dropdownDefaults('Theme'),
-        featuresOption: dropdownDefaults('Feature'),
-        familyOption: dropdownDefaults('Family'),
-        gameTypeOption: dropdownDefaults('Game Type'),
-        jackpotOption: dropdownDefaults('Jackpot'),
-    });
+
 
     // console.log(dropdowns?.featuresOption);
 
@@ -56,11 +49,6 @@ const [formData, setFormData] = useState({
         fetchGames();
     }, [filters]);
 
-    useEffect(() => {
-        fetchStudios()
-        fetchCategories()
-
-    }, [])
 
     
     // Scroll event to trigger infinite scroll
@@ -78,44 +66,8 @@ const [formData, setFormData] = useState({
     }, [loading, hasMore]);
 
 
-    const fetchStudios = async () => {
-        try {
-            const { data } = await apiHandler.get("studios");
-            
-            const options = data?.data?.map((e) => ({ name: e.name, value: e.id }));
-            setStudios([ ...options]);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    const fetchCategories = async () => {
-        try {
-            const { data } = await apiHandler.get("categories");
-            const categories = data?.data || [];
-            console.log(categories);
 
 
-            const options = (type) => {
-                console.log(type);
-                
-                const items = categories?.filter((q) => q.type === type).map((e) => ({ name: e.title, value: e.id }))
-                return [ ...items]
-            }
-
-            
-            setDropdowns({
-                regionOption: options("region"),
-                volatilityOption: options("volatility"),
-                themeOption: options("theme"),
-                featuresOption: options("feature"),
-                jackpotOption: options("jackpots"),
-                gameTypeOption: options("gameType"),
-                familyOption: options("family"),
-            });
-        } catch (error) {
-            console.error("Failed to fetch categories:", error);
-        }
-    };
 
 
     const fetchGames = async () => {
@@ -236,14 +188,14 @@ console.log(filters);
                         options={studios}
                         handleInputChange={onFilterChange}
                     />
-                    <InputField
-                        type='selects'
+                    <RegionListComponent
                         id='region'
                         label="Region"
-                        value={formData?.region}
-                        options={dropdowns.regionOption}
+                        name="Region"
+                        options={regions}
                         handleInputChange={onFilterChange}
                     />
+                    
                     <InputField
                         type='selects'
                         label="Volatility"
