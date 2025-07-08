@@ -41,7 +41,7 @@ const DashboardLayout = () => {
       </div>
 
       {/* Main content area */}
-      <div className="flex flex-col w-full md:w-[calc(100vw-240px)] lg:ml-[230px]">
+      <div className="flex flex-col w-full lg:w-[calc(100vw-240px)] lg:ml-[230px]">
         {user?.systemGeneratedPass && (
           <ChangePass initialValue={user?.systemGeneratedPass} />
         )}

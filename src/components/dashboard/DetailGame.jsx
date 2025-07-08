@@ -11,6 +11,11 @@ import moment from 'moment';
 import { baseUrl, dateFormat } from '../../../constants';
 import ActiveButtons from '../utils/ActiveButtons';
 import { ChevronDown, ChevronRight, Download, X } from 'lucide-react';
+import Mobile from '../../assets/logos/phone.svg'
+import Tab from '../../assets/logos/tablet.svg'
+import Casino from '../../assets/logos/slot_machine.svg'
+import Pc from '../../assets/logos/Desktop.svg'
+import { toast, ToastContainer } from 'react-toastify';
 const data = [
     {
         id: 1,
@@ -66,15 +71,7 @@ function DetailGame() {
     };
 
     const swiperRef = useRef(null)
-    const [dateOption, setDateOption] = useState(
-        [
-            {
-                value: "Date",
-                selected: true,
-                name: "Date"
-            }
-        ]
-    )
+
 
     const [heroSlider, setHeroSlider] = useState([
         { img: '/Images/sliderBanner.png' },
@@ -89,17 +86,13 @@ function DetailGame() {
 
     const [showReleaseDropdown, setShowReleaseDropdown] = useState(false);
     const [selectedRelease, setSelectedRelease] = useState({
-        country: 'United Kingdom',
-        date: '10 Jan, 2025',
+        country: 'General Release Date',
+        date: moment(game?.releaseDate).format('DD MMM, YYYY'),
     });
 
-    const releaseDates = [
-        { country: 'USA', date: '01 Jan, 2025' },
-        { country: 'Canada', date: '05 Jan, 2025' },
-        { country: 'United Kingdom', date: '10 Jan, 2025' },
-        { country: 'Europe', date: '22 Jan, 2025' },
-        { country: 'Europe', date: '31 Jan, 2025' },
-    ];
+    const [releaseDates, setReleaseDates] = useState([]);
+
+
 
 
     useEffect(() => {
@@ -107,44 +100,44 @@ function DetailGame() {
     }, [id]);
     const handleDownload = async (name, type) => {
         try {
-          const folder = buttons?.[active]?.key;
-      
-          if (!id || !name || !type || !folder) {
-            console.warn("Missing required parameters");
-            return;
-          }
-      
-          const url = `/games/${id}/download?type=${type}&name=${encodeURIComponent(name)}&folder=${folder}`;
-          debugger
-      
-          const response = await apiHandler.get(url, {
-            responseType: 'blob', // Needed to process binary data (zip or file)
-          });
-      
-          // Extract filename from response headers or fallback
-          const contentDisposition = response.headers['content-disposition'];
-          let filename = `${name}.zip`; // fallback to zipped folder name
-          if (contentDisposition) {
-            const match = contentDisposition.match(/filename="?([^"]+)"?/);
-            if (match?.[1]) {
-              filename = match[1];
+            const folder = buttons?.[active]?.key;
+
+            if (!id || !name || !type || !folder) {
+                console.warn("Missing required parameters");
+                return;
             }
-          }
-          // Create a download link
-          const blob = new Blob([response.data]);
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = filename;
-          document.body.appendChild(link);
-          link.click();
-          link.remove();
-          URL.revokeObjectURL(link.href);
+
+            const url = `/games/${id}/download?type=${type}&name=${encodeURIComponent(name)}&folder=${folder}`;
+            debugger
+
+            const response = await apiHandler.get(url, {
+                responseType: 'blob', // Needed to process binary data (zip or file)
+            });
+
+            // Extract filename from response headers or fallback
+            const contentDisposition = response.headers['content-disposition'];
+            let filename = `${name}.zip`; // fallback to zipped folder name
+            if (contentDisposition) {
+                const match = contentDisposition.match(/filename="?([^"]+)"?/);
+                if (match?.[1]) {
+                    filename = match[1];
+                }
+            }
+            // Create a download link
+            const blob = new Blob([response.data]);
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+            URL.revokeObjectURL(link.href);
         } catch (error) {
-          console.error("Download failed:", error);
+            console.error("Download failed:", error);
         }
-      };
-      
-      
+    };
+
+
     const fetchGame = async () => {
         setLoading(true);
         try {
@@ -155,6 +148,16 @@ function DetailGame() {
             setVolatility(data?.data?.categories?.filter(q => q.type === "volatility"))
             setTheme(data?.data?.categories?.filter(q => q.type === "theme"))
             setFeatures(data?.data?.categories?.filter(q => q.type === "feature"))
+
+            const formattedReleaseDates = (data?.data?.Countries || []).map(item => ({
+                country: item?.name,
+                date: moment(item?.GameCountryRelease?.date).format('DD MMM, YYYY'),
+            }));
+
+            setReleaseDates(formattedReleaseDates);
+
+            // console.log(formattedReleaseDates);
+
 
         } catch (error) {
             console.error('Failed to fetch game:', error);
@@ -167,7 +170,7 @@ function DetailGame() {
     //         const { data } = await apiHandler.get(`files/${id}?type=${buttons?.[active]?.key}`)
     //         setFiles(data?.data)
     //     } catch (error) {
-            
+
 
     const [buttons, setButtons] = useState([
 
@@ -235,9 +238,13 @@ function DetailGame() {
                                     <span className="text-sm font-medium text-black">{folder.name}</span>
                                 </div>
 
-                                <button onClick={() => { downloadById("folder", folder) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
-                                    Download <Download size={14} />
-                                </button>
+                                <Buttons spinner
+                                    onClick={() => downloadById("folder", folder)}
+                                >
+                                    <div className='flex gap-2 items-center '>
+                                        <span>Download</span> <Download size={14} />
+                                    </div>
+                                </Buttons>
                             </div>
 
                             {/* Expanded Subfolders and Files */}
@@ -253,9 +260,15 @@ function DetailGame() {
                                                     <input type="checkbox" className="cursor-pointer" />
                                                     <span className="text-sm text-black">{file.name}</span>
                                                 </div>
-                                            <button onClick={() => { downloadById("file", file) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
-                                                    Download <Download size={14} />
-                                                </button>
+                                                <Buttons spinner
+                                                    onClick={() => downloadById("file", file)}
+                                                >
+                                                    <div className='flex gap-2 items-center '>
+                                                        <span>Download</span> <Download size={14} />
+                                                    </div>
+                                                </Buttons>
+
+
                                             </div>
                                         )
                                     })}
@@ -277,9 +290,13 @@ function DetailGame() {
                             <input type="checkbox" className="cursor-pointer" />
                             <span className="text-sm text-black">{file.name}</span>
                         </div>
-                        <button onClick={() => { downloadById("file", file) }} className="flex bg-primary-dark hover:bg-black px-8 py-2.5 rounded-xl items-center gap-2.5 text-white" >
-                            Download <Download size={14} />
-                        </button>
+                        <Buttons spinner
+                            onClick={() => downloadById("file", file)}
+                        >
+                            <div className='flex gap-2 items-center '>
+                                <span>Download</span> <Download size={14} />
+                            </div>
+                        </Buttons>
                     </div>
                 )
             })}
@@ -288,6 +305,7 @@ function DetailGame() {
 
 
     const zippedFileDownload = async () => {
+          toast.success("Your file is downloading");
         try {
             const response = await apiHandler.get(`/games/${id}/download-zip`, {
                 responseType: 'blob',
@@ -317,53 +335,58 @@ function DetailGame() {
             link.remove();
             window.URL.revokeObjectURL(url);
         } catch (error) {
+              toast.error("Download failed");
             console.error('Failed to fetch game zip:', error);
         }
     };
 
-    
+
     const [downloading, setDownloading] = useState(false);
-const [downloadProgress, setDownloadProgress] = useState(0);
+    const [downloadProgress, setDownloadProgress] = useState(0);
 
 
-  const downloadById = async (type, id) => {
-    setDownloading(true);
-    setDownloadProgress(0);
+    const downloadById = async (type, item) => {
+        setDownloading(true);
+        setDownloadProgress(0);
+        toast.success("Your file is downloading");
+
         try {
             const query = type === 'file' ? `fileId=${item?.id}` : `folderId=${item?.id}`;
             const response = await apiHandler.get(`/download?${query}`, {
                 responseType: 'blob',
             });
 
-
             const disposition = response.headers['content-disposition'];
-debugger
             let filename = item?.name;
 
-        if (disposition && disposition.includes('filename=')) {
-            const match = disposition.match(/filename="?([^"]+)"?/);
-            if (match && match[1]) filename = match[1];
+            if (disposition && disposition.includes('filename=')) {
+                const match = disposition.match(/filename="?([^"]+)"?/);
+                if (match && match[1]) filename = match[1];
+            }
+
+            const blob = new Blob([response.data]);
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            window.URL.revokeObjectURL(url);
+
+            // 
+        } catch (error) {
+            console.error('Download failed:', error);
+            toast.error("Download failed");
+        } finally {
+            setDownloading(false);
         }
+    };
 
-        const blob = new Blob([response.data]);
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-
-        link.remove();
-        window.URL.revokeObjectURL(url);
-    } catch (error) {
-        console.error('Download failed:', error);
-    } finally {
-        setDownloading(false);
-        setDownloadProgress(0);
-    }
-};
 
     const selectedFilesDownload = async () => {
+                toast.success("Your file is downloading");
         try {
             const response = await apiHandler.post(
                 'download-selected',
@@ -382,17 +405,17 @@ debugger
             const link = document.createElement('a');
 
             link.href = url;
-            link.download = 'selected_assets.zip'; 
+            link.download = 'selected_assets.zip';
             document.body.appendChild(link);
             link.click();
 
             window.URL.revokeObjectURL(url);
             document.body.removeChild(link);
         } catch (error) {
+              toast.error("Download failed");
             console.error('Download failed:', error);
         }
     };
-
 
 
 
@@ -406,7 +429,7 @@ debugger
                             <h1 className='text-4xl font-medium'>{game?.title}</h1>
                             <p className='mt-4 mb-4 text-base'>By: {game?.studio?.name}</p>
 
-                            <div className='space-y-6 flex-grow'>
+                            <div className='space-y-6 flex-grow overflow-auto max-h-[300px]'>
                                 <p className='text-lg text-black-v3 max-w-[650px] w-full'>
                                     {game?.description}
                                 </p>
@@ -495,9 +518,9 @@ debugger
                                                 <div
                                                     key={index}
                                                     className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${selectedRelease.country === item.country &&
-                                                            selectedRelease.date === item.date
-                                                            ? 'font-bold text-black'
-                                                            : 'text-gray-400'
+                                                        selectedRelease.date === item.date
+                                                        ? 'font-bold text-black'
+                                                        : 'text-gray-400'
                                                         }`}
                                                     onClick={() => {
                                                         setSelectedRelease(item);
@@ -514,8 +537,28 @@ debugger
                             </div>
 
 
-                            <div className='flex flex-col items-start md:items-center justify-between'>
-                                <img src={"/Images/platform.png"} alt="" className='w-32 h-10 mb-1.5' />
+                            <div className='flex flex-col items-start md:items-center justify-between not-first:'>
+
+                                <div className='flex item-center gap-2'>
+                                    {
+                                        game?.ps && <img src={Tab} alt="" />
+                                    }
+
+                                    {
+                                        game?.pc && <img src={Pc} alt="" />
+                                    } {
+                                        game?.phone && <img src={Mobile} alt="" />
+                                    }
+                                    {
+                                        game?.casino && <img src={Tab} alt="" />
+                                    }
+
+
+
+
+                                </div>
+
+
                                 <p className='font-semibold text-xl text-black-v4 leading-[36px]'>Platform</p>
                             </div>
 
@@ -537,7 +580,7 @@ debugger
                             </div>
 
                             <div className="mt-10">
-                                <p className="text-[#7C7C7C] font-medium mb-2">Max Exposure</p>   ``
+                                <p className="text-[#7C7C7C] font-medium mb-2">Max Exposure</p>
                                 <p className="font-semibold">{game?.maxExposure}</p>
                             </div>
 
@@ -575,20 +618,22 @@ debugger
                         <div className="flex flex-col justify-between h-full">
                             <div>
                                 <p className="text-[#7C7C7C] font-medium mb-2">RTP</p>
-                                {Array(4)
-                                    .fill(0)
-                                    .map((_, i) => (
-                                        <p key={`rtp-${i}`} className="font-semibold">Var_99&nbsp;&nbsp;&nbsp;96.66%</p>
-                                    ))}
+                                {Object.entries(game?.rtpVersions?.rtp || {}).map(([key, value], i) => (
+                                    <p key={`rtp-${i}`} className="font-semibold">
+                                        {key}&nbsp;&nbsp;&nbsp;{value}
+                                    </p>
+                                ))}
+
                             </div>
 
                             <div className="mt-16">
                                 <p className="text-[#7C7C7C] font-medium mb-2">RTP USA</p>
-                                {Array(4)
-                                    .fill(0)
-                                    .map((_, i) => (
-                                        <p key={`rtp-usa-${i}`} className="font-semibold">Var_99&nbsp;&nbsp;&nbsp;96.66%</p>
-                                    ))}
+                                {Object.entries(game?.rtpVersions?.rtpUsa || {}).map(([key, value], i) => (
+                                    <p key={`rtp-${i}`} className="font-semibold">
+                                        {key}&nbsp;&nbsp;&nbsp;{value}
+                                    </p>
+                                ))}
+
                             </div>
                         </div>
 
@@ -602,18 +647,21 @@ debugger
     </div> */}
                             <div className="space-y-1">
 
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
+                                {
+                                    features?.map((item) => {
+                                        return (
+                                            <p className="font-semibold" key={item?.id}>{item?.title}</p>
+
+                                        )
+
+
+
+
+                                    })
+                                }
+
+
+
 
 
                             </div>
@@ -638,8 +686,9 @@ debugger
                         {
                             <div className="bg-white rounded-lg p-3 md:p-10">
                                 <div className="flex flex-col md:flex-row justify-end gap-7 mb-4">
-                                    <Buttons onClick={selectedFilesDownload} className="w-full cursor-pointer"  >Download Selected</Buttons>
-                                    <Buttons onClick={zippedFileDownload} className="w-full cursor-pointer" >Download All</Buttons>
+                                    
+                                    <Buttons spinner  onClick={selectedFilesDownload} className="w-full cursor-pointer"  >Download Selected</Buttons>
+                                    <Buttons spinner onClick={zippedFileDownload} className="w-full cursor-pointer" >Download All</Buttons>
                                 </div>
 
                                 <hr className="border-1 border-[#A8A8A8] mb-5" />

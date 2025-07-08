@@ -12,6 +12,9 @@ import logo from '../../assets/logos/texas-longhorn-country-western-bull-cattle-
 import useGlobal from '../../hooks/useGlobal';
 import { Region } from '../../../constants';
 import RegionListComponent from '../utils/RegionListComponent';
+import MobileFilter from '../utils/MobileFilter';
+import FilterIcon from '../../assets/icons/Group 4519.svg'
+
 function GameAssets() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
@@ -20,6 +23,7 @@ function GameAssets() {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalGames, setTotalGames] = useState(0);
+ const [showFilter, setShowFilter] = useState(false);
 
 
     const {regions,studios,dropdowns } = useGlobal()
@@ -145,6 +149,7 @@ const[gamesList, setGameLists]=useState(
     ]
 )
 
+// console.log(dropdowns.volatilityOption);
 
     return (
         <div className='container space-y-16 group mb-10' >
@@ -161,7 +166,33 @@ const[gamesList, setGameLists]=useState(
                 </div>
             {/* Filter Inputs */}
             <div className='space-y-5'>
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
+
+                  <div className='lg:hidden '>
+                    <button   onClick={() => setShowFilter(true)} className="cursor-pointer flex items-center gap-2 w-full xl:w-[unset] justify-center px-4 py-1.5 border-1 mt-10 border-[#00B290] hover:bg-[rgba(0,178,144,0.10)]
+ text-[#00B290] text-base font-semibold rounded-md transition">
+       <span className=' font-normal  text-lg '>Filter</span>
+                                            <img src={FilterIcon} alt="" className='w-5' />
+    </button>
+
+
+
+<div
+        className={`fixed top-0 left-0 w-full  h-full bg-white z-50 transition-transform duration-300 ease-in-out transform ${
+          showFilter ? 'translate-x-0' : '-translate-x-full'
+        }`}
+      >
+        {/* Close button */}
+        
+
+        {/* Filter Content */}
+        
+        <MobileFilter setShowFilter={setShowFilter} filters={filters} onFilterChange={onFilterChange} studios={studios} clearFilter={clearFilter} clearAllFilters={clearAllFilters}/>
+      </div>
+                    
+                   </div>
+
+
+             <div className='lg:grid  lg:grid-cols-4 gap-10 hidden'>
                     <InputField
                         type='selects'
                         id='studio'
@@ -179,6 +210,7 @@ const[gamesList, setGameLists]=useState(
                         options={regions}
                         handleInputChange={onFilterChange}
                     />
+                   
                     <InputField
                         type='selects'
                         label="Certificate"
@@ -203,7 +235,7 @@ const[gamesList, setGameLists]=useState(
 
 
             {/* Filter Chip Display */}
-            <div className='flex justify-between items-center mb-20'>
+                <div className='hidden lg:flex justify-between items-center mb-20 '>
                 <div className='flex gap-5 flex-wrap'>
                     {Object.entries(filters)
             .filter(([key, val]) => val && !['skip', 'limit'].includes(key))

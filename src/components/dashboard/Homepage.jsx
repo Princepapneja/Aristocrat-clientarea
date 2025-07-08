@@ -131,8 +131,8 @@ function Homepage() {
       spaceBetween: 20,
     },
     1024: {
-      slidesPerView: 4,
-      spaceBetween: 30,
+      slidesPerView: 3,
+      spaceBetween: 10,
     },
     1280: {
       slidesPerView: 4,
@@ -151,7 +151,7 @@ function Homepage() {
         </div>
 
         <div className='flex justify-center pb-16 border-b-2 mb-14 border-b-black-v4'>
-          <Link to={`/dashboard/games?studio=d538d8e3-6616-42e7-adb3-69f2e73f78dd`}>
+          <Link to={`/dashboard/games?category=d538d8e3-6616-42e7-adb3-69f2e73f78dd`}>
             <Buttons>Discover More</Buttons>
           </Link>
         </div>
@@ -197,8 +197,8 @@ function Homepage() {
       spaceBetween: 20,
     },
     1024: {
-      slidesPerView: 4,
-      spaceBetween: 30,
+      slidesPerView: 3,
+      spaceBetween: 10,
     },
     1280: {
       slidesPerView: 4,

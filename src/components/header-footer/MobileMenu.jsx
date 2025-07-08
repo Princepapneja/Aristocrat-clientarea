@@ -33,7 +33,7 @@ const MobileMenu = () => {
 
   return (
     <>
-      <div className="lg:hidden flex items-center justify-between p-2 bg-white  z-40 relative  box-border">
+      <div className="xl:hidden flex items-center justify-between p-2 bg-white  z-40 relative  box-border">
         <img
           src={Logo} 
           alt="Logo"
@@ -69,7 +69,7 @@ const MobileMenu = () => {
       </div>
 
       {open && (
-        <div className="fixed top-0 inset-0 z-50 md:hidden bg-[url(/Images/sidebar.png)] bg-center bg-cover text-black   transition-all h-[100vh]">
+        <div className="fixed top-0 inset-0 z-50 xl:hidden bg-[url(/Images/sidebar.png)] bg-center bg-cover text-black   transition-all h-[100vh]">
           <div className="flex justify-between items-center p-4">
             <img src="/logos/logo-black.png" alt="Logo" className="w-40" />
             <button onClick={() => setOpen(false)} className="border p-1 rounded-xl">
