@@ -42,9 +42,7 @@ const AddForm = ({ type, text }) => {
 
 
     useEffect(() => {
-
         setInputItems(null)
-
         fieldSetUp()
     }, [type, render, user]);
 

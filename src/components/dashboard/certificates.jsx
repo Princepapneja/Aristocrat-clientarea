@@ -310,8 +310,7 @@ function Certificates() {
   {/* Left */}
   <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
     <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
-    {(game?.game?.logo)}
-    <img src={encodeURIComponent(game?.game?.logo)} alt="Game Icon" className=" md:mb-2" />
+    <img src={game?.game?.logo} alt="Game Icon" className=" h-24 w-40 md:mb-2" />
     <div className='text-center md:text-left'>
       <h2 className="text-emerald-600 font-medium text-3xl mb-2">
         {game.name}
