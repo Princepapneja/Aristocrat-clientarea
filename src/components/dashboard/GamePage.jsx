@@ -33,8 +33,6 @@ function GamePage() {
     const {regions,studios,dropdowns } = useGlobal()
     
 
-    
-
 const [formData, setFormData] = useState({
     studio: [],
     categoryIds: [],
@@ -67,14 +65,22 @@ const [formData, setFormData] = useState({
 
 
 
-
-
-
     const fetchGames = async () => {
         setLoading(true);
         try {
-            const queryParams = new URLSearchParams(formData).toString();
-            const { data } = await apiHandler.get(`games/`);
+            let url = `games?`
+        if(formData?.categoryIds?.length > 0 ){
+            url+=`categogryIds=${formData?.categoryIds?.join(",")}`
+        }
+        if(formData?.studio?.length > 0 ){
+            url+=`subStudios=${formData?.studio?.join(",")}`
+        }
+        if(formData?.region?.length > 0 ){
+            url+=`countryIds=${formData?.region?.join(",")}`
+        }
+            // console.log(url);
+            
+            const { data } = await apiHandler.get(url);
             const newGames = data.data.games || [];
             setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
@@ -113,7 +119,6 @@ const onFilterChange = (filterArray) => {
     setFilters(updatedFilter);
   };
 
-
 // console.log(Object.entries(filters));
 console.log(filters);
 
@@ -140,7 +145,7 @@ console.log(filters);
     const [showFilterModal, setShowFilterModal] = useState(false);
 
 
-    console.log(filters);
+    console.log(formData);
     
 
 
@@ -154,8 +159,8 @@ console.log(filters);
                    </Buttons> */}
 
 
-                   <div className='md:hidden '>
-                    <button   onClick={() => setShowFilter(true)} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 border-1 mt-10 border-[#00B290] hover:bg-[rgba(0,178,144,0.10)]
+                   <div className='lg:hidden '>
+                    <button   onClick={() => setShowFilter(true)} className="cursor-pointer flex items-center gap-2 w-full xl:w-[unset] justify-center px-4 py-1.5 border-1 mt-10 border-[#00B290] hover:bg-[rgba(0,178,144,0.10)]
  text-[#00B290] text-base font-semibold rounded-md transition">
        <span className=' font-normal  text-lg '>Filter</span>
                                             <img src={FilterIcon} alt="" className='w-5' />
@@ -164,7 +169,7 @@ console.log(filters);
 
 
 <div
-        className={`fixed top-0 left-0 w-full max-w-sm h-full bg-white z-50 transition-transform duration-300 ease-in-out transform ${
+        className={`fixed top-0 left-0 w-full  h-full bg-white z-50 transition-transform duration-300 ease-in-out transform ${
           showFilter ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
@@ -179,7 +184,7 @@ console.log(filters);
                    </div>
 
 
-                <div className='md:grid  grid-cols-1 md:grid-cols-4 gap-10 hidden'>
+                <div className='lg:grid  lg:grid-cols-4 gap-10 hidden'>
                     <InputField
                         type='selects'
                         id='studio'
@@ -253,7 +258,7 @@ console.log(filters);
 
 
             {/* Filter Chip Display */}
-            <div className='hidden md:flex justify-between items-center mb-20 '>
+            <div className='hidden lg:flex justify-between items-center mb-20 '>
                 <div className='flex gap-5 flex-wrap'>
                     {Object.entries(filters)
             .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
@@ -311,7 +316,7 @@ console.log(filters);
             </div>
 
             {/* Game List */}
-            <div className='grid grid-cols-1 md:grid-cols-4 gap-x-10 gap-y-16 '>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5  xl:gap-10 '>
                 {games.map((item, index) => (
                     <GameCard key={index} game={item} className='w-[280px]' />
                 ))}

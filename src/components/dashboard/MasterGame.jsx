@@ -3,6 +3,7 @@ import InputField from '../utils/InputFields'
 import Buttons from '../utils/buttons'
 import DashboardHeader from '../header-footer/dashBoardHeader'
 import ActiveButtons from '../utils/ActiveButtons'
+import { Download } from 'lucide-react'
 function MasterGame() {
     const [active,setActive]= useState(0)
 
@@ -60,7 +61,7 @@ return (
     })}</div>
 
 <div>
-<Buttons type='download' name='Download'></Buttons></div>
+<Buttons >    <span className='hidden '>Download</span> <Download size={14} /> </Buttons></div>
    </div>
    </div>
 </div>

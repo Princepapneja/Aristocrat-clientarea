@@ -5,11 +5,14 @@ import { dateFormat } from "../../../constants";
 import Buttons from "./buttons";
 
 function GameCard({ game }) {
+
+  // console.log(game);
+  
   const navigation= useNavigate()
   return (
 <div
   id={game?.id}
-  className="card group relative bg-white-v2 hover:shadow flex flex-col duration-300 rounded-[20px] max-w-100 w-full transform transition-transform hover:-translate-y-5"
+  className="card group relative bg-[#F4F4F4] xl:hover:shadow flex flex-col duration-300 rounded-[20px] max-w-100 w-full transform transition-transform xl:hover:-translate-y-5"
 >
 
   {/* Game Image and Date */}
@@ -20,14 +23,14 @@ function GameCard({ game }) {
   alt=""
 />
 
-    {game?.createdAt && (
+    {game?.releaseDate && (
       <p
         className="absolute top-3 left-3 text-black px-3 py-2 text-xs font-semibold rounded-[10px]"
         style={{
           background: "linear-gradient(86.08deg, #66FFCC 0%, #94FF80 100%)",
         }}
       >
-        {moment(game.createdAt).format("D MMMM YYYY")}
+        {moment(game.releaseDate).format("D MMMM YYYY")}
       </p>
     )}
   </div>
@@ -38,11 +41,11 @@ function GameCard({ game }) {
     <p className="mb-4">By: {game?.studio?.name}</p>
 
 
-    <div className="overflow-hidden max-h-0 group-hover:max-h-40 transition-all duration-300 flex justify-between ">
-      <Buttons onClick={() => navigation(`/dashboard/detail-game/${game.id}`)} className="!py-1.5 !px-4 rounded-[10px] cursor-pointer hover:bg-[black]">
+    <div className="overflow-hidden xl:max-h-0 group-hover:max-h-40 transition-all duration-300 flex justify-between ">
+      <Buttons onClick={() => navigation(`/dashboard/detail-game/${game.id}`)} className="">
         Details
       </Buttons>
-      <Buttons className="!py-1.5 !px-4 rounded-[10px] cursor-pointer hover:bg-[black]">Play Demo</Buttons>
+      <Buttons className="">Play Demo</Buttons>
     </div>
   </div>
 </div>

@@ -22,7 +22,7 @@ const InputField = ({
   placeholder = "",
   checked,
   prefix = false,
-  
+  name
   
 }) => {
   const [showPass, setShowPass] = useState(false);
@@ -135,7 +135,7 @@ dataName.toLowerCase().includes(searchTerm.toLowerCase())
               className="border-2 border-gray-200 rounded-md p-2 cursor-pointer flex items-center justify-between bg-[#F4F4F4]"
               onClick={toggleDropdown}
             >
-              <span className="text-[#6F6F6F] font-semibold text-base capitalize">{id} {selected?.length>0 && <span className="bg-[#94FF80] px-2 py-1 rounded-bl-sm text-[#6F6F6F]" >{selected?.length}</span>}</span>
+              <span className="text-[#6F6F6F] font-semibold text-base capitalize">{name} {selected?.length>0 && <span className="bg-[#94FF80] px-2 py-1 rounded-bl-sm text-[#6F6F6F]" >{selected?.length}</span>}</span>
               {open ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
             </div>
           
