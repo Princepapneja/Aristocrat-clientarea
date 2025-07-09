@@ -16,6 +16,7 @@ import ForgotPassword from './src/pages/ForgotPassword';
 import GameAssets from './src/components/dashboard/GameAssets';
 import ProtectedRoute from './src/components/auth/ProtectedRoute';
 import CreatePassword from './src/pages/CreatePassword';
+import Games from './src/components/dashboard/games';
 
 
 const Route = () => {
@@ -89,7 +90,7 @@ const Route = () => {
                                 },
                                 {
                                   path:"/dashboard/test",
-                                  element:<ProtectedRoute><FolderUploader /></ProtectedRoute>
+                                  element:<ProtectedRoute><Games /></ProtectedRoute>
                                 },
                                
 
