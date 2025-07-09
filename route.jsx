@@ -6,7 +6,7 @@ import Certificates from './src/components/dashboard/certificates';
 import MasterGame from './src/components/dashboard/MasterGame';
 import ContactUs from './src/components/dashboard/ContactUs';
 import Roadmaps from './src/components/dashboard/Roadmaps';
-import GamePage from './src/components/dashboard/GamePage';
+import GamePage from './src/components/dashboard/games';
 import EngagementTools from './src/components/dashboard/EngagementTools';
 import Homepage from './src/components/dashboard/Homepage';
 import DetailGame from './src/components/dashboard/DetailGame';

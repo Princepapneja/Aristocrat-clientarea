@@ -28,7 +28,7 @@ const Games = () => {
     const fetchGames = async () => {
         setLoading(true);
         try {
-            debugger
+            // debugger
             const {
                 skip = 0,
                 limit = 10,
@@ -95,82 +95,107 @@ const Games = () => {
     const handleOuterClear = (type, id) => {
         setFilters((prev) => ({ ...prev, [type]: prev?.[type]?.filter((q) => (q !== id)) }))
     }
+
+
+    const clearAllFilters=()=>{
+        setFilters({skip:0,limit:16})
+    }
     return (
         <>
-            <div className='container'>
-                <div className='grid grid-cols-4 gap-4'>
+            <div className='container space-y-16 group'>
+                <div className='grid grid-cols-4 gap-4 space-y-5'>
                     <FilterDropdownGrouped
                         options={studios}
                         name="subStudioIds"
                         selected={filters?.subStudioIds}
-
                         onApply={handleApplyButton}
                         onClear={handleClear}
-                        title={<div className='flex gap-2'>
-                            <h2>Studios</h2> <span className="bg-primary px-2 py-1 rounded-bl-sm text-[#6F6F6F]">{filters?.subStudioIds?.length}</span>
+                        title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Studios</h2> {filters?.subStudioIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.subStudioIds?.length}</span>}
                         </div>}
 
                     />
                     <FilterDropdownGrouped
                         options={countryOption}
                         name="countryIds"
-                        title='Regions'
+                        
                         selected={filters?.countryIds}
                         onApply={handleApplyButton}
                         onClear={handleClear}
+                        title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Regions</h2> {filters?.countryIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.countryIds?.length}</span>}
+                        </div>}
 
 
 
                     />
                     <FilterDropdownGrouped
                         options={dropdowns.volatilityOption}
-                        title='Volatility'
+                       
                         name="volatilityIds"
                         selected={filters?.volatilityIds}
                         onApply={handleApplyButton}
                         onClear={handleClear}
+                         title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Volatility</h2> {filters?.volatilityIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.volatilityIds?.length}</span>}
+                        </div>}
 
 
                     />
                     <FilterDropdownGrouped
                         options={dropdowns.themeOption}
-                        title='Theme'
+                       
                         name="themeIds"
                         selected={filters?.themeIds}
                         onApply={handleApplyButton}
                         onClear={handleClear}
+                         title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Theme</h2> {filters?.themeIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.themeIds?.length}</span>}
+                        </div>}
                     />
                     <FilterDropdownGrouped
                         options={dropdowns.featuresOption}
-                        title='Features'
+               
                         name="featuresIds"
                         selected={filters?.featuresIds}
                         onApply={handleApplyButton}
                         onClear={handleClear}
+                         title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Features</h2> {filters?.featuresIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.featuresIds?.length}</span>}
+                        </div>}
                     />
                     <FilterDropdownGrouped
                         options={dropdowns.familyOption}
-                        title='Family'
+                     
                         name="familyIds"
                         selected={filters?.familyIds}
                         onApply={handleApplyButton}
                         onClear={handleClear}
+                         title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Family</h2> {filters?.familyIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.familyIds?.length}</span>}
+                        </div>}
                     />
                     <FilterDropdownGrouped
                         options={dropdowns.gameTypeOption}
-                        title='Game Type'
+                      
                         name="gameTypeIds"
                         selected={filters?.gameTypeIds}
                         onApply={handleApplyButton}
                         onClear={handleClear}
+                        title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Game Type</h2> {filters?.gameTypeIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.gameTypeIds?.length}</span>}
+                        </div>}
                     />
                     <FilterDropdownGrouped
                         options={dropdowns.jackpotOption}
-                        title='Jackpots'
+                        
                         name="jackpotIds"
                         selected={filters?.jackpotIds}
                         onApply={handleApplyButton}
                         onClear={handleClear}
+                        title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                            <h2>Jackpots</h2> {filters?.jackpotIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.jackpotIds?.length}</span>}
+                        </div>}
                     />
                 </div>
                 <div className='hidden lg:flex justify-between items-center mb-20 '>
@@ -178,7 +203,9 @@ const Games = () => {
                         {Object.entries(filters)
                             .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
                             .slice(0, 5)
-                            .map(([key, val]) => {
+                            .map(([key, val],index) => {
+                                console.log(val);
+                                
                                 let options = []
                                 if (key === "subStudioIds") {
                                     options = studios
@@ -202,6 +229,9 @@ const Games = () => {
                                 else return null;
                                 return (
                                     val?.map((id, i) => {
+                                        if(i>4){
+                                            return null
+                                        }
                                         return (
                                             <div key={i} className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
                                                 <p className='text-sm text-black-v3'>
@@ -228,7 +258,7 @@ const Games = () => {
                         </div>
 
                         <button
-                            // onClick={clearAllFilters}
+                            onClick={clearAllFilters}
                             className='font-semibold text-black-v4'>
                             Clear All
                         </button>

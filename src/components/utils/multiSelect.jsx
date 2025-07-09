@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   ChevronDown,
   ChevronRight,
@@ -18,8 +18,11 @@ export default function FilterDropdownGrouped({
   const [search, setSearch] = useState("");
   const [selectedItems, setSelectedItems] = useState([]);
   const [expandedGroups, setExpandedGroups] = useState({});
+   const ref = useRef(null)
 
   useEffect(() => {
+    setSelectedItems([]);
+
     if (!selected) return;
     setSelectedItems(selected);
   }, [selected]);
@@ -53,13 +56,28 @@ export default function FilterDropdownGrouped({
   const filterFn = (name) =>
     name.toLowerCase().includes(search.toLowerCase());
 
+
+   useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside); 
+    };
+  }, []);
+
+
   return (
-    <div className="relative w-full ">
+    <div className="relative w-full " ref={ref}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="border-2 w-full border-gray-200 rounded-md p-2 cursor-pointer flex items-center justify-between bg-[#F4F4F4]"
       >
-        <span>{title}</span>
+        <span className="capitalize font-medium block whitespace-nowrap">{title}</span>
         <ChevronDown className="w-4 h-4" />
       </button>
 

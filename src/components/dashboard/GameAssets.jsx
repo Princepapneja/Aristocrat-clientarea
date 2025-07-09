@@ -223,6 +223,7 @@ function GameAssets() {
                         .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
                         .slice(0, 5)
                         .map(([key, val]) => {
+                            console.log(val);
 
                             let options = []
                             if (key === "studio") {
