@@ -14,6 +14,7 @@ import { Region } from '../../../constants';
 import RegionListComponent from '../utils/RegionListComponent';
 import MobileFilter from '../utils/MobileFilter';
 import FilterIcon from '../../assets/icons/Group 4519.svg'
+import MiniLoader from '../utils/miniLoader';
 
 function GameAssets() {
     const [params] = useSearchParams()
@@ -23,10 +24,10 @@ function GameAssets() {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalGames, setTotalGames] = useState(0);
- const [showFilter, setShowFilter] = useState(false);
+    const [showFilter, setShowFilter] = useState(false);
 
 
-    const {regions,studios,dropdowns } = useGlobal()
+    const { regions, studios, dropdowns } = useGlobal()
 
 
     useEffect(() => {
@@ -87,8 +88,11 @@ function GameAssets() {
     const fetchGames = async () => {
         setLoading(true);
         try {
-            const queryParams = new URLSearchParams(filters).toString();
-            const { data } = await apiHandler.get(`root-folders?type=exclude_certificates&${queryParams}`);
+             let url = `root-folders?type=exclude_certificates?skip=${filters?.skip}&limit=${filters?.limit}`
+            if (filters?.studio?.length > 0) {
+                url += `subStudios=${formData?.studio?.join(",")}`
+            }
+            const { data } = await apiHandler.get(url);
             const newFolders = data.data.resp || [];
             setFolders((prev) => (filters.skip === 0 ? newFolders : [...prev, ...newFolders]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
@@ -99,20 +103,20 @@ function GameAssets() {
         setLoading(false);
     };
 
-   const onFilterChange = (filterArray) => {
-    console.log(filterArray);
+    const onFilterChange = (filterArray) => {
+        console.log(filterArray);
 
-    const updatedFilters = { ...filters };
+        const updatedFilters = { ...filters };
 
-    filterArray.forEach(filter => {
-        updatedFilters[filter.name] = filter.value;
-    });
+        filterArray.forEach(filter => {
+            updatedFilters[filter.name] = filter.value;
+        });
 
-    updatedFilters.skip = 0;
+        updatedFilters.skip = 0;
 
-    setFolders([]);
-    setFilters(updatedFilters);
-};
+        setFolders([]);
+        setFilters(updatedFilters);
+    };
 
 
 
@@ -129,70 +133,48 @@ function GameAssets() {
         setFilters({ skip: 0, limit: 16 });
     };
     const [showFilterModal, setShowFilterModal] = useState(false);
-const[gamesList, setGameLists]=useState(
-    [
-        {
-            icon:'/logos/gameIcon.png',
-            title: "Amun Ra King Of The Gods...",
-            by: "Studio Name"
-        },
-        {
-            icon:'/logos/gameIcon.png',
-            title: "Amun Ra King Of The Gods...",
-            by: "Studio Name"
-        },
-        {
-            icon:'/logos/gameIcon.png',
-            title: "Amun Ra King Of The Gods...",
-            by: "Studio Name"
-        }
-    ]
-)
-
-// console.log(dropdowns.volatilityOption);
 
     return (
         <div className='container space-y-16 group mb-10' >
 
             <div className='flex justify-between mb-14'>
-                    <h1 className='text-3xl md:4xl font-medium'>Game Assets</h1>
-                    <Link
-                                        to="/dashboard/certificates"
-                                        className="flex items-center gap-2 py-2.5 px-4 md:border-2 md:border-black-v4 rounded-xl justify-between"
-                                    >
-                                        <p className="text-center text-base font-normal">Go to Certificate</p>
-                                        <img className="h-5 w-5" src="/logos/rightArrow.png" alt="Arrow" />
-                                    </Link>
-                </div>
+                <h1 className='text-3xl md:4xl font-medium'>Game Assets</h1>
+                <Link
+                    to="/dashboard/certificates"
+                    className="flex items-center gap-2 py-2.5 px-4 md:border-2 md:border-black-v4 rounded-xl justify-between"
+                >
+                    <p className="text-center text-base font-normal">Go to Certificate</p>
+                    <img className="h-5 w-5" src="/logos/rightArrow.png" alt="Arrow" />
+                </Link>
+            </div>
             {/* Filter Inputs */}
             <div className='space-y-5'>
 
-                  <div className='lg:hidden '>
-                    <button   onClick={() => setShowFilter(true)} className="cursor-pointer flex items-center gap-2 w-full xl:w-[unset] justify-center px-4 py-1.5 border-1 mt-10 border-[#00B290] hover:bg-[rgba(0,178,144,0.10)]
+                <div className='lg:hidden '>
+                    <button onClick={() => setShowFilter(true)} className="cursor-pointer flex items-center gap-2 w-full xl:w-[unset] justify-center px-4 py-1.5 border-1 mt-10 border-[#00B290] hover:bg-[rgba(0,178,144,0.10)]
  text-[#00B290] text-base font-semibold rounded-md transition">
-       <span className=' font-normal  text-lg '>Filter</span>
-                                            <img src={FilterIcon} alt="" className='w-5' />
-    </button>
+                        <span className=' font-normal  text-lg '>Filter</span>
+                        <img src={FilterIcon} alt="" className='w-5' />
+                    </button>
 
 
 
-<div
-        className={`fixed top-0 left-0 w-full  h-full bg-white z-50 transition-transform duration-300 ease-in-out transform ${
-          showFilter ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        {/* Close button */}
-        
-
-        {/* Filter Content */}
-        
-        <MobileFilter setShowFilter={setShowFilter} filters={filters} onFilterChange={onFilterChange} studios={studios} clearFilter={clearFilter} clearAllFilters={clearAllFilters}/>
-      </div>
-                    
-                   </div>
+                    <div
+                        className={`fixed top-0 left-0 w-full  h-full bg-white z-50 transition-transform duration-300 ease-in-out transform ${showFilter ? 'translate-x-0' : '-translate-x-full'
+                            }`}
+                    >
+                        {/* Close button */}
 
 
-             <div className='lg:grid  lg:grid-cols-4 gap-10 hidden'>
+                        {/* Filter Content */}
+
+                        <MobileFilter setShowFilter={setShowFilter} filters={filters} onFilterChange={onFilterChange} studios={studios} clearFilter={clearFilter} clearAllFilters={clearAllFilters} />
+                    </div>
+
+                </div>
+
+
+                <div className='lg:grid  lg:grid-cols-4 gap-10 hidden'>
                     <InputField
                         type='selects'
                         id='studio'
@@ -210,7 +192,7 @@ const[gamesList, setGameLists]=useState(
                         options={regions}
                         handleInputChange={onFilterChange}
                     />
-                   
+
                     <InputField
                         type='selects'
                         label="Certificate"
@@ -229,52 +211,52 @@ const[gamesList, setGameLists]=useState(
                     />
                 </div>
 
-             
+
             </div>
 
 
 
             {/* Filter Chip Display */}
-                <div className='hidden lg:flex justify-between items-center mb-20 '>
+            <div className='hidden lg:flex justify-between items-center mb-20 '>
                 <div className='flex gap-5 flex-wrap'>
                     {Object.entries(filters)
-            .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
-            .slice(0, 5)
-            .map(([key, val]) => {
+                        .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
+                        .slice(0, 5)
+                        .map(([key, val]) => {
 
-                        let options = []
-                        if (key === "studio") {
-                            options = studios
-                        }
-                        else if (key === "region") {
-                            options = dropdowns?.regionOption
-                        }
-                        else if (key === "volatility") {
-                            options = dropdowns?.volatilityOption
-                        }
-                        else if (key === "family") {
-                            options = dropdowns?.familyOption
-                        }
-                        else if (key === "features") {
-                            options = dropdowns?.featuresOption
-                        }
-                        else if (key === "gameType") {
-                            options = dropdowns?.gameType
-                        }
-                        if (['skip', 'limit'].includes(key)) return null;
-                        if (!val) return null
-                        console.log(options, options?.find(q => q.value === val), options?.find(q => q.value === val)?.name, "name")
-                        return (
-                            <div key={key} className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
-                                <p className='text-sm text-black-v3'>{
-                                    key
-                                }</p>
-                                <button onClick={() => clearFilter(key)}>
-                                    <img className='w-2 h-2' src={cross} alt='remove' />
-                                </button>
-                            </div>
-                        );
-                    })}
+                            let options = []
+                            if (key === "studio") {
+                                options = studios
+                            }
+                            else if (key === "region") {
+                                options = dropdowns?.regionOption
+                            }
+                            else if (key === "volatility") {
+                                options = dropdowns?.volatilityOption
+                            }
+                            else if (key === "family") {
+                                options = dropdowns?.familyOption
+                            }
+                            else if (key === "features") {
+                                options = dropdowns?.featuresOption
+                            }
+                            else if (key === "gameType") {
+                                options = dropdowns?.gameType
+                            }
+                            if (['skip', 'limit'].includes(key)) return null;
+                            if (!val) return null
+                            console.log(options, options?.find(q => q.value === val), options?.find(q => q.value === val)?.name, "name")
+                            return (
+                                <div key={key} className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
+                                    <p className='text-sm text-black-v3'>{
+                                        key
+                                    }</p>
+                                    <button onClick={() => clearFilter(key)}>
+                                        <img className='w-2 h-2' src={cross} alt='remove' />
+                                    </button>
+                                </div>
+                            );
+                        })}
                 </div>
                 <div className='flex gap-10'>
                     <div
@@ -294,55 +276,54 @@ const[gamesList, setGameLists]=useState(
             {/* Game List */}
             <div className='bg-white-v2 px-7 pt-8 pb-1 space-y-8 rounded-t-3xl '>
 
-                    {/*  button */}
-                    <div className='flex  md:justify-end w-full '>
+                {/*  button */}
+                <div className='flex  md:justify-end w-full '>
                     <button className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
-      Download All
-      <Download size={16} />
-    </button>
-                    </div>
-                    {/*  button */}
-
-                    <div>
-                        {folders?.map((folder) => {
-                            return (
-<div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
-    <div className="flex justify-between items-center w-full md:hidden">
-   
-    <img  src={"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full " />
-     <input type="checkbox" className="w-5 h-5 accent-emerald-500 " />
-
-
-    </div>
-  {/* Left */}
-  <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
-    <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
-    <img src={folder.icon} alt="Game Icon" className="w-44 h-28 md:mb-2" />
-    <div className='text-center md:text-left'>
-      <h2 className="text-emerald-600 font-medium text-3xl mb-2">
-        {folder.name}
-      </h2>
-      <p className="text-xl text-gray-800 font-medium mb-4">{folder?.game?.title}</p>
-      
-      <p className="text-base text-gray-400 mb-2">By: {folder?.game?.subStudio?.name}</p>
-    </div>
-  </div>
-
-  {/* Right */}
-  <div className="flex flex-col md:flex-row items-center gap-7 md:gap-14 w-full md:w-[unset]">
-    <button onClick={() => { downloadById("folder", folder) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
-      Download
-      <Download size={16} />
-    </button>
-  </div>
-</div>
-
-
-                            )
-                        })}
-                    </div>
-
+                        Download All
+                        <Download size={16} />
+                    </button>
                 </div>
+                {/*  button */}
+             
+                <div>
+                    {folders?.map((folder) => {
+                        return (
+                            <div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
+                                <div className="flex justify-between items-center w-full md:hidden">
+                                     <input type="checkbox" className="w-5 h-5 accent-emerald-500 " />
+                                </div>
+                                {/* Left */}
+                                <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
+                                    <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
+                                    <img src={folder?.game
+                                        ?.logo||"/Images/uk.jpg"} alt="Game Icon" className="w-44 h-28 md:mb-2" />
+                                    <div className='text-center md:text-left'>
+                                        <h2 className="text-emerald-600 font-medium text-3xl mb-2">
+                                            {folder.name}
+                                        </h2>
+                                        <p className="text-xl text-gray-800 font-medium mb-4">{folder?.game?.title}</p>
+
+                                        <p className="text-base text-gray-400 mb-2">By: {folder?.game?.subStudio?.name}</p>
+                                    </div>
+                                </div>
+
+                                {/* Right */}
+                                <div className="flex flex-col md:flex-row items-center gap-7 md:gap-14 w-full md:w-[unset]">
+                                    <button onClick={() => { downloadById("folder", folder) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+                                        Download
+                                        <Download size={16} />
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        )
+                    })}
+                </div>
+                {loading && (
+                <div className='grid place-items-center my-4'><MiniLoader/></div>
+            )}
+            </div>
 
             {showFilterModal && (
                 <div className="fixed inset-0 bg-black/40 z-50 flex items-center justify-center">

@@ -641,20 +641,6 @@ function DetailGame() {
                         <div className="flex flex-col h-full">
                             <p className="text-[#7C7C7C] font-medium mb-2">Special Features</p>
                             <div className="space-y-1">
-<<<<<<< HEAD
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-                                <p className="font-semibold">Unlock Feature</p>
-=======
 
                                 {
                                     features?.map((item) => {
@@ -671,7 +657,6 @@ function DetailGame() {
 
 
 
->>>>>>> sec/main
 
 
                             </div>

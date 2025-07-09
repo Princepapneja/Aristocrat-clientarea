@@ -12,7 +12,7 @@ function GameCard({ game }) {
   return (
 <div
   id={game?.id}
-  className="card group relative bg-[#F4F4F4] xl:hover:shadow flex flex-col duration-300 rounded-[20px] max-w-100 w-full transform transition-transform xl:hover:-translate-y-5"
+  className="card group relative bg-[#F4F4F4] xl:hover:shadow flex flex-col duration-300 rounded-[20px]  w-full transform transition-transform xl:hover:-translate-y-5"
 >
 
   {/* Game Image and Date */}
@@ -38,7 +38,7 @@ function GameCard({ game }) {
   {/* Game Info + Buttons */}
   <div className="p-5 flex flex-col grow justify-between group-hover:bg-white transition-colors duration-300">
     <p className="text-2xl font-medium mb-3">{game.title}</p>
-    <p className="mb-4">By: {game?.studio?.name}</p>
+    <p className="mb-4">By: {game?.subStudio?.name}</p>
 
 
     <div className="overflow-hidden xl:max-h-0 group-hover:max-h-40 transition-all duration-300 flex justify-between ">

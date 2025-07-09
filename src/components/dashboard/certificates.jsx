@@ -14,26 +14,16 @@ function Certificates() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
     const [filters, setFilters] = useState({ skip: 0, limit: 16, studio: studio || "" });
-    const [games, setGames] = useState([]);
+    const [files, setFiles] = useState([]);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [totalGames, setTotalGames] = useState(0);
+    const [totalFiles, setTotalFiles] = useState(0);
 
  const {regions,studios,dropdowns } = useGlobal();
-    
-    const dropdownDefaults = (label) => [
-        { value: label, selected: true, name: label }
-    ];
-
-
-
     useEffect(() => {
         fetchGames();
     }, [filters]);
 
-
-
-    // Scroll event to trigger infinite scroll
     useEffect(() => {
         const handleScroll = () => {
             if (
@@ -86,12 +76,18 @@ function Certificates() {
     const fetchGames = async () => {
         setLoading(true);
         try {
-            const queryParams = new URLSearchParams(filters).toString();
-            const { data } = await apiHandler.get(`certificates?${queryParams}`);
-            const newGames = data.data.resp || [];
-            setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
+            let url = `certificates?skip=${filters?.skip}&limit=${filters?.limit}`
+            if (filters?.studio?.length > 0) {
+                url += `&subStudios=${filters?.studio?.join(",")}`
+            }
+            if (filters?.country?.length > 0) {
+                url += `&subStudios=${filters?.studio?.join(",")}`
+            }
+            const { data } = await apiHandler.get(url);
+            const newFiles = data.data.resp || [];
+            setFiles((prev) => (filters.skip === 0 ? newFiles : [...prev, ...newFiles]));
             setHasMore((filters.skip + filters.limit) < data.data.total);
-            setTotalGames(data.data.total);
+            setTotalFiles(data.data.total);
         } catch (error) {
             console.error('Failed to fetch games:', error);
         }
@@ -109,7 +105,7 @@ function Certificates() {
 
     updatedFilters.skip = 0;
 
-    setGames([]);
+    setFiles([]);
     setFilters(updatedFilters);
 };
 
@@ -119,12 +115,12 @@ function Certificates() {
         const updatedFilters = { ...filters };
         delete updatedFilters[key];
         updatedFilters.skip = 0;
-        setGames([]);
+        setFiles([]);
         setFilters(updatedFilters);
     };
 
     const clearAllFilters = () => {
-        setGames([]);
+        setFiles([]);
         setFilters({ skip: 0, limit: 16 });
     };
     const [showFilterModal, setShowFilterModal] = useState(false);
@@ -253,41 +249,41 @@ function Certificates() {
                     {/*  button */}
 
                     <div>
-                        {games?.map((game) => {
+                        {files?.map((file) => {
                             return (
-<div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow hover:shadow transition-shadow duration-300">
-    <div className="flex justify-between items-center w-full md:hidden">
-    <img  src={game?.folder?.country?.flag}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full " />
+<div className="flex flex-col lg:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow hover:shadow transition-shadow duration-300">
+    <div className="flex justify-between items-center w-full lg:hidden">
+    <img  src={file?.country?.flag||"/Images/uk.jpg"}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full " />
      <input type="checkbox" className="w-5 h-5 accent-emerald-500 " />
 
 
     </div>
   {/* Left */}
-  <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
-    <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
-    <img src={game?.game?.logo} alt="Game Icon" className=" h-24 w-40 md:mb-2" />
-    <div className='text-center md:text-left'>
+  <div className="flex flex-col md:flex-row items-center  gap-4 lg:gap-14">
+    <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden lg:block" />
+    <img src={file?.game?.logo || "/Images/uk.jpg"} alt="Game Icon" className=" h-24 w-40 lg:mb-2" />
+    <div className='text-center lg:text-left'>
       <h2 className="text-emerald-600 font-medium text-3xl mb-2">
-        {game.name}
+        {file.name}
       </h2>
-      <p className="text-xl text-gray-800 font-medium mb-4">{game?.game?.title}</p>
+      <p className="text-xl text-gray-800 font-medium mb-4">{file?.game?.title}</p>
       
-      <p className="text-base text-gray-400 mb-2">By: {game?.game?.subStudio?.name}</p>
+      <p className="text-base text-gray-400 mb-2">By: {file?.game?.subStudio?.name}</p>
     </div>
   </div>
 
   {/* Right */}
   
-  <div className="flex flex-col md:flex-row items-center gap-7 md:gap-14 w-full md:w-[unset]">
-    <img  src={game?.folder?.county?.flag}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full hidden md:block" />
+  <div className="flex flex-col lg:flex-row items-center gap-7 lg:gap-14 w-full lg:w-[unset]">
+    <img  src={file?.folder?.county?.flag}  alt="UK Flag" className="w-10 h-10 shadow-md rounded-full hidden lg:block" />
     <p className="text-xl text-gray-600 font-normal">
-  {game?.size ? (
-    game.size >= 1024 ** 3
-      ? `${(game.size / (1024 ** 3)).toFixed(2)} GB`
-      : `${(game.size / (1024 ** 2)).toFixed(2)} MB`
+  {file?.size ? (
+    file.size >= 1024 ** 3
+      ? `${(file.size / (1024 ** 3)).toFixed(2)} GB`
+      : `${(file.size / (1024 ** 2)).toFixed(2)} MB`
   ) : 'N/A'}
 </p>
-    <button onClick={() => { downloadById("file", game) }} className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
+    <button onClick={() => { downloadById("file", file) }} className="cursor-pointer flex items-center gap-2 w-full lg:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
       Download
       <Download size={16} />
     </button>
