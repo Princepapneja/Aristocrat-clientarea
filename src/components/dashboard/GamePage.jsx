@@ -75,9 +75,9 @@ function GamePage() {
                 url += `&countryIds=${formData?.region?.join(",")}`
             }
             const { data } = await apiHandler.get(url);
+            
             const newGames = data.data.games || [];
             setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
-            debugger
             setHasMore((filters.skip + filters.limit) < data.data.total);
             setTotalGames(data.data.total);
         } catch (error) {
@@ -121,7 +121,11 @@ function GamePage() {
         setGames([]);
         setFilters(updatedFilters);
     };
+
+    const [clearFlag,setClearFlag]=useState(false)
+
     const clearAllFilters = () => {
+
         setFormData({
             studio: [],
             categoryIds: [],
@@ -129,15 +133,14 @@ function GamePage() {
 
         });
         setFilters({ skip: 0, limit: 16 });
+        setClearFlag(true)
     };
+
+
     const [showFilterModal, setShowFilterModal] = useState(false);
 
 
-    console.log(formData);
-
-
-
-    return (
+return (
         <div className='container space-y-16 group' >
             {/* Filter Inputs */}
             <div className='space-y-5'>
@@ -160,7 +163,7 @@ function GamePage() {
 
                         {/* Filter Content */}
 
-                        <MobileFilter setShowFilter={setShowFilter} filters={filters} dropdowns={dropdowns && dropdowns} onFilterChange={onFilterChange} studios={studios} clearFilter={clearFilter} clearAllFilters={clearAllFilters} />
+                        <MobileFilter  clearFlag={clearFlag}   setClearFlag={setClearFlag} setShowFilter={setShowFilter} filters={filters} dropdowns={dropdowns && dropdowns} onFilterChange={onFilterChange} studios={studios} clearFilter={clearFilter} clearAllFilters={clearAllFilters} />
                     </div>
 
                 </div>
@@ -174,6 +177,8 @@ function GamePage() {
                         value={formData.volatility}
                         options={studios}
                         handleInputChange={onFilterChange}
+                        clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
                     <RegionListComponent
                         id='region'
@@ -181,6 +186,8 @@ function GamePage() {
                         name="Region"
                         options={regions}
                         handleInputChange={onFilterChange}
+                        clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
 
                     <InputField
@@ -190,6 +197,8 @@ function GamePage() {
                         value={formData?.volatility}
                         options={dropdowns.volatilityOption}
                         handleInputChange={onFilterChange}
+                        clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
                     <InputField
                         type='selects'
@@ -198,6 +207,8 @@ function GamePage() {
                         value={formData?.theme}
                         options={dropdowns.themeOption}
                         handleInputChange={onFilterChange}
+                        clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
 
                     <InputField
@@ -207,6 +218,8 @@ function GamePage() {
                         value={formData?.features}
                         options={dropdowns.featuresOption}
                         handleInputChange={onFilterChange}
+                        clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
                     <InputField
                         type='selects'
@@ -215,6 +228,8 @@ function GamePage() {
                         value={formData?.family}
                         options={dropdowns.familyOption}
                         handleInputChange={onFilterChange}
+                         clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
                     <InputField
                         type='selects'
@@ -223,6 +238,8 @@ function GamePage() {
                         value={formData?.gameType}
                         options={dropdowns.gameTypeOption}
                         handleInputChange={onFilterChange}
+                        clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
                     <InputField
                         type='selects'
@@ -231,6 +248,8 @@ function GamePage() {
                         value={formData?.jackpot}
                         options={dropdowns.jackpotOption}
                         handleInputChange={onFilterChange}
+                        clearFlag={clearFlag}
+                        setClearFlag={setClearFlag}
                     />
                 </div>
                 {/* <MobileFilter/> */}

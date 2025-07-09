@@ -22,7 +22,9 @@ const InputField = ({
   placeholder = "",
   checked,
   prefix = false,
-  name
+  name,
+  clearFlag,
+  setClearFlag
   
 }) => {
   const [showPass, setShowPass] = useState(false);
@@ -71,6 +73,7 @@ const InputField = ({
 //  console.log(options);
  
 
+
   const filteredData = options?.filter((data) =>{
     
     const dataName =data?.name || data?.title
@@ -116,6 +119,15 @@ dataName.toLowerCase().includes(searchTerm.toLowerCase())
   }, [value]);
 
 // console.log(selected);
+
+  useEffect(() => {
+    if (clearFlag) {
+      setSelected([])
+      setClearFlag(false)
+    }
+   
+  }, [clearFlag]);
+
 
   return (
     <div className={`${className} ${(type === "textarea" || type === "textEditor") ? "md:col-span-2 xl:col-span-3" : type === "checkbox" ? "flex gap-1 items-center" : "space-y-2 w-full "} normal-case`}>

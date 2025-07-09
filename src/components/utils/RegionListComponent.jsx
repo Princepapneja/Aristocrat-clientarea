@@ -1,7 +1,8 @@
+import { filter } from "jszip";
 import { ChevronUp, ChevronDown, Search, ChevronRight } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 
-const RegionListComponent = ({ label, id, options, value, handleInputChange, className,name }) => {
+const RegionListComponent = ({clearFlag,setClearFlag ,label, id, options, value, handleInputChange, className,name }) => {
     const [open, setOpen] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [selected, setSelected] = useState([]);
@@ -45,6 +46,17 @@ const RegionListComponent = ({ label, id, options, value, handleInputChange, cla
         return region.region?.toLowerCase().includes(searchTerm.toLowerCase()) ||
             region.countries?.some((c) => c.name.toLowerCase().includes(searchTerm.toLowerCase()));
     });
+
+
+      useEffect(() => {
+    if (clearFlag) {
+      
+      setSelected([])
+      setClearFlag(false)
+    }
+   
+  }, [clearFlag]);
+  
 
     return (
         <div ref={ref} className={`${className} relative w-full`}>

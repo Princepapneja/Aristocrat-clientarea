@@ -22,7 +22,7 @@ const filterCounts = {
   'Game Type': 0,
   Jackpots: 0,
 };
-const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange, dropdowns, studios, clearFilter, clearAllFilters }) => {
+const MobileFilter = ({ clearFlag,  setClearFlag,  setShowFilter, filters, showFilterModal, onFilterChange, dropdowns, studios, clearFilter, clearAllFilters }) => {
 
   const { regions } = useGlobal()
 
@@ -85,6 +85,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
         value={filters?.studio}
         options={studios}
         handleInputChange={onFilterChange}
+         clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
       />
       <RegionListComponent
         id='region'
@@ -93,6 +95,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
         name="Region"
         options={regions}
         handleInputChange={onFilterChange}
+        clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
       />
       {
         dropdowns?.volatilityOption?.length > 0 && <InputField
@@ -103,6 +107,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
           // value={filters?.volatility}
           options={dropdowns?.volatilityOption}
           handleInputChange={onFilterChange}
+          clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
         />
 
       }
@@ -117,6 +123,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
           value={filters?.theme}
           options={dropdowns?.themeOption}
           handleInputChange={onFilterChange}
+          clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
         />
 
       }
@@ -132,6 +140,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
           value={filters?.features}
           options={dropdowns?.featuresOption}
           handleInputChange={onFilterChange}
+          clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
         />
 
       }
@@ -150,6 +160,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
           value={filters?.family}
           options={dropdowns?.familyOption}
           handleInputChange={onFilterChange}
+          clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
         />
 
       }
@@ -164,6 +176,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
           value={filters?.gameType}
           options={dropdowns?.gameTypeOption}
           handleInputChange={onFilterChange}
+          clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
         />
 
       }
@@ -179,6 +193,8 @@ const MobileFilter = ({ setShowFilter, filters, showFilterModal, onFilterChange,
           value={filters?.jackpot}
           options={dropdowns?.jackpotOption}
           handleInputChange={onFilterChange}
+          clearFlag={clearFlag}
+        setClearFlag={setClearFlag}
         />
 
       }
