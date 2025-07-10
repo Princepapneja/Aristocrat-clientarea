@@ -13,7 +13,7 @@ const Games = () => {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalGames, setTotalGames] = useState(0);
-    const { studios, countryOption, dropdowns } = useGlobal()
+    const { studios, countryOption, dropdowns,regions } = useGlobal()
 
     useEffect(() => {
         fetchGames();
