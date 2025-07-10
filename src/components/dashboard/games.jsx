@@ -31,7 +31,7 @@ const Games = () => {
     const fetchGames = async () => {
         setLoading(true);
         try {
-            // debugger
+            // 
             const {
                 skip = 0,
                 limit = 10,

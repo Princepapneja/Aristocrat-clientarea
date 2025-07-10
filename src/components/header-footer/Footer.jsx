@@ -18,7 +18,7 @@ function Footer() {
         <img src={"/logos/linkdin.png"} alt="LinkedIn" className="h-12 w-12" />
       </div>
 
-      <div className="grid grid-cols-2 md:flex md:justify-center md:gap-16 py-14 gap-6 text-center">
+      <div className="grid grid-cols-2 lg:grid-cols-4 xl:flex xl:justify-center xl:gap-16 py-14 gap-6 text-center">
         {footerData.map((item, index) => (
           <p key={index} className="text-black-v4 font-medium">
             {item.title}
