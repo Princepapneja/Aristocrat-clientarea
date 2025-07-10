@@ -27,7 +27,7 @@ const Buttons = ({ type = "primary", children, spinner = false, disabled, big = 
     </div>
           {children}
         </a>
-        : <button disabled={disabled} onClick={handleClick} className={` relative rounded-lg py-1.5 px-4   ${type === "border" ? "text-primary-dark  border  border-solid disabled:opacity-70 disabled:text-desc" : type === "danger" ? "bg-red-500 text-white" : "bg-primary-dark text-white hover:bg-[black] cursor-pointer "} select-none $ disabled:opacity-50 font-semibold ${className}`}>
+        : <button disabled={disabled} onClick={handleClick} className={` relative rounded-lg py-1.5 px-4   ${type === "border" ? "text-primary-dark  border  border-solid disabled:opacity-70 disabled:text-desc" : type === "danger" ? "bg-red-500 text-white" :type==="secondary"? "border-black-v4 border text-black-v3" : "bg-primary-dark text-white hover:bg-[black] cursor-pointer "} select-none $ disabled:opacity-50 font-semibold ${className}`}>
         {
           spinner ?
          
