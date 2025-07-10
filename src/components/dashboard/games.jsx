@@ -16,15 +16,18 @@ const Games = () => {
     const [showFilterModal, setShowFilterModal] = useState(false);
     const { studios, regions, dropdowns } = useGlobal()
 
+
     useEffect(() => {
         fetchGames();
     }, [filters]);
+
     useEffect(() => {
         if (!regions) return
-        console.log(regions)
+        // console.log(regions)
         const options = regions?.map((e) => ({ value: e.id, name: e.name, children: e.countries?.map((country) => ({ value: country.id, name: country.name })) }))
         setCountriesOption(options)
     }, [regions])
+    
     const fetchGames = async () => {
         setLoading(true);
         try {
@@ -229,6 +232,8 @@ const Games = () => {
                                 else return null;
                                 return (
                                     val?.map((id, i) => {
+                                        console.log(id,i);
+                                        
                                         if(i>4){
                                             return null
                                         }
