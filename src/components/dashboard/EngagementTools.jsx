@@ -24,7 +24,7 @@ function EngagementTools() {
           name: 'Free Spins',
           description1: "Configure personalized free spins in one quick step!",
           description2: "This marketing tool allows you to easily give your players alluring incentives to try new games and keep winning in their favorite ones, while our back-office system gives you full control of the promotion settings.",
-          icon: "/Images/free spins 1.png",
+          icon: "/Images/freespins.png",
           image: "/Images/Leading content & creative talent 1.png"
         },
         {
@@ -72,24 +72,24 @@ function EngagementTools() {
                             That is why, along with our attractive set of games, we provide a variety of powerful engagement tools, specifically designed for seamless use and integration, to maximize your attraction and retention rates.
                         </p>
                     </div>
-                    <div className='flex flex-col md:flex-row rounded-3xl bg-white-v2 gap-10 justify-between p-2 items-center mb-8 w-full'>
-                        <ActiveButtons active={active} setActive={setActive} className="grid  grid-cols-2 md:grid-cols-1 gap-4 md:max-w-[275px] w-full" buttons={activeButtons} type='' />
+                    <div className='flex flex-col lg:flex-row rounded-3xl bg-white-v2 gap-4 xl:gap-10  p-2 md:p-8 items-center mb-8 w-full'>
+                        <ActiveButtons active={active} setActive={setActive} className="grid  grid-cols-2 lg:grid-cols-1 gap-4 lg:max-w-[275px] w-full" buttons={activeButtons} type='' />
 
-                        <div className="bg-white-v2 rounded-3xl p-2 md:p-10">
-                            <div className="flex flex-col md:flex-row items-center gap-6 md:gap-20 mb-6">
+                        <div className="bg-white-v2 rounded-3xl p-2 xl:p-10">
+                            <div className="flex flex-col xl:flex-row w-full items-center  justify-between gap-6 xl:gap-20 mb-6">
                                 <img
                                     src={
                                         activeButtons?.[active]?.icon
                                     }
                                     alt="Trophy"
-                                    className="h-28 w-auto object-contain rounded-2xl"
+                                    className="h-28 max-w-[190px] w-full object-contain rounded-2xl"
                                 />
                                 <img
                                     src={
                                         activeButtons?.[active]?.image
                                     }
                                     alt="Screen"
-                                    className="h-50 w-auto object-contain"
+                                    className="h-50 w-full max-w-[390px] object-contain"
                                 />
                             </div>
 

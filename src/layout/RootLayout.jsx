@@ -7,6 +7,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loader from '../components/utils/loader';
 import apiHandler from '../functions/apiHandler';
+import React from 'react';
 const RootLayout = () => {
   const navigate = useNavigate()
   const [height, setHeight] = useState(0);
@@ -19,6 +20,8 @@ const RootLayout = () => {
   const [progress, setProgress] = useState(0);
   const [user, setUser] = useState(null);
   const [mainLoader, setMainLoader] = useState(false)
+      const [countryOption, setCountriesOption] = useState([])
+
   
  const [collapsed, setCollapsedState] = useState(() => {
   const stored = localStorage.getItem('sidebarCollapsed');
@@ -117,6 +120,8 @@ const loggedUser=localStorage.getItem("token")
             // setGames((prev) => (filters.skip === 0 ? newGames : [...prev, ...newGames]));
             // setHasMore((filters.skip + filters.limit) < data.data.total);
             setRegions(data.data);
+            const options = data.data?.map((e) => ({ value: e.id, name: e.name, children: e.countries?.map((country) => ({ value: country.id, name: country.name })) }))
+        setCountriesOption(options)
         } catch (error) {
             console.error('Failed to fetch games:', error);
         }
@@ -195,7 +200,7 @@ fetchCategories()
         <Loader />
       }
       <main className="">
-        <Outlet context={{ collapsed, setCollapsed,disable, setDisable, availableQuestions, setAvailableQuestions, mainLoader, setMainLoader, user, counts, setCounts, navigate, token, setToken, setUser, render, setRender, height, success, error, progress, setProgress, sideBarOpen, setSideBarOpen,regions,studios,dropdowns}} />
+        <Outlet context={{ collapsed,countryOption, setCountriesOption, setCollapsed,disable, setDisable, availableQuestions, setAvailableQuestions, mainLoader, setMainLoader, user, counts, setCounts, navigate, token, setToken, setUser, render, setRender, height, success, error, progress, setProgress, sideBarOpen, setSideBarOpen,regions,studios,dropdowns}} />
       </main>
       {/* <Footer/> */}
     </>

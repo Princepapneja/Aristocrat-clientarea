@@ -6,11 +6,12 @@ import DashboardHeader from '../header-footer/dashBoardHeader'
 import apiHandler from '../../functions/apiHandler'
 import RegionListComponent from '../utils/RegionListComponent'
 import useGlobal from '../../hooks/useGlobal'
+import FilterDropdownGrouped from '../utils/multiSelect'
 function Roadmaps() {
     const [activeStudio, setActiveStudio] = useState(0)
     const [activeYear, setActiveYear] = useState(0)
     const [selectedRegions, setSelectedRegions] = useState([])
-    const { regions } = useGlobal()
+    const { countryOption } = useGlobal()
 const [formData, setFormData] = useState({
    
     regions: [],
@@ -90,35 +91,10 @@ const [formData, setFormData] = useState({
     }
     useEffect(() => {
         fetchGame()
-    }, [activeStudio, activeYear])
+    }, [activeStudio, activeYear,selectedRegions])
 
 
-    const onFilterChange = (filterArray) => {
-    const updatedFormData = { ...formData };
-
- const updatedFilter = { ...filters };
-
- 
-
-    filterArray.forEach(({ value,id }) => {
-      if (!updatedFormData[id]) {
-        updatedFormData[id] = [];
-      }
-      if (!updatedFormData[id].includes(value)) {
-        updatedFormData[id].push(value);
-      }
-    });
-
-    
-    filterArray.forEach(filter => {
-        updatedFilter[filter.name] = filter.value;
-        
-    });
-// console.log(updatedFormData);
-
-    setFormData(updatedFormData);
-    // setFilters(updatedFilter);
-  };
+   
     return (
 
         <>
@@ -144,12 +120,23 @@ const [formData, setFormData] = useState({
 
 
 
-                            <RegionListComponent
-                                id='region'
-                                name="Region"
-                                options={regions}
-                                handleInputChange={onFilterChange}
-                            />
+                              <FilterDropdownGrouped
+                                                    name={"countryIds"}
+                                                    selected={selectedRegions}
+                                                    options={countryOption}
+                                                    onApply={(name,ids)=>{setSelectedRegions(ids)}}
+                                                    onClear={()=>{setSelectedRegions([])}}
+                                                    title={
+                                                        <div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
+                                                            <h2>{"Regions"}</h2>
+                                                            {selectedRegions?.length > 0 && (
+                                                                <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">
+                                                                    {selectedRegions.length}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                    }
+                                                />
                         </div>
                     </div>
 

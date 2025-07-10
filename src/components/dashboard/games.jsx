@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import apiHandler from '../../functions/apiHandler';
 import MiniLoader from '../utils/miniLoader';
 import GameCard from '../utils/GameCard';
-import FilterDropdownGrouped from '../utils/multiSelect';
 import useGlobal from '../../hooks/useGlobal';
 import { ArrowLeft, Cross, MoveLeft, X } from 'lucide-react';
 import Buttons from '../utils/buttons';
@@ -14,19 +13,13 @@ const Games = () => {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalGames, setTotalGames] = useState(0);
-    const [countryOption, setCountriesOption] = useState([])
-    const { studios, regions, dropdowns } = useGlobal()
+    const { studios, countryOption, dropdowns } = useGlobal()
 
     useEffect(() => {
         fetchGames();
     }, [filters]);
 
-    useEffect(() => {
-        if (!regions) return
-        // console.log(regions)
-        const options = regions?.map((e) => ({ value: e.id, name: e.name, children: e.countries?.map((country) => ({ value: country.id, name: country.name })) }))
-        setCountriesOption(options)
-    }, [regions])
+    
     
     const fetchGames = async () => {
         setLoading(true);
