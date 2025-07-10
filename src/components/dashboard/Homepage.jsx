@@ -216,7 +216,7 @@ function Homepage() {
         </div>
 
         <div className='flex justify-center mb-10'>
-          <Link to={'/dashboard/games?studio=974c3fc0-214c-456a-8b36-68d6813cb8b3'}>
+          <Link to={'/dashboard/games'}>
             <Buttons>Discover More</Buttons>
           </Link>
         </div>

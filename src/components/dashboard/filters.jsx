@@ -121,7 +121,7 @@ const [chipsItems,setChipsItems]= useState([])
             {item.name}
           </p>
           <button onClick={() => handleOuterClear(item.key, item.value)}>
-            <X />
+            <X size={20}/>
           </button>
         </div>
       );
@@ -166,7 +166,7 @@ const [chipsItems,setChipsItems]= useState([])
             {item.name}
           </p>
           <button onClick={() => handleOuterClear(item.key, item.value)}>
-            <X />
+            <X size={20} />
           </button>
         </div>
       );
