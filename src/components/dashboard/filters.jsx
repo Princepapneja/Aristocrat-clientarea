@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Buttons from '../utils/buttons'
 import { ArrowLeft, X } from 'lucide-react'
 import FilterDropdownGrouped from '../utils/multiSelect'
+import FilterIcon from '../../assets/icons/Group 4519.svg'
 
 const Filters = ({ filters, setFilters, items }) => {
     const [openFilter, setOpenFilter] = useState(false)
@@ -28,7 +29,7 @@ const [chipsItems,setChipsItems]= useState([])
         setFilters((prev) => ({ ...prev, [type]: prev?.[type]?.filter((q) => (q !== id)) }))
     }
     useEffect(() => {
-        debugger
+        
 
         const chips = Object.entries(filters)
           .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
@@ -53,14 +54,15 @@ const [chipsItems,setChipsItems]= useState([])
       
 
     return (
-        <div>
+        <div className=''>
 
-            <Buttons className={"lg:hidden w-full"} onClick={() => { setOpenFilter(true) }} >Open</Buttons>
-            <div className={`fixed w-full z-50 bg-white top-0 h-screen duration-300 lg:h-[unset] p-4 md:0 ${openFilter ? "left-0" : "left-[-100%] "} lg:static lg:grid grid-cols-4 gap-4 space-y-5`}>
+            <Buttons type="border" className={"lg:hidden w-full flex items-center justify-center  gap-2"} onClick={() => { setOpenFilter(true) }} ><span>Filter</span><img src={FilterIcon} alt="" className='w-5' /></Buttons>
+            <div className={`overflow-y-auto lg:overflow-y-visible  fixed w-full z-50 bg-white top-0 h-screen duration-300 lg:h-[unset] p-4 md:0 ${openFilter ? "left-0" : "left-[-100%] "} lg:static lg:grid grid-cols-4 gap-4 space-y-5`}>
                 <div className='lg:hidden flex '>
                     <div className='flex items-center gap-2'>
                         <ArrowLeft />
-                        <button onClick={() => { setOpenFilter(false) }}>Back</button>
+                                                <button onClick={() => { setOpenFilter(false) }}>Back</button>
+
                     </div>
                     <h4 className='grow text-center'>Filters</h4>
                 </div>

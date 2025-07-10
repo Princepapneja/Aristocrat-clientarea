@@ -108,7 +108,7 @@ function DetailGame() {
             }
 
             const url = `/games/${id}/download?type=${type}&name=${encodeURIComponent(name)}&folder=${folder}`;
-            debugger
+            
 
             const response = await apiHandler.get(url, {
                 responseType: 'blob', // Needed to process binary data (zip or file)

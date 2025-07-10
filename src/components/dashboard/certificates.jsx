@@ -10,6 +10,7 @@ import { X } from 'lucide-react';
 import { Download } from "lucide-react";
 import useGlobal from '../../hooks/useGlobal';
 import RegionListComponent from '../utils/RegionListComponent';
+import Filters from './filters';
 function Certificates() {
     const [params] = useSearchParams()
     const studio = params.get("studio")
@@ -18,6 +19,8 @@ function Certificates() {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalFiles, setTotalFiles] = useState(0);
+    const [showFilterModal, setShowFilterModal] = useState(false);
+    const [countryOption, setCountriesOption] = useState([])
 
  const {regions,studios,dropdowns } = useGlobal();
     useEffect(() => {
@@ -42,7 +45,7 @@ function Certificates() {
 
     const downloadById = async (type, item) => {
         try {
-            debugger
+            
             const query = type === 'file' ? `fileId=${item?.id}` : `folderId=${item?.id}`;
             const response = await apiHandler.get(`/download?${query}`, {
                 responseType: 'blob',
@@ -77,11 +80,11 @@ function Certificates() {
         setLoading(true);
         try {
             let url = `certificates?skip=${filters?.skip}&limit=${filters?.limit}`
-            if (filters?.studio?.length > 0) {
-                url += `&subStudios=${filters?.studio?.join(",")}`
+            if (filters?.subStudioIds?.length > 0) {
+                url += `&subStudioId=${filters?.subStudioIds?.join(",")}`
             }
-            if (filters?.country?.length > 0) {
-                url += `&subStudios=${filters?.studio?.join(",")}`
+             if (filters?.countryIds?.length > 0) {
+                url += `&countryIds=${filters?.countryIds?.join(",")}`
             }
             const { data } = await apiHandler.get(url);
             const newFiles = data.data.resp || [];
@@ -94,37 +97,39 @@ function Certificates() {
         setLoading(false);
     };
 
-   const onFilterChange = (filterArray) => {
-    console.log(filterArray);
 
-    const updatedFilters = { ...filters };
-
-    filterArray.forEach(filter => {
-        updatedFilters[filter.name] = filter.value;
-    });
-
-    updatedFilters.skip = 0;
-
-    setFiles([]);
-    setFilters(updatedFilters);
-};
+    useEffect(() => {
+        if (!regions) return
+        // console.log(regions)
+        const options = regions?.map((e) => ({ value: e.id, name: e.name, children: e.countries?.map((country) => ({ value: country.id, name: country.name })) }))
+        setCountriesOption(options)
+    }, [regions])
 
 
-
-    const clearFilter = (key) => {
-        const updatedFilters = { ...filters };
-        delete updatedFilters[key];
-        updatedFilters.skip = 0;
-        setFiles([]);
-        setFilters(updatedFilters);
-    };
-
-    const clearAllFilters = () => {
-        setFiles([]);
-        setFilters({ skip: 0, limit: 16 });
-    };
-    const [showFilterModal, setShowFilterModal] = useState(false);
-
+        const filterConfigs = [
+        {
+          name: "subStudioIds",
+          title: "Studios",
+          options: studios
+        },
+        {
+          name: "countryIds",
+          title: "Regions",
+          options: countryOption,
+          filterArray:regions?.flatMap(region => region?.countries || [])?.map(e => ({ value: e.id, name: e.name }))
+        },
+        // {
+        //   name: "volatilityIds",
+        //   title: "Certificate",
+        //   options: dropdowns?.volatilityOption
+        // },
+        // {
+        //   name: "themeIds",
+        //   title: "Game Title",
+        //   options: dropdowns?.themeOption
+        // },
+      
+      ];
 
     return (
         <div className='container space-y-16 group mb-10' >
@@ -140,101 +145,8 @@ function Certificates() {
                                     </Link>
                 </div>
             {/* Filter Inputs */}
-            <div className='space-y-5'>
-                <div className='grid grid-cols-1 md:grid-cols-4 gap-10'>
-                    <InputField
-                        type='selects'
-                        id='studio'
-                        label="Studio"
-                        value={filters?.studio}
-                        options={studios}
-                        handleInputChange={onFilterChange}
-                    />
-                  <RegionListComponent
-                        id='region'
-                        label="Region"
-                        name="Region"
-                        options={regions}
-                        handleInputChange={onFilterChange}
-                    />
-                    <InputField
-                        type='selects'
-                        label="Certificate"
-                        id='Certificate'
-                        value={filters?.volatility}
-                        options={dropdowns.volatilityOption}
-                        handleInputChange={onFilterChange}
-                    />
-                    <InputField
-                        type='selects'
-                        id='gameTitle'
-                        label="Game Title"
-                        value={filters?.theme}
-                        options={dropdowns.themeOption}
-                        handleInputChange={onFilterChange}
-                    />
-                </div>
-
-             
-            </div>
-
-
-
-            {/* Filter Chip Display */}
-            <div className='flex justify-between items-center mb-20'>
-                <div className='flex gap-5 flex-wrap'>
-                    {Object.entries(filters)
-            .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
-            .slice(0, 5)
-            .map(([key, val]) => {
-
-                        let options = []
-                        if (key === "studio") {
-                            options = studios
-                        }
-                        else if (key === "region") {
-                            options = dropdowns?.regionOption
-                        }
-                        else if (key === "volatility") {
-                            options = dropdowns?.volatilityOption
-                        }
-                        else if (key === "family") {
-                            options = dropdowns?.familyOption
-                        }
-                        else if (key === "features") {
-                            options = dropdowns?.featuresOption
-                        }
-                        else if (key === "gameType") {
-                            options = dropdowns?.gameType
-                        }
-                        if (['skip', 'limit'].includes(key)) return null;
-                        if (!val) return null
-                        return (
-                            <div key={key} className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
-                                <p className='text-sm text-black-v3'>{
-                                    key
-                                }</p>
-                                <button onClick={() => clearFilter(key)}>
-                                    <img className='w-2 h-2' src={cross} alt='remove' />
-                                </button>
-                            </div>
-                        );
-                    })}
-                </div>
-                <div className='flex gap-10'>
-                    <div
-                        onClick={() => setShowFilterModal(true)}
-                        className='cursor-pointer font-semibold text-primary-dark flex gap-3.5 items-center bg-white-v2 rounded-xl px-5 py-2.5'
-                    >
-                        <p>View All Chosen Filters</p>
-                        <img className='h-4 w-4' src='/logos/filterArrow.png' alt='' />
-                    </div>
-
-                    <button onClick={clearAllFilters} className='font-semibold text-black-v4'>
-                        Clear All
-                    </button>
-                </div>
-            </div>
+   <Filters  items={filterConfigs} filters={filters} setFilters={setFilters} />
+          
 
             {/* Game List */}
             <div className='bg-white-v2 px-7 pt-8 pb-1 space-y-8 rounded-t-3xl '>
@@ -242,7 +154,7 @@ function Certificates() {
                     {/*  button */}
                     <div className='flex  md:justify-end w-full '>
                     <button className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
-      Download All
+      Download Selected
       <Download size={16} />
     </button>
                     </div>

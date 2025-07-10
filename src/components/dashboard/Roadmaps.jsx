@@ -143,7 +143,7 @@ const [formData, setFormData] = useState({
                     <div className='mb-14'>
                         <ActiveButtons active={activeYear} setActive={setActiveYear} type="roadmap" buttons={months} />
                     </div>
-                    <div className='grid grid-cols-1 md:grid-cols-4 gap-8 mb-10'>
+                    <div className='grid mb-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5  xl:gap-10 '>
                         {games.map((item) => {
                             return (
                                 <GameCard game={item} />

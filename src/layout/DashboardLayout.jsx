@@ -11,7 +11,7 @@ import MobileMenu from '../components/header-footer/MobileMenu';
 const DashboardLayout = () => {
   const context = useGlobal();
   const navigate = useNavigate();
-  const { height, sideBarOpen, user, setUser, setCounts, token, render } = context;
+  const { height, sideBarOpen, user, setUser, setCounts, token, render ,collapsed} = context;
 
   const fetchDetails = async () => {
     const { data } = await apiHandler.get("me");
@@ -29,9 +29,9 @@ const DashboardLayout = () => {
   }, [token, render]);
 
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen bg-background">
+    <div className="flex flex-col w-full lg:flex-row min-h-screen bg-background">
       {/* Sidebar for desktop */}
-      <div className="hidden lg:block fixed top-0 left-0 h-full w-[240px] z-30">
+      <div className={`hidden lg:block fixed top-0 left-0 h-full ${collapsed?"w-[80px]":"w-[240px]"} z-30`}>
         <SideBar />
       </div>
 
@@ -41,10 +41,8 @@ const DashboardLayout = () => {
       </div>
 
       {/* Main content area */}
-      <div className="flex flex-col w-full lg:w-[calc(100vw-240px)] lg:ml-[230px]">
-        {user?.systemGeneratedPass && (
-          <ChangePass initialValue={user?.systemGeneratedPass} />
-        )}
+      <div className={`flex flex-col w-full ${collapsed?"lg:w-[calc(100vw-80px)] ":"lg:w-[calc(100vw-240px)] lg:ml-[230px]"}`}>
+       
 
         {/* <p className="text-2xl sm:text-3xl mt-4 mb-4 text-center font-medium">
           Welcome to Arictocrat Interactive Client Area

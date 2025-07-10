@@ -16,6 +16,7 @@ import MobileFilter from '../utils/MobileFilter';
 import FilterIcon from '../../assets/icons/Group 4519.svg'
 import MiniLoader from '../utils/miniLoader';
 import FilterDropdownGrouped from '../utils/multiSelect';
+import Filters from './filters';
 
 function GameAssets() {
     const [params] = useSearchParams()
@@ -98,8 +99,11 @@ function GameAssets() {
         setLoading(true);
         try {
              let url = `root-folders?type=exclude_certificates?skip=${filters?.skip}&limit=${filters?.limit}`
-            if (filters?.studio?.length > 0) {
-                url += `subStudios=${formData?.studio?.join(",")}`
+            if (filters?.subStudioIds?.length > 0) {
+                url += `&subStudioId=${filters?.subStudioIds?.join(",")}`
+            }
+             if (filters?.countryIds?.length > 0) {
+                url += `&countryIds=${filters?.countryIds?.join(",")}`
             }
             const { data } = await apiHandler.get(url);
             const newFolders = data.data.resp || [];
@@ -112,37 +116,30 @@ function GameAssets() {
         setLoading(false);
     };
 
-    const handleApplyButton = async (type, ids) => {
-        setFilters((prev) => {
-            //   if (type === "categoryIds") {
-            //     const existingIds = Array.isArray(prev[type]) ? prev[type] : [];
-            //     const newUniqueValues = ids?.filter((id) => !existingIds.includes(id)) || [];
-            //     return {
-            //       ...prev,
-            //       [type]: [...existingIds, ...newUniqueValues],
-            //     };
-            //   }
-
-            return {
-                ...prev,
-                [type]: ids,
-            };
-        });
-    };
-
-    const handleClear = (type) => {
-        setFilters((prev) => ({ ...prev, [type]: [] }))
-    }
-
-    const handleOuterClear = (type, id) => {
-        setFilters((prev) => ({ ...prev, [type]: prev?.[type]?.filter((q) => (q !== id)) }))
-    }
-
-
-    const clearAllFilters=()=>{
-        setFilters({skip:0,limit:16})
-    }
-
+    const filterConfigs = [
+        {
+          name: "subStudioIds",
+          title: "Studios",
+          options: studios
+        },
+        {
+          name: "countryIds",
+          title: "Regions",
+          options: countryOption,
+          filterArray:regions?.flatMap(region => region?.countries || [])?.map(e => ({ value: e.id, name: e.name }))
+        },
+        // {
+        //   name: "volatilityIds",
+        //   title: "Certificate",
+        //   options: dropdowns?.volatilityOption
+        // },
+        // {
+        //   name: "themeIds",
+        //   title: "Game Title",
+        //   options: dropdowns?.themeOption
+        // },
+      
+      ];
 
     
 
@@ -159,165 +156,20 @@ function GameAssets() {
                     <img className="h-5 w-5" src="/logos/rightArrow.png" alt="Arrow" />
                 </Link>
             </div>
-            {/* Filter Inputs */}
-            <div className='space-y-5'>
+       
+
+   <Filters  items={filterConfigs} filters={filters} setFilters={setFilters} />
 
 
-                <div className='lg:hidden '>
-                    <button onClick={() => setShowFilter(true)} className="cursor-pointer flex items-center gap-2 w-full xl:w-[unset] justify-center px-4 py-1.5 border-1 mt-10 border-[#00B290] hover:bg-[rgba(0,178,144,0.10)]
- text-[#00B290] text-base font-semibold rounded-md transition">
-                        <span className=' font-normal  text-lg '>Filter</span>
-                        <img src={FilterIcon} alt="" className='w-5' />
-                    </button>
+             
 
 
-
-                    <div
-                        className={`fixed top-0 left-0 w-full  h-full bg-white z-50 transition-transform duration-300 ease-in-out transform ${showFilter ? 'translate-x-0' : '-translate-x-full'
-                            }`}
-                    >
-                        {/* Close button */}
-
-
-                        {/* Filter Content */}
-
-                        {/* <MobileFilter setShowFilter={setShowFilter} filters={filters} onFilterChange={onFilterChange} studios={studios} clearFilter={clearFilter} clearAllFilters={clearAllFilters} /> */}
-                    </div>
-
-                </div>
-
-
-                <div className='lg:grid  lg:grid-cols-4 gap-10 hidden'>
-                   <FilterDropdownGrouped
-                                           options={studios}
-                                           name="subStudioIds"
-                                           selected={filters?.subStudioIds}
-                                           onApply={handleApplyButton}
-                                           onClear={handleClear}
-                                           title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
-                                               <h2>Studios</h2> {filters?.subStudioIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.subStudioIds?.length}</span>}
-                                           </div>}
-                   
-                                       />
-                                       <FilterDropdownGrouped
-                                           options={countryOption}
-                                           name="countryIds"
-                                           
-                                           selected={filters?.countryIds}
-                                           onApply={handleApplyButton}
-                                           onClear={handleClear}
-                                           title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
-                                               <h2>Regions</h2> {filters?.countryIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.countryIds?.length}</span>}
-                                           </div>}
-                   
-                   
-                   
-                                       />
-
-
-   <FilterDropdownGrouped
-                        options={dropdowns.volatilityOption}
-                       
-                        name="volatilityIds"
-                        selected={filters?.volatilityIds}
-                        onApply={handleApplyButton}
-                        onClear={handleClear}
-                         title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
-                            <h2>Certificate</h2> {filters?.volatilityIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.volatilityIds?.length}</span>}
-                        </div>}
-
-
-                    />
-                    <FilterDropdownGrouped
-                        options={dropdowns.themeOption}
-                       
-                        name="themeIds"
-                        selected={filters?.themeIds}
-                        onApply={handleApplyButton}
-                        onClear={handleClear}
-                         title={<div className='flex gap-2 items-center text-[#6F6F6F] font-semibold text-base capitalize'>
-                            <h2>Game Title</h2> {filters?.themeIds?.length>0 && <span className="ml-2 bg-[#94FF80] px-2 py-0.5 rounded text-xs text-black">{filters?.themeIds?.length}</span>}
-                        </div>}
-                    />
-
-
-                   
-                </div>
-
-
-            </div>
+  
 
 
 
-            {/* Filter Chip Display */}
-         <div className='hidden lg:flex justify-between items-center mb-20 '>
-                             <div className='flex gap-5 flex-wrap'>
-                                 {Object.entries(filters)
-                                     .filter(([key, val]) => val && !['skip', 'limit'].includes(key))
-                                     .slice(0, 5)
-                                     .map(([key, val],index) => {
-                                         console.log(val);
-                                         
-                                         let options = []
-                                         if (key === "subStudioIds") {
-                                             options = studios
-                                         }
-                                         else if (key === "countryIds") {
-                                             options = dropdowns?.regionOption
-                                         }
-                                         else if (key === "volatilityIds") {
-                                             options = dropdowns?.volatilityOption
-                                         }
-                                         else if (key === "familyIds") {
-                                             options = dropdowns?.familyOption
-                                         }
-                                         else if (key === "featuresIds") {
-                                             options = dropdowns?.featuresOption
-                                         }
-                                         else if (key === "gameTypeIds") {
-                                             options = dropdowns?.gameType
-                                         }
-         
-                                         else return null;
-                                         return (
-                                             val?.map((id, i) => {
-                                                 console.log(id,i);
-                                                 
-                                                 if(i>4){
-                                                     return null
-                                                 }
-                                                 return (
-                                                     <div key={i} className='flex items-center gap-3 py-2.5 px-3.5 border-2 border-black-v4 rounded-xl'>
-                                                         <p className='text-sm text-black-v3'>
-                                                             {options?.find((q) => (q.value === id))?.name}
-                                                         </p>
-                                                         <button onClick={() => handleOuterClear(key, id)}>
-                                                             <X />
-                                                         </button>
-                                                     </div>
-                                                 )
-                                             })
-         
-         
-                                         );
-                                     })}
-                             </div>
-                             <div className='flex gap-10'>
-                                 <div
-                                     onClick={() => setShowFilterModal(true)}
-                                     className='cursor-pointer font-semibold text-primary-dark flex gap-3.5 items-center bg-white-v2 rounded-xl px-5 py-2.5'
-                                 >
-                                     <p>View All Chosen Filters</p>
-                                     <img className='h-4 w-4' src='/logos/filterArrow.png' alt='' />
-                                 </div>
-         
-                                 <button
-                                     onClick={clearAllFilters}
-                                     className='font-semibold text-black-v4'>
-                                     Clear All
-                                 </button>
-                             </div>
-                         </div>
+
+ 
 
             {/* Game List */}
             <div className='bg-white-v2 px-7 pt-8 pb-1 space-y-8 rounded-t-3xl '>
@@ -325,7 +177,7 @@ function GameAssets() {
                 {/*  button */}
                 <div className='flex  md:justify-end w-full '>
                     <button className="cursor-pointer flex items-center gap-2 w-full md:w-[unset] justify-center px-4 py-1.5 hover:bg-black bg-[#00B290] text-white text-base font-semibold rounded-md transition">
-                        Download All
+                        Download Selected
                         <Download size={16} />
                     </button>
                 </div>
