@@ -184,7 +184,6 @@ function DetailGame() {
         const { data } = await apiHandler.get(url)
 
         setRootLevels(data?.data?.folders || [])
-
         //    setFiles(data?.data?.files)
 
 

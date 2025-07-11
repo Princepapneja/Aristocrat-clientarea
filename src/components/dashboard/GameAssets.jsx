@@ -26,27 +26,19 @@ function GameAssets() {
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
     const [totalGames, setTotalGames] = useState(0);
-    const [showFilter, setShowFilter] = useState(false);
     const [showFilterModal, setShowFilterModal] = useState(false);
 
     const [countryOption, setCountriesOption] = useState([])
 
-    const { regions, studios, dropdowns } = useGlobal()
-
-
+    const { regions, studios } = useGlobal()
     useEffect(() => {
         fetchGames();
     }, [filters]);
-
     useEffect(() => {
         if (!regions) return
-        // console.log(regions)
         const options = regions?.map((e) => ({ value: e.id, name: e.name, children: e.countries?.map((country) => ({ value: country.id, name: country.name })) }))
         setCountriesOption(options)
     }, [regions])
-
-
-    // Scroll event to trigger infinite scroll
     useEffect(() => {
         const handleScroll = () => {
             if (
@@ -59,9 +51,6 @@ function GameAssets() {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, [loading, hasMore]);
-
-
-
 
     const downloadById = async (type, item) => {
         try {
@@ -79,11 +68,9 @@ function GameAssets() {
                     filename = match[1];
                 }
             }
-
             const blob = new Blob([response.data]);
             const url = window.URL.createObjectURL(blob);
             const link = document.createElement('a');
-
             link.href = url;
             link.download = filename;
             document.body.appendChild(link);
@@ -98,11 +85,11 @@ function GameAssets() {
     const fetchGames = async () => {
         setLoading(true);
         try {
-             let url = `root-folders?type=exclude_certificates?skip=${filters?.skip}&limit=${filters?.limit}`
+            let url = `root-folders?type=exclude_certificates&skip=${filters?.skip}&limit=${filters?.limit}`
             if (filters?.subStudioIds?.length > 0) {
                 url += `&subStudioId=${filters?.subStudioIds?.join(",")}`
             }
-             if (filters?.countryIds?.length > 0) {
+            if (filters?.countryIds?.length > 0) {
                 url += `&countryIds=${filters?.countryIds?.join(",")}`
             }
             const { data } = await apiHandler.get(url);
@@ -118,30 +105,19 @@ function GameAssets() {
 
     const filterConfigs = [
         {
-          name: "subStudioIds",
-          title: "Studios",
-          options: studios
+            name: "subStudioIds",
+            title: "Studios",
+            options: studios
         },
         {
-          name: "countryIds",
-          title: "Regions",
-          options: countryOption,
-          filterArray:regions?.flatMap(region => region?.countries || [])?.map(e => ({ value: e.id, name: e.name }))
+            name: "countryIds",
+            title: "Regions",
+            options: countryOption,
+            filterArray: regions?.flatMap(region => region?.countries || [])?.map(e => ({ value: e.id, name: e.name }))
         },
-        // {
-        //   name: "volatilityIds",
-        //   title: "Certificate",
-        //   options: dropdowns?.volatilityOption
-        // },
-        // {
-        //   name: "themeIds",
-        //   title: "Game Title",
-        //   options: dropdowns?.themeOption
-        // },
-      
-      ];
+    ];
 
-    
+
 
     return (
         <div className='container space-y-16 group mb-10' >
@@ -156,21 +132,7 @@ function GameAssets() {
                     <img className="h-5 w-5" src="/logos/rightArrow.png" alt="Arrow" />
                 </Link>
             </div>
-       
-
-   <Filters  items={filterConfigs} filters={filters} setFilters={setFilters} />
-
-
-             
-
-
-  
-
-
-
-
- 
-
+            <Filters items={filterConfigs} filters={filters} setFilters={setFilters} />
             {/* Game List */}
             <div className='bg-white-v2 px-7 pt-8 pb-1 space-y-8 rounded-t-3xl '>
 
@@ -182,19 +144,19 @@ function GameAssets() {
                     </button>
                 </div>
                 {/*  button */}
-             
+
                 <div>
                     {folders?.map((folder) => {
                         return (
                             <div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
                                 <div className="flex justify-between items-center w-full md:hidden">
-                                     <input type="checkbox" className="w-5 h-5 accent-emerald-500 " />
+                                    <input type="checkbox" className="w-5 h-5 accent-emerald-500 " />
                                 </div>
                                 {/* Left */}
                                 <div className="flex flex-col md:flex-row items-center  gap-4 md:gap-14">
                                     <input type="checkbox" className="w-5 h-5 accent-emerald-500 hidden md:block" />
                                     <img src={folder?.game
-                                        ?.logo||"/Images/uk.jpg"} alt="Game Icon" className="w-44 h-28 md:mb-2" />
+                                        ?.logo || "/Images/uk.jpg"} alt="Game Icon" className="w-44 h-28 md:mb-2" />
                                     <div className='text-center md:text-left'>
                                         <h2 className="text-emerald-600 font-medium text-3xl mb-2">
                                             {folder.name}
@@ -219,8 +181,8 @@ function GameAssets() {
                     })}
                 </div>
                 {loading && (
-                <div className='grid place-items-center my-4'><MiniLoader/></div>
-            )}
+                    <div className='grid place-items-center my-4'><MiniLoader /></div>
+                )}
             </div>
 
             {showFilterModal && (

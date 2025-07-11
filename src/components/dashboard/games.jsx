@@ -3,9 +3,6 @@ import apiHandler from '../../functions/apiHandler';
 import MiniLoader from '../utils/miniLoader';
 import GameCard from '../utils/GameCard';
 import useGlobal from '../../hooks/useGlobal';
-import { ArrowLeft, Cross, MoveLeft, X } from 'lucide-react';
-import Buttons from '../utils/buttons';
-import Filters from './filters';
 
 const Games = () => {
     const [filters, setFilters] = useState({ skip: 0, limit: 16 });
