@@ -163,6 +163,8 @@ function Certificates() {
 
                 <div>
                     {files?.map((file) => {
+                        console.log(file);
+                        
                         return (
                             <div className="flex flex-col lg:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow hover:shadow transition-shadow duration-300">
                                 <div className="flex justify-between items-center w-full lg:hidden">
