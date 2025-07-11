@@ -147,6 +147,8 @@ function GameAssets() {
 
                 <div>
                     {folders?.map((folder) => {
+                        console.log(folder);
+                        
                         return (
                             <div className="flex flex-col md:flex-row items-center justify-between px-4 py-3 mb-7  bg-white rounded-xl w-full shadow-sm hover:shadow-lg transition-shadow duration-300">
                                 <div className="flex justify-between items-center w-full md:hidden">

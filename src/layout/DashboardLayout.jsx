@@ -41,12 +41,8 @@ const DashboardLayout = () => {
       </div>
 
       {/* Main content area */}
-      <div className={`flex flex-col w-full ${collapsed?"lg:w-[calc(100vw-80px)] ":"lg:w-[calc(100vw-240px)] lg:ml-[230px]"}`}>
-       
+      <div className={`flex flex-col w-full   transition-all duration-300 ease-in-out ${collapsed?"lg:w-[calc(100vw-80px)] lg:ml-[80px] ":"lg:w-[calc(100vw-240px)] lg:ml-[230px]"}`}>
 
-        {/* <p className="text-2xl sm:text-3xl mt-4 mb-4 text-center font-medium">
-          Welcome to Arictocrat Interactive Client Area
-        </p> */}
 
         <div className="hidden lg:block">
           <DashBoardHeader />
